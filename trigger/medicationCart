@@ -1,0 +1,77 @@
+-- Trigger for inserting into calculatedMedication Table
+DELIMITER $$
+
+USE `ltc`$$
+
+DROP TRIGGER /*!50032 IF EXISTS */ `insertIntoCalculatedMedications`$$
+
+CREATE
+    /*!50017 DEFINER = 'root'@'localhost' */
+    TRIGGER `insertIntoCalculatedMedications` AFTER INSERT ON `medications` 
+    FOR EACH ROW BEGIN
+    -- calling  calculatedMedicationInsertProc() to insert data 
+	CALL calculatedMedicationInsertProc(NEW.serial);
+    END;
+$$
+
+DELIMITER ;
+
+-- Trigger to insert into medications table
+DELIMITER $$
+
+USE `ltc`$$
+
+DROP TRIGGER /*!50032 IF EXISTS */ `insertIntoMedications`$$
+
+CREATE
+    /*!50017 DEFINER = 'root'@'localhost' */
+    TRIGGER `insertIntoMedications` AFTER INSERT ON `physicianordermedication` 
+    FOR EACH ROW BEGIN
+    -- insert a new row with new data
+	INSERT  INTO `medications`(`dosage`,`endDate`,`formId`,`frequency`,`medicationName`,`orderDate`,`prnIndicator`,`residentId`,`route`,`genTimeValue`,`genTimeType`,`isPRN`,`medicationId`)
+	VALUES (NEW.dose,NEW.durationTo,NEW.serial,NEW.frequency1,NEW.medication,NEW.durationFrom,NEW.prnIndication,(SELECT (@residentId:=p.residentId) FROM physicianordermedication AS p WHERE p.serial = NEW.serial),NEW.route, (SELECT a.timeValue FROM alertsetting AS a WHERE a.serial = 5), (SELECT a.timeType FROM alertsetting AS a WHERE a.serial = 5),New.prnIndication,New.medicationId);
+    END;
+$$
+
+DELIMITER ;
+
+-- Trigger on updations on medications table
+
+DELIMITER $$
+
+USE `ltc`$$
+
+DROP TRIGGER /*!50032 IF EXISTS */ `updateOnMedications`$$
+
+CREATE
+    /*!50017 DEFINER = 'root'@'localhost' */
+    TRIGGER `updateOnMedications` AFTER UPDATE ON `physicianordermedication` 
+    FOR EACH ROW BEGIN
+    -- deletes a row from medications table when you delete a row from physicianorderform3row table
+	DELETE FROM medications WHERE formId = OLD.serial;
+	-- insert a new row with new data
+	INSERT  INTO `medications`(`dosage`,`endDate`,`formId`,`frequency`,`medicationName`,`orderDate`,`prnIndicator`,`residentId`,`route`,`genTimeValue`,`genTimeType`,`isPRN`,`medicationId`)
+	VALUES (NEW.dose,NEW.durationTo,NEW.serial,NEW.frequency1,NEW.medication,NEW.durationFrom,NEW.prnIndication,(SELECT (@residentId:=p.residentId) FROM physicianordermedication AS p WHERE p.serial = NEW.serial),NEW.route, (SELECT a.timeValue FROM alertsetting AS a WHERE a.serial = 5), (SELECT a.timeType FROM alertsetting AS a WHERE a.serial = 5),New.prnIndication,New.medicationId);
+    END;
+$$
+
+DELIMITER ;
+
+-- Trigger on delete on medications 
+
+DELIMITER $$
+
+USE `ltc`$$
+
+DROP TRIGGER /*!50032 IF EXISTS */ `deleteOnMedications`$$
+
+CREATE
+    /*!50017 DEFINER = 'root'@'localhost' */
+    TRIGGER `deleteOnMedications` AFTER DELETE ON `physicianordermedication` 
+    FOR EACH ROW BEGIN
+    -- deletes a row from medications table when you delete a row from physicianordermedication table
+	DELETE FROM medications WHERE formId = OLD.serial;
+    END;
+$$
+
+DELIMITER ;

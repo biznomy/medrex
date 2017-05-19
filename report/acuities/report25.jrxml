@@ -1,0 +1,1121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<parameter name="o2" class="java.lang.String"/>
+	<parameter name="iv" class="java.lang.String"/>
+	<parameter name="wo" class="java.lang.String"/>
+	<parameter name="t" class="java.lang.String"/>
+	<parameter name="ortho" class="java.lang.String"/>
+	<parameter name="advNeuro" class="java.lang.String"/>
+	<parameter name="respServ" class="java.lang.String"/>
+	<parameter name="trach" class="java.lang.String"/>
+	<parameter name="head" class="java.lang.String"/>
+	<parameter name="nurses" class="java.lang.String"/>
+	<parameter name="cna" class="java.lang.String"/>
+	<parameter name="date" class="java.lang.String"/>
+	<parameter name="total02" class="java.lang.String"/>
+	<parameter name="totaliv" class="java.lang.String"/>
+	<parameter name="totalwo" class="java.lang.String"/>
+	<parameter name="totalt" class="java.lang.String"/>
+	<parameter name="totalortho" class="java.lang.String"/>
+	<parameter name="totaladvNeuro" class="java.lang.String"/>
+	<parameter name="totalrespServ" class="java.lang.String"/>
+	<parameter name="totaltrach" class="java.lang.String"/>
+	<parameter name="totalhead" class="java.lang.String"/>
+	<parameter name="cnaTotal" class="java.lang.String"/>
+	<parameter name="nursesTotal" class="java.lang.String"/>
+	<parameter name="censusCount" class="java.lang.String"/>
+	<parameter name="totalCensusCount" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="80" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="5" width="379" height="74"/>
+				<textElement>
+					<font size="36" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Accuities Guidelines]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="40" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="141" height="35"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="1" y="0" width="140" height="35"/>
+				<textElement>
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="141" y="0" width="239" height="35"/>
+			</rectangle>
+			<textField>
+				<reportElement x="141" y="0" width="228" height="35"/>
+				<textElement>
+					<font size="24"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{date}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="41" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="529" splitType="Stretch">
+			<frame>
+				<reportElement mode="Transparent" x="291" y="14" width="264" height="97"/>
+				<staticText>
+					<reportElement x="0" y="0" width="89" height="16"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Position]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement mode="Transparent" x="0" y="0" width="89" height="16"/>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Transparent" x="89" y="0" width="73" height="16"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="93" y="0" width="59" height="18"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[# of Emp.]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement mode="Transparent" x="162" y="0" width="55" height="16"/>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Transparent" x="217" y="0" width="47" height="16"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="162" y="2" width="55" height="16"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ Hrs worked]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="217" y="0" width="47" height="16"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ Total]]></text>
+				</staticText>
+				<frame>
+					<reportElement x="0" y="16" width="264" height="16"/>
+					<rectangle>
+						<reportElement mode="Transparent" x="0" y="0" width="89" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="0" y="2" width="89" height="14"/>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
+						<text><![CDATA[Nurses]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="89" y="0" width="73" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="89" y="0" width="73" height="16"/>
+						<textElement/>
+						<text><![CDATA[ ]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement x="162" y="0" width="55" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="162" y="0" width="55" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[8]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="217" y="0" width="47" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="219" y="0" width="45" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[]]></text>
+					</staticText>
+				</frame>
+				<frame>
+					<reportElement x="0" y="32" width="264" height="16"/>
+					<rectangle>
+						<reportElement mode="Transparent" x="0" y="0" width="89" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="0" y="2" width="89" height="14"/>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
+						<text><![CDATA[C.N.A.]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="89" y="0" width="73" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="89" y="0" width="73" height="16"/>
+						<textElement/>
+						<text><![CDATA[ ]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement x="162" y="0" width="55" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="162" y="0" width="55" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[8]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="217" y="0" width="47" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="219" y="0" width="45" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[]]></text>
+					</staticText>
+				</frame>
+				<frame>
+					<reportElement x="0" y="48" width="264" height="16"/>
+					<rectangle>
+						<reportElement mode="Transparent" x="0" y="0" width="89" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="0" y="2" width="89" height="14"/>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
+						<text><![CDATA[Total]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="89" y="0" width="73" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="89" y="0" width="73" height="16"/>
+						<textElement/>
+						<text><![CDATA[ ]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement x="162" y="0" width="55" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="162" y="0" width="55" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[8]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="217" y="0" width="47" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="219" y="0" width="45" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[]]></text>
+					</staticText>
+				</frame>
+				<frame>
+					<reportElement x="0" y="64" width="264" height="16"/>
+					<rectangle>
+						<reportElement mode="Transparent" x="0" y="0" width="89" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="0" y="2" width="89" height="14"/>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
+						<text><![CDATA[÷Census Count]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="89" y="0" width="73" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="89" y="0" width="73" height="16"/>
+						<textElement/>
+						<text><![CDATA[ ]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement x="162" y="0" width="55" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="162" y="0" width="55" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[8]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="217" y="0" width="47" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="219" y="0" width="45" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[]]></text>
+					</staticText>
+				</frame>
+			</frame>
+			<frame>
+				<reportElement mode="Transparent" x="328" y="186" width="162" height="54"/>
+				<staticText>
+					<reportElement x="0" y="0" width="89" height="16"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[TOTAL H/P/P]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement mode="Transparent" x="0" y="0" width="89" height="16"/>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Transparent" x="89" y="0" width="73" height="16"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="93" y="0" width="59" height="18"/>
+					<textElement textAlignment="Center">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[2.67]]></text>
+				</staticText>
+				<frame>
+					<reportElement x="0" y="16" width="162" height="16"/>
+					<rectangle>
+						<reportElement mode="Transparent" x="0" y="0" width="89" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="0" y="2" width="89" height="14"/>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
+						<text><![CDATA[TOTAL N/H/P/P]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="89" y="0" width="73" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="89" y="0" width="73" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[3.2]]></text>
+					</staticText>
+				</frame>
+			</frame>
+			<frame>
+				<reportElement mode="Transparent" x="1" y="14" width="264" height="328"/>
+				<staticText>
+					<reportElement x="0" y="0" width="89" height="16"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ Accuties]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement mode="Transparent" x="0" y="0" width="89" height="16"/>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Transparent" x="89" y="0" width="73" height="16"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="93" y="0" width="59" height="18"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ Hours.]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement mode="Transparent" x="162" y="0" width="55" height="16"/>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Transparent" x="217" y="0" width="47" height="16"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="162" y="2" width="55" height="16"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ Count]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="217" y="0" width="47" height="16"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[  Total]]></text>
+				</staticText>
+				<frame>
+					<reportElement x="0" y="16" width="264" height="16"/>
+					<rectangle>
+						<reportElement mode="Transparent" x="0" y="0" width="89" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="0" y="2" width="89" height="14"/>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
+						<text><![CDATA[ Census]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="89" y="0" width="73" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="89" y="0" width="73" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[2.5]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement x="162" y="0" width="55" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="162" y="0" width="55" height="16"/>
+						<textElement textAlignment="Right"/>
+						<text><![CDATA[ ]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="217" y="0" width="47" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="219" y="0" width="45" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[]]></text>
+					</staticText>
+				</frame>
+				<frame>
+					<reportElement x="0" y="32" width="264" height="16"/>
+					<rectangle>
+						<reportElement mode="Transparent" x="0" y="0" width="89" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="0" y="2" width="89" height="14"/>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
+						<text><![CDATA[ Wound Care]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="89" y="0" width="73" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="89" y="0" width="73" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[0.75]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement x="162" y="0" width="55" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="162" y="0" width="55" height="16"/>
+						<textElement textAlignment="Right"/>
+						<text><![CDATA[]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="217" y="0" width="47" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="219" y="0" width="45" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[]]></text>
+					</staticText>
+				</frame>
+				<frame>
+					<reportElement x="0" y="48" width="264" height="16"/>
+					<rectangle>
+						<reportElement mode="Transparent" x="0" y="0" width="89" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="0" y="2" width="89" height="14"/>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
+						<text><![CDATA[ Tube Feeding]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="89" y="0" width="73" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="89" y="0" width="73" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[1]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement x="162" y="0" width="55" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="162" y="0" width="55" height="16"/>
+						<textElement textAlignment="Right"/>
+						<text><![CDATA[ ]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="217" y="0" width="47" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="219" y="0" width="45" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[]]></text>
+					</staticText>
+				</frame>
+				<frame>
+					<reportElement x="0" y="64" width="264" height="16"/>
+					<rectangle>
+						<reportElement mode="Transparent" x="0" y="0" width="89" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="0" y="2" width="89" height="14"/>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
+						<text><![CDATA[ Oxygen Therapy]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="89" y="0" width="73" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="89" y="0" width="73" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[0.75]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement x="162" y="0" width="55" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="162" y="0" width="55" height="16"/>
+						<textElement textAlignment="Right"/>
+						<text><![CDATA[ ]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="217" y="0" width="47" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="219" y="0" width="45" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[]]></text>
+					</staticText>
+				</frame>
+				<frame>
+					<reportElement x="0" y="80" width="264" height="16"/>
+					<rectangle>
+						<reportElement mode="Transparent" x="0" y="0" width="89" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="0" y="2" width="89" height="14"/>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
+						<text><![CDATA[ Tracheostomy]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="89" y="0" width="73" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="89" y="0" width="73" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[1.25]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement x="162" y="0" width="55" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="162" y="0" width="55" height="16"/>
+						<textElement textAlignment="Right"/>
+						<text><![CDATA[ ]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="217" y="0" width="47" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="219" y="0" width="45" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[]]></text>
+					</staticText>
+				</frame>
+				<frame>
+					<reportElement x="0" y="96" width="264" height="16"/>
+					<rectangle>
+						<reportElement mode="Transparent" x="0" y="0" width="89" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="0" y="2" width="89" height="14"/>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
+						<text><![CDATA[  I. V. Therapy]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="89" y="0" width="73" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="89" y="0" width="73" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[1.5]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement x="162" y="0" width="55" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="162" y="0" width="55" height="16"/>
+						<textElement textAlignment="Right"/>
+						<text><![CDATA[ ]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="217" y="0" width="47" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="219" y="0" width="45" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[]]></text>
+					</staticText>
+				</frame>
+				<frame>
+					<reportElement x="0" y="112" width="264" height="16"/>
+					<rectangle>
+						<reportElement mode="Transparent" x="0" y="0" width="89" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="0" y="2" width="89" height="14"/>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
+						<text><![CDATA[ Respiratory]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="89" y="0" width="73" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="89" y="0" width="73" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[1.25]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement x="162" y="0" width="55" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="162" y="0" width="55" height="16"/>
+						<textElement textAlignment="Right"/>
+						<text><![CDATA[]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="217" y="0" width="47" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="219" y="0" width="45" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[]]></text>
+					</staticText>
+				</frame>
+				<frame>
+					<reportElement x="0" y="128" width="264" height="16"/>
+					<rectangle>
+						<reportElement mode="Transparent" x="0" y="0" width="89" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="0" y="2" width="89" height="14"/>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
+						<text><![CDATA[ Adv. Neuro Care]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="89" y="0" width="73" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="89" y="0" width="73" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[1.5]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement x="162" y="0" width="55" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="162" y="0" width="55" height="16"/>
+						<textElement textAlignment="Right"/>
+						<text><![CDATA[]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="217" y="0" width="47" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="219" y="0" width="45" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[]]></text>
+					</staticText>
+				</frame>
+				<frame>
+					<reportElement x="0" y="144" width="264" height="16"/>
+					<rectangle>
+						<reportElement mode="Transparent" x="0" y="0" width="89" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="0" y="2" width="89" height="14"/>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
+						<text><![CDATA[ Orthopedic care]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="89" y="0" width="73" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="89" y="0" width="73" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[1.5]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement x="162" y="0" width="55" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="162" y="0" width="55" height="16"/>
+						<textElement textAlignment="Right"/>
+						<text><![CDATA[]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="217" y="0" width="47" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="219" y="0" width="45" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[]]></text>
+					</staticText>
+				</frame>
+				<frame>
+					<reportElement x="0" y="160" width="264" height="16"/>
+					<rectangle>
+						<reportElement mode="Transparent" x="0" y="0" width="89" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="0" y="2" width="89" height="14"/>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
+						<text><![CDATA[ Head Trauma]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="89" y="0" width="73" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="89" y="0" width="73" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[1.5]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement x="162" y="0" width="55" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="162" y="0" width="55" height="16"/>
+						<textElement textAlignment="Right"/>
+						<text><![CDATA[]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="217" y="0" width="47" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="219" y="0" width="45" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[]]></text>
+					</staticText>
+				</frame>
+				<frame>
+					<reportElement x="0" y="176" width="264" height="16"/>
+					<rectangle>
+						<reportElement mode="Transparent" x="0" y="0" width="89" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="0" y="2" width="89" height="14"/>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
+						<text><![CDATA[ Total Hrs spent]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="89" y="0" width="73" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="89" y="0" width="73" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[ ]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement x="162" y="0" width="55" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="162" y="0" width="55" height="16"/>
+						<textElement textAlignment="Right"/>
+						<text><![CDATA[]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="217" y="0" width="47" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="219" y="0" width="45" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[]]></text>
+					</staticText>
+				</frame>
+				<frame>
+					<reportElement x="0" y="192" width="264" height="16"/>
+					<rectangle>
+						<reportElement mode="Transparent" x="0" y="0" width="89" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="0" y="2" width="89" height="14"/>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
+						<text><![CDATA[ ÷Census Count]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="89" y="0" width="73" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="89" y="0" width="73" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[ ]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement x="162" y="0" width="55" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="162" y="0" width="55" height="16"/>
+						<textElement textAlignment="Right"/>
+						<text><![CDATA[]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="217" y="0" width="47" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="219" y="0" width="45" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[2.67]]></text>
+					</staticText>
+				</frame>
+				<frame>
+					<reportElement x="0" y="208" width="264" height="16"/>
+					<rectangle>
+						<reportElement mode="Transparent" x="0" y="0" width="89" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="0" y="2" width="89" height="14"/>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
+						<text><![CDATA[nurses]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="89" y="0" width="73" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="89" y="0" width="73" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[ ]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement x="162" y="0" width="55" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="162" y="0" width="55" height="16"/>
+						<textElement textAlignment="Right"/>
+						<text><![CDATA[]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="217" y="0" width="47" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="219" y="0" width="45" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[53.4]]></text>
+					</staticText>
+				</frame>
+				<frame>
+					<reportElement x="0" y="224" width="264" height="16"/>
+					<rectangle>
+						<reportElement mode="Transparent" x="0" y="0" width="89" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="0" y="2" width="89" height="14"/>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
+						<text><![CDATA[can's]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="89" y="0" width="73" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="89" y="0" width="73" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[ ]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement x="162" y="0" width="55" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="162" y="0" width="55" height="16"/>
+						<textElement textAlignment="Right"/>
+						<text><![CDATA[]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="217" y="0" width="47" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="219" y="0" width="45" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[213.6]]></text>
+					</staticText>
+				</frame>
+				<frame>
+					<reportElement x="0" y="240" width="264" height="16"/>
+					<rectangle>
+						<reportElement mode="Transparent" x="0" y="0" width="89" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="0" y="2" width="89" height="14"/>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
+						<text><![CDATA[]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="89" y="0" width="73" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="89" y="0" width="73" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[ ]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement x="162" y="0" width="55" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="162" y="0" width="55" height="16"/>
+						<textElement textAlignment="Right"/>
+						<text><![CDATA[]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="217" y="0" width="47" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="219" y="0" width="45" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[267]]></text>
+					</staticText>
+				</frame>
+			</frame>
+			<textField>
+				<reportElement x="174" y="80" width="42" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{o2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="174" y="111" width="42" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{iv}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="174" y="47" width="42" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{wo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="174" y="64" width="42" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{t}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="174" y="159" width="42" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{ortho}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="174" y="143" width="42" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{advNeuro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="174" y="127" width="42" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{respServ}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="174" y="94" width="42" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{trach}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="174" y="174" width="42" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{head}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="386" y="30" width="57" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{nurses}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="386" y="46" width="54" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{cna}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="510" y="45" width="45" height="16"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{cnaTotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="510" y="29" width="45" height="16"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{nursesTotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="218" y="79" width="45" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{total02}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="220" y="109" width="45" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{totaliv}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="220" y="46" width="45" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{totalwo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="220" y="61" width="45" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{totalt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="218" y="158" width="45" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{totalortho}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="220" y="142" width="45" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{totaladvNeuro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="220" y="126" width="45" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{totalrespServ}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="220" y="94" width="45" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{totaltrach}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="220" y="176" width="45" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{totalhead}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="163" y="32" width="55" height="16"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{censusCount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="218" y="29" width="45" height="16"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{totalCensusCount}]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement x="328" y="218" width="162" height="16"/>
+				<rectangle>
+					<reportElement mode="Transparent" x="0" y="0" width="89" height="16"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="0" y="2" width="89" height="14"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[over under]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement mode="Transparent" x="89" y="0" width="73" height="16"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="89" y="0" width="73" height="16"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[0.53]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement mode="Transparent" x="328" y="270" width="162" height="48"/>
+				<staticText>
+					<reportElement x="0" y="0" width="89" height="16"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nurses/h/n]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement mode="Transparent" x="0" y="0" width="89" height="16"/>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Transparent" x="89" y="0" width="73" height="16"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="93" y="0" width="59" height="18"/>
+					<textElement textAlignment="Center">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[53.4]]></text>
+				</staticText>
+				<frame>
+					<reportElement x="0" y="16" width="162" height="16"/>
+					<rectangle>
+						<reportElement mode="Transparent" x="0" y="0" width="89" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="0" y="2" width="89" height="14"/>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
+						<text><![CDATA[actual/n/h]]></text>
+					</staticText>
+					<rectangle>
+						<reportElement mode="Transparent" x="89" y="0" width="73" height="16"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="89" y="0" width="73" height="16"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[80]]></text>
+					</staticText>
+				</frame>
+			</frame>
+			<frame>
+				<reportElement x="328" y="302" width="162" height="16"/>
+				<rectangle>
+					<reportElement mode="Transparent" x="0" y="0" width="89" height="16"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="0" y="2" width="89" height="14"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[over under]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement mode="Transparent" x="89" y="0" width="73" height="16"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="89" y="0" width="73" height="16"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[26.6]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

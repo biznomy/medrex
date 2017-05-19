@@ -1,0 +1,708 @@
+-- -------------- Stored procedures (2009-1-27) --------- 
+
+-- ------------------ calculateAlertProc -------------
+
+DELIMITER $$
+
+USE `ltc`$$
+
+DROP PROCEDURE IF EXISTS `calculateAlertProc`$$
+
+/* procedure is used to insert values in calculated from alert, alert reciever, alert setting */
+CREATE DEFINER=`root`@`localhost` PROCEDURE `calculateAlertProc`(IN alertId INT)
+BEGIN
+/* declaring variables, cursors and handlers */
+    	DECLARE notes VARCHAR(255) DEFAULT NULL;
+	DECLARE ownerStatus INT(11) DEFAULT 0;
+	DECLARE done INT DEFAULT 0;
+	DECLARE timeDone INT DEFAULT 0;
+	DECLARE alertDate DATETIME DEFAULT NULL;
+	DECLARE alertType VARCHAR(255);
+	DECLARE timeInterval INT(11);
+	DECLARE str VARCHAR(255) DEFAULT NULL;
+	DECLARE intervalType VARCHAR(255) DEFAULT NULL;
+	DECLARE immediateAlertType VARCHAR(255) DEFAULT NULL;
+	DECLARE startTime DATETIME DEFAULT NULL;
+	DECLARE endDate DATETIME DEFAULT NULL;
+	DECLARE newDate DATETIME DEFAULT NULL;
+	DECLARE timeType VARCHAR(255) DEFAULT NULL;
+	DECLARE timeValue VARCHAR(255) DEFAULT NULL;
+	DECLARE dailyTimes VARCHAR(255) DEFAULT NULL;
+	DECLARE futureDate DATETIME DEFAULT NULL;
+	DECLARE endTime VARCHAR(255) DEFAULT NULL;
+	DECLARE dTimes VARCHAR(255) DEFAULT NULL;
+	DECLARE dailyTiming VARCHAR(255) DEFAULT NULL;
+	DECLARE cursorAlertData CURSOR FOR SELECT a.notes, a.ownerStatus, a.beginDate, a.intervalType, a.intervalTime, a.startTime, a.alertType, a.immediateAlertType, a.endDate, a.dailyTimes FROM alert AS a WHERE a.serial = alertId;
+	DECLARE cursorAlertSetting CURSOR FOR SELECT ast.timeType, ast.timeValue FROM alertsetting AS ast WHERE ast.serial = 2;
+	DECLARE cursorAlertTime CURSOR FOR SELECT atime.time FROM alerttime AS atime WHERE atime.alertId = alertId;
+	DECLARE cursorATime CURSOR FOR SELECT atime.time FROM alerttime AS atime WHERE atime.alertId = alertId;
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+/* opening cursors and fetching data from cursors */	
+	OPEN cursorAlertData;
+	OPEN cursorAlertSetting;
+	OPEN cursorAlertTime;
+	FETCH cursorAlertData INTO notes, ownerStatus, newDate, intervalType, timeInterval, startTime, alertType, immediateAlertType, endDate, dTimes;
+	FETCH cursorAlertSetting INTO timeType, timeValue;
+	FETCH cursorAlertTime INTO dailyTimes;
+/* getting starttime and making alert date from newdate and starttime by adding them */		
+	IF dTimes = '' THEN
+		SET str = CONCAT(CAST(newDate AS DATE), ' ', CAST(startTime AS TIME));
+		SET alertDate = STR_TO_DATE(str, '%Y-%m-%d %H:%i:%s');
+/* checking time type and making future date by adding time value in current time */			
+/* this inserts when you click daily as alert type */	
+		IF alertType = 1 THEN
+			IF (timeType = 'MINUTE') THEN
+				SET futureDate = DATE_ADD(NOW(), INTERVAL timeValue MINUTE);
+			ELSEIF (timeType = 'HOUR') THEN
+				SET futureDate = DATE_ADD(NOW(), INTERVAL timeValue HOUR);
+			ELSEIF (timeType = 'DAY') THEN
+				SET futureDate = DATE_ADD(NOW(), INTERVAL timeValue DAY);
+			ELSEIF (timeType = 'WEEK') THEN
+				SET futureDate = DATE_ADD(NOW(), INTERVAL timeValue WEEK);
+			ELSEIF (timeType = 'MONTH') THEN
+				SET futureDate = DATE_ADD(NOW(), INTERVAL timeValue MONTH);
+			ELSEIF (timeType = 'YEAR') THEN
+				SET futureDate = DATE_ADD(NOW(), INTERVAL timeValue YEAR);
+			END IF;
+/* checking enddate if it is null then assume it as follows */				
+			IF endDate IS NULL THEN
+				SET endTime = '2999-12-31 00:00:00';
+				SET endDate = STR_TO_DATE(endTime, '%Y-%m-%d %H:%i:%s');
+			END IF;
+/* making while loop and insert data from alert in calculatedalert from begin date to end date,
+it inserts according to what we have selected in combo */			
+			WHILE ((alertDate <= futureDate) AND (alertDate <= endDate)) DO
+			/* check for interval type = minutes then insert, add time according to minutes */
+				IF intervalType = 'Minutes' THEN
+						INSERT INTO calculatedAlert (notes, alertDate, ownerStatus, alertId) VALUES (notes, alertDate, ownerStatus, alertId);
+					SET alertDate = DATE_ADD(alertDate, INTERVAL timeInterval MINUTE);
+					SET done = 0;
+				ELSEIF intervalType = 'Hrs' THEN
+			/* check for interval type = Hrs then insert, add time according to Hrs */	
+						INSERT INTO calculatedAlert (notes, alertDate, ownerStatus, alertId) VALUES (notes, alertDate, ownerStatus, alertId);
+					SET alertDate = DATE_ADD(alertDate, INTERVAL timeInterval HOUR);
+					SET done = 0;
+				ELSEIF intervalType = 'Days' THEN
+			/* check for interval type = Days then insert, add time according to Days */	
+						INSERT INTO calculatedAlert (notes, alertDate, ownerStatus, alertId) VALUES (notes, alertDate, ownerStatus, alertId);
+					SET alertDate = DATE_ADD(alertDate, INTERVAL timeInterval DAY);
+					SET done = 0;
+				ELSEIF intervalType = 'Weeks' THEN
+			/* check for interval type = Weeks then insert, add time according to Weeks */	
+						INSERT INTO calculatedAlert (notes, alertDate, ownerStatus, alertId) VALUES (notes, alertDate, ownerStatus, alertId);
+					SET alertDate = DATE_ADD(alertDate, INTERVAL timeInterval WEEK);
+					SET done = 0;
+			/* check for interval type = Months then insert, add time according to Months */			
+				ELSEIF intervalType = 'Months' THEN
+						INSERT INTO calculatedAlert (notes, alertDate, ownerStatus, alertId) VALUES (notes, alertDate, ownerStatus, alertId);
+					SET alertDate = DATE_ADD(alertDate, INTERVAL timeInterval MONTH);
+					SET done = 0;
+				ELSEIF intervalType = 'Years' THEN
+			/* check for interval type = Years then insert, add time according to Years */	
+						INSERT INTO calculatedAlert (notes, alertDate, ownerStatus, alertId) VALUES (notes, alertDate, ownerStatus, alertId);
+					SET alertDate = DATE_ADD(alertDate, INTERVAL timeInterval YEAR);
+					SET done = 0;
+				END IF;
+			END WHILE;
+		ELSEIF alertType = 3 THEN
+				IF immediateAlertType = 1 THEN
+					INSERT INTO calculatedAlert (notes, alertDate, ownerStatus, alertId) VALUES (notes, NOW(), ownerStatus, alertId);
+				ELSEIF immediateAlertType = 2 THEN
+					INSERT INTO calculatedAlert (notes, alertDate, ownerStatus, alertId) VALUES (notes, alertDate, ownerStatus, alertId);
+				END IF;
+		END IF;
+	ELSE
+/* this inserts when you click daily as alert type, multiple times on that day */		
+	IF alertType = 1 THEN
+	/* check timetype and set in futuredate according to timevalue */
+		IF (timeType = 'DAY') THEN
+			SET futureDate = DATE_ADD(newDate, INTERVAL timeValue DAY);
+		ELSEIF (timeType = 'WEEK') THEN
+			SET futureDate = DATE_ADD(newDate, INTERVAL timeValue WEEK);
+		ELSEIF (timeType = 'MONTH') THEN
+			SET futureDate = DATE_ADD(newDate, INTERVAL timeValue MONTH);
+		ELSEIF (timeType = 'YEAR') THEN
+			SET futureDate = DATE_ADD(newDate, INTERVAL timeValue YEAR);
+		END IF;
+	/* checking enddate if it is null then assume it as follows */	
+		IF endDate IS NULL THEN
+			SET endTime = '2999-12-31 00:00:00';
+			SET endDate = STR_TO_DATE(endTime, '%Y-%m-%d %H:%i:%s');
+		END IF;
+		/* getting starttime and making alert date from newdate and starttime by adding them */	
+		SET str = CONCAT(CAST(newDate AS DATE), ' ', dailyTimes);
+		SET alertDate = STR_TO_DATE(str, '%Y-%m-%d %h:%i %p');
+		/* making while loop and insert data from alert in calculatedalert from begin date to end date,
+	it inserts according to what we have selected in combo */
+	
+	/* open cursor for every thing that you have selected in combo and then fetch data from alerttime and 
+	then extract time and add that time in alert date and insert in calculatedalert table*/
+		WHILE ((alertDate <= futureDate) AND (alertDate <= endDate)) DO
+		/* for days that you have selected in combobox */
+			IF intervalType = 'Days' THEN
+				BEGIN
+				DECLARE CONTINUE HANDLER FOR NOT FOUND SET timeDone = 1;
+				SET timedone = 0;
+				OPEN cursorATime;
+				/*inner while loop for getting data from alerttime table and insert alerts in calculatedalert table */
+				cur1_loop : WHILE (timeDone = 0) DO
+					FETCH cursorATime INTO dailyTiming;
+						IF timeDone = 1 THEN
+							LEAVE cur1_loop;
+						END IF;
+						SET str = CONCAT(CAST(alertDate AS DATE), ' ', dailyTiming);
+						SET alertDate = STR_TO_DATE(str, '%Y-%m-%d %h:%i %p');
+						INSERT INTO calculatedAlert (notes, alertDate, ownerStatus, alertId) VALUES (notes, alertDate, ownerStatus, alertId);
+				END WHILE cur1_loop;
+				CLOSE cursorATime;
+				SET alertDate = DATE_ADD(alertDate, INTERVAL timeInterval DAY);
+				END;
+				/* for weeks that you have selected in combobox */
+			ELSEIF intervalType = 'Weeks' THEN
+				BEGIN
+				DECLARE CONTINUE HANDLER FOR NOT FOUND SET timeDone = 1;
+				SET timedone = 0;
+				OPEN cursorATime;
+				/*inner while loop for getting data from alerttime table and insert alerts in calculatedalert table */
+				cur1_loop : WHILE (timeDone = 0) DO
+					FETCH cursorATime INTO dailyTiming;
+						IF timeDone = 1 THEN
+							LEAVE cur1_loop;
+						END IF;
+						SET str = CONCAT(CAST(alertDate AS DATE), ' ', dailyTiming);
+						SET alertDate = STR_TO_DATE(str, '%Y-%m-%d %h:%i %p');
+						INSERT INTO calculatedAlert (notes, alertDate, ownerStatus, alertId) VALUES (notes, alertDate, ownerStatus, alertId);
+				END WHILE cur1_loop;
+				CLOSE cursorATime;
+				SET alertDate = DATE_ADD(alertDate, INTERVAL timeInterval WEEK);
+				END;
+				/* for Months that you have selected in combobox */
+			ELSEIF intervalType = 'Months' THEN
+				BEGIN
+				DECLARE CONTINUE HANDLER FOR NOT FOUND SET timeDone = 1;
+				SET timedone = 0;
+				OPEN cursorATime;
+				/*inner while loop for getting data from alerttime table and insert alerts in calculatedalert table */
+				cur1_loop : WHILE (timeDone = 0) DO
+					FETCH cursorATime INTO dailyTiming;
+						IF timeDone = 1 THEN
+							LEAVE cur1_loop;
+						END IF;
+						SET str = CONCAT(CAST(alertDate AS DATE), ' ', dailyTiming);
+						SET alertDate = STR_TO_DATE(str, '%Y-%m-%d %h:%i %p');
+						INSERT INTO calculatedAlert (notes, alertDate, ownerStatus, alertId) VALUES (notes, alertDate, ownerStatus, alertId);
+				END WHILE cur1_loop;
+				CLOSE cursorATime;
+				SET alertDate = DATE_ADD(alertDate, INTERVAL timeInterval MONTH);
+				END;
+				/* for Months that you have selected in combobox */
+			ELSEIF intervalType = 'Years' THEN
+				BEGIN
+				DECLARE CONTINUE HANDLER FOR NOT FOUND SET timeDone = 1;
+				SET timedone = 0;
+				OPEN cursorATime;
+				/*inner while loop for getting data from alerttime table and insert alerts in calculatedalert table */
+				cur1_loop : WHILE (timeDone = 0) DO
+					FETCH cursorATime INTO dailyTiming;
+						IF timeDone = 1 THEN
+							LEAVE cur1_loop;
+						END IF;
+						SET str = CONCAT(CAST(alertDate AS DATE), ' ', dailyTiming);
+						SET alertDate = STR_TO_DATE(str, '%Y-%m-%d %h:%i %p');
+						INSERT INTO calculatedAlert (notes, alertDate, ownerStatus, alertId) VALUES (notes, alertDate, ownerStatus, alertId);
+				END WHILE cur1_loop;
+				CLOSE cursorATime;
+				SET alertDate = DATE_ADD(alertDate, INTERVAL timeInterval YEAR);
+				END;
+			END IF;
+		END WHILE;
+		/* check for daily times that you have selected as radio button */
+	ELSEIF alertType = 2 THEN
+	/* making future date from timevalue according to timetype */
+		IF (timeType = 'DAY') THEN
+			SET futureDate = DATE_ADD(NOW(), INTERVAL timeValue DAY);
+		ELSEIF (timeType = 'WEEK') THEN
+			SET futureDate = DATE_ADD(NOW(), INTERVAL timeValue WEEK);
+		ELSEIF (timeType = 'MONTH') THEN
+			SET futureDate = DATE_ADD(NOW(), INTERVAL timeValue MONTH);
+		ELSEIF (timeType = 'YEAR') THEN
+			SET futureDate = DATE_ADD(NOW(), INTERVAL timeValue YEAR);
+		END IF;
+		/* checking enddate if it is null then assume it as follows */	
+		IF endDate IS NULL THEN
+			SET endTime = '2999-12-31 00:00:00';
+			SET endDate = STR_TO_DATE(endTime, '%Y-%m-%d %H:%i:%s');
+		END IF;
+		/* getting starttime and making alert date from newdate and starttime by adding them */	
+		SET str = CONCAT(CAST(newDate AS DATE), ' ', dailyTimes);
+		SET alertDate = STR_TO_DATE(str, '%Y-%m-%d %h:%i %p');
+		/* while loop from future date to end date for inserting value in calculatedalert table */
+		WHILE ((alertDate <= futureDate) AND (alertDate <= endDate)) DO
+		BEGIN
+				DECLARE CONTINUE HANDLER FOR NOT FOUND SET timeDone = 1;
+				SET timedone = 0;
+				OPEN cursorATime;
+				/* inner while loop for fetching data from alerttime table and inserting them  */
+				cur1_loop : WHILE (timeDone = 0) DO
+					FETCH cursorATime INTO dailyTiming;
+						IF timeDone = 1 THEN
+							LEAVE cur1_loop;
+						END IF;
+						SET str = CONCAT(CAST(alertDate AS DATE), ' ', dailyTiming);
+						SET alertDate = STR_TO_DATE(str, '%Y-%m-%d %h:%i %p');
+						INSERT INTO calculatedAlert (notes, alertDate, ownerStatus, alertId) VALUES (notes, alertDate, ownerStatus, alertId);
+				END WHILE cur1_loop;
+-- ending of while loop and closing of cursors
+				CLOSE cursorATime;
+				SET alertDate = DATE_ADD(alertDate, INTERVAL 1 DAY);
+				END;
+				END WHILE;
+	END IF;
+	END IF;
+    CLOSE cursorAlertData;
+    CLOSE cursorAlertSetting;
+    CLOSE cursorAlertTime;
+    SET done = 0;
+    END$$
+
+DELIMITER ;
+-- ------------ calculatedAlertViewProc ---------------------------
+
+DELIMITER $$
+
+USE `ltc`$$
+
+DROP PROCEDURE IF EXISTS `calculatedAlertViewProc`$$
+/*This procedure is call on pending alert table to show the pending alert for that particular user*/
+/*logged in key is used for showing alert for user, alertfor means is it global alert or for any resident,
+residet key is used for checking alert for that resident, limited view means is this shows all,
+pending past, upcoming, completed, i send out.*/
+CREATE DEFINER=`root`@`localhost` PROCEDURE `calculatedAlertViewProc`(IN loggedInKey INT, IN alertFor VARCHAR(255), IN residenceKey INT, IN limitedView VARCHAR(255))
+BEGIN
+/*declaring variables, cursors and their handlers*/
+	DECLARE userType VARCHAR(255);
+	DECLARE residentId INT(11) DEFAULT 0;
+	DECLARE timeType VARCHAR(255) DEFAULT NULL;
+	DECLARE timeValue VARCHAR(255) DEFAULT NULL;
+	DECLARE pastTimeType VARCHAR(255) DEFAULT NULL;
+	DECLARE pastTimeValue VARCHAR(255) DEFAULT NULL;
+	DECLARE futureDate DATETIME DEFAULT NULL;
+	DECLARE pastDate DATETIME DEFAULT NULL;
+	DECLARE cursorUserType CURSOR FOR SELECT u.userType FROM users AS u WHERE u.serial = loggedInKey;
+	DECLARE cursorAlertSetting CURSOR FOR SELECT ast.timeType, ast.timeValue FROM alertsetting AS ast WHERE ast.serial = 1;
+	DECLARE cursorAlertPastSetting CURSOR FOR SELECT ast.timeType, ast.timeValue FROM alertsetting AS ast WHERE ast.serial = 3;
+/*opening and fetching data in variables from cursors.*/	
+	OPEN cursorUserType;
+	OPEN cursorAlertSetting;
+	OPEN cursorAlertPastSetting;
+	FETCH cursorUserType INTO userType;
+	FETCH cursorAlertSetting INTO timeType, timeValue;
+	FETCH cursorAlertPastSetting INTO pastTimeType, pastTimeValue;
+	SET residentId = residenceKey;
+/* checking timetype and set value in future date*/	
+	IF (timeType = 'MINUTE') THEN
+		SET futureDate = DATE_ADD(NOW(), INTERVAL timeValue MINUTE);
+	ELSEIF (timeType = 'HOUR') THEN
+		SET futureDate = DATE_ADD(NOW(), INTERVAL timeValue HOUR);
+	ELSEIF (timeType = 'DAY') THEN
+		SET futureDate = DATE_ADD(NOW(), INTERVAL timeValue DAY);
+	ELSEIF (timeType = 'WEEK') THEN
+		SET futureDate = DATE_ADD(NOW(), INTERVAL timeValue WEEK);
+	ELSEIF (timeType = 'MONTH') THEN
+		SET futureDate = DATE_ADD(NOW(), INTERVAL timeValue MONTH);
+	ELSEIF (timeType = 'YEAR') THEN
+		SET futureDate = DATE_ADD(NOW(), INTERVAL timeValue YEAR);
+	END IF;
+/* checking pastTimeType and set value in past date */	
+	IF (pastTimeType = 'MINUTE') THEN
+		SET pastDate = DATE_SUB(NOW(), INTERVAL pastTimeValue MINUTE);
+	ELSEIF (pastTimeType = 'HOUR') THEN
+		SET pastDate = DATE_SUB(NOW(), INTERVAL pastTimeValue HOUR);
+	ELSEIF (pastTimeType = 'DAY') THEN
+		SET pastDate = DATE_SUB(NOW(), INTERVAL pastTimeValue DAY);
+	ELSEIF (pastTimeType = 'WEEK') THEN
+		SET pastDate = DATE_SUB(NOW(), INTERVAL pastTimeValue WEEK);
+	ELSEIF (pastTimeType = 'MONTH') THEN
+		SET pastDate = DATE_SUB(NOW(), INTERVAL pastTimeValue MONTH);
+	ELSEIF (pastTimeType = 'YEAR') THEN
+		SET pastDate = DATE_SUB(NOW(), INTERVAL pastTimeValue YEAR);
+	END IF;
+/* view global and resident alert counts for for administrator type users, 
+administrator can view all alerts from any user to other user and alert also,
+there are two tables alert and calculatedalert */	
+	IF userType = 'Administrator' THEN
+/* view for all pending alert for limitedview for resident and global alerts */		
+		IF limitedView = 'All' THEN
+			SELECT ca.notes, ca.alertDate, ca.ownerStatus, ca.serial, ca.updater FROM calculatedAlert
+			AS ca WHERE ca.alertDate < futureDate AND ca.alertDate > pastDate AND ca.alertId IN
+			(SELECT a.serial FROM alert AS a WHERE a.residentId = residentId);
+		ELSEIF limitedView = 'Pending Past' THEN
+/* view for all past pending alert for limitedview for resident and global alerts */		
+			SELECT ca.notes, ca.alertDate, ca.ownerStatus, ca.serial, ca.updater FROM calculatedAlert
+			AS ca WHERE ca.ownerStatus = 1 AND ca.alertDate < NOW() AND ca.alertDate > pastDate AND ca.alertId IN
+			(SELECT a.serial FROM alert AS a WHERE a.residentId = residentId);
+		ELSEIF limitedView = 'Pending Upcoming' THEN
+/* view for all upcoming pending alert for limitedview for resident and global alerts */			
+			SELECT ca.notes, ca.alertDate, ca.ownerStatus, ca.serial, ca.updater FROM calculatedAlert
+			AS ca WHERE ca.ownerStatus = 1 AND ca.alertDate < futureDate AND ca.alertDate > NOW() AND ca.alertId IN
+			(SELECT a.serial FROM alert AS a WHERE a.residentId = residentId);
+		ELSEIF limitedView = 'Completed' THEN
+/* view for all completed alert for limitedview for resident and global alerts */		
+			SELECT ca.notes, ca.alertDate, ca.ownerStatus, ca.serial, ca.updater FROM calculatedAlert
+			AS ca WHERE ca.alertDate < futureDate AND ca.alertDate > pastDate AND ca.ownerStatus = 2
+			AND ca.alertId IN (SELECT a.serial FROM alert AS a WHERE a.residentId = residentId AND
+			a.owner = loggedInKey);
+		ELSEIF limitedView = 'I Send Out' THEN
+/* view for all alerts whose owner is any administrator with limitedview for resident and global alerts */		
+			SELECT ca.notes, ca.alertDate, ca.ownerStatus, ca.serial, ca.updater FROM calculatedAlert
+			AS ca WHERE ca.alertDate < futureDate AND ca.alertDate > pastDate AND ca.alertId IN
+			(SELECT a.serial FROM alert AS a WHERE a.residentId = residentId AND a.owner = loggedInKey);
+		END IF;
+	ELSE
+/* view for non administrator */		
+	IF limitedView = 'All' THEN
+/* view for all pending alert for limitedview for resident and global alerts, check that user if he is owner or reciever, 
+all alerts types */		
+			SELECT ca.notes, ca.alertDate, ca.ownerStatus, ca.serial, ca.updater
+			FROM calculatedAlert AS ca
+			LEFT JOIN (SELECT a.serial AS aSerial, a.owner AS aOwner, a.residentId AS residentId FROM alert AS a) AS a
+			ON ca.alertId = a.aSerial 
+			WHERE ca.alertDate < futureDate AND ca.alertDate > pastDate AND a.residentId = residentId AND ((a.aOwner = loggedInKey)
+			OR (ca.alertId IN (SELECT ar.alertId FROM alertreciever AS ar WHERE ar.recieverId = loggedInKey AND ca.ownerStatus = 1)));
+		ELSEIF limitedView = 'Pending Past' THEN
+/* view pending past alert for limited time, check if he is owner or reciever */		
+			SELECT ca.notes, ca.alertDate, ca.ownerStatus, ca.serial, ca.updater
+			FROM calculatedAlert AS ca
+			LEFT JOIN (SELECT a.serial AS aSerial, a.owner AS aOwner, a.residentId AS residentId FROM alert AS a) AS a
+			ON ca.alertId = a.aSerial 
+			WHERE ca.alertDate < NOW() AND ca.alertDate > pastDate AND a.residentId = residentId 
+			AND (ca.alertId IN (SELECT ar.alertId FROM alertreciever AS ar WHERE ar.recieverId = loggedInKey AND ca.ownerStatus = 1));
+		ELSEIF limitedView = 'Pending Upcoming' THEN
+/* view pending upcoming alert for limited time, check if he is owner or reciever */		
+			SELECT ca.notes, ca.alertDate, ca.ownerStatus, ca.serial, ca.updater
+			FROM calculatedAlert AS ca
+			LEFT JOIN (SELECT a.serial AS aSerial, a.owner AS aOwner, a.residentId AS residentId FROM alert AS a) AS a
+			ON ca.alertId = a.aSerial 
+			WHERE ca.alertDate < futureDate AND ca.alertDate > NOW() AND a.residentId = residentId 
+			AND (ca.alertId IN (SELECT ar.alertId FROM alertreciever AS ar WHERE ar.recieverId = loggedInKey AND ca.ownerStatus = 1));
+		ELSEIF limitedView = 'Completed' THEN
+/* view completed alert for limited time, check if he is owner or reciever */			
+			SELECT ca.notes, ca.alertDate, ca.ownerStatus, ca.serial, ca.updater FROM calculatedAlert
+			AS ca WHERE ca.alertDate < futureDate AND ca.alertDate > pastDate AND ca.ownerStatus = 2 AND
+			ca.alertId IN (SELECT a.serial FROM alert AS a WHERE a.owner = loggedInKey AND
+			a.residentId = residentId);
+		ELSEIF limitedView = 'I Send Out' THEN
+/* view alert for owner only, for limited time, check if he is owner or reciever */		
+			SELECT ca.notes, ca.alertDate, ca.ownerStatus, ca.serial, ca.updater FROM calculatedAlert
+			AS ca WHERE ca.alertDate < futureDate AND ca.alertDate > pastDate
+			AND ca.alertId IN (SELECT a.serial FROM alert AS a WHERE a.residentId = residentId AND
+			a.owner = loggedInKey);
+		END IF;
+	END IF;
+/* close all cursors */		
+    CLOSE cursorUserType;
+    CLOSE cursorAlertSetting;
+    CLOSE cursorAlertPastSetting;
+    END$$
+
+DELIMITER ;
+-- ---------- calculatedAlertCountProc ---------------
+
+DELIMITER $$
+
+USE `ltc`$$
+
+DROP PROCEDURE IF EXISTS `calculatedAlertCountProc`$$
+
+/* this procedure is made for inserting alerts into calculatedalert table from startdate 
+to limited period that is shown in alert setting*/
+CREATE DEFINER=`root`@`localhost` PROCEDURE `calculatedAlertCountProc`(IN loggedInKey INT)
+BEGIN
+/*  declaring variables and cursors*/ 
+	DECLARE userType VARCHAR(255);
+	DECLARE timeType VARCHAR(255) DEFAULT NULL;
+	DECLARE timeValue VARCHAR(255) DEFAULT NULL;
+	DECLARE pastTimeType VARCHAR(255) DEFAULT NULL;
+	DECLARE pastTimeValue VARCHAR(255) DEFAULT NULL;
+	DECLARE futureDate DATETIME DEFAULT NULL;
+	DECLARE pastDate DATETIME DEFAULT NULL;
+	DECLARE cursorUserType CURSOR FOR SELECT u.userType FROM users AS u WHERE u.serial = loggedInKey;
+	DECLARE cursorAlertSetting CURSOR FOR SELECT ast.timeType, ast.timeValue FROM alertsetting AS ast WHERE ast.serial = 1;
+	DECLARE cursorAlertPastSetting CURSOR FOR SELECT ast.timeType, ast.timeValue FROM alertsetting AS ast WHERE ast.serial = 3;
+/* opening cursors and fetching data from cursors to variables */
+	OPEN cursorUserType;
+	OPEN cursorAlertSetting;
+	OPEN cursorAlertPastSetting;
+	FETCH cursorUserType INTO userType;
+	FETCH cursorAlertSetting INTO timeType, timeValue;
+	FETCH cursorAlertPastSetting INTO pastTimeType, pastTimeValue;
+	
+/* future and past times are used for calculating limited period for alert viewing: refer from alert setting table*/	
+	
+/* checking timetype and set value in future date*/
+	IF (timeType = 'MINUTE') THEN
+		SET futureDate = DATE_ADD(NOW(), INTERVAL timeValue MINUTE);
+	ELSEIF (timeType = 'HOUR') THEN
+		SET futureDate = DATE_ADD(NOW(), INTERVAL timeValue HOUR);
+	ELSEIF (timeType = 'DAY') THEN
+		SET futureDate = DATE_ADD(NOW(), INTERVAL timeValue DAY);
+	ELSEIF (timeType = 'WEEK') THEN
+		SET futureDate = DATE_ADD(NOW(), INTERVAL timeValue WEEK);
+	ELSEIF (timeType = 'MONTH') THEN
+		SET futureDate = DATE_ADD(NOW(), INTERVAL timeValue MONTH);
+	ELSEIF (timeType = 'YEAR') THEN
+		SET futureDate = DATE_ADD(NOW(), INTERVAL timeValue YEAR);
+	END IF;
+/* checking pastTimeType and set value in past date */	
+	IF (pastTimeType = 'MINUTE') THEN
+		SET pastDate = DATE_SUB(NOW(), INTERVAL pastTimeValue MINUTE);
+	ELSEIF (pastTimeType = 'HOUR') THEN
+		SET pastDate = DATE_SUB(NOW(), INTERVAL pastTimeValue HOUR);
+	ELSEIF (pastTimeType = 'DAY') THEN
+		SET pastDate = DATE_SUB(NOW(), INTERVAL pastTimeValue DAY);
+	ELSEIF (pastTimeType = 'WEEK') THEN
+		SET pastDate = DATE_SUB(NOW(), INTERVAL pastTimeValue WEEK);
+	ELSEIF (pastTimeType = 'MONTH') THEN
+		SET pastDate = DATE_SUB(NOW(), INTERVAL pastTimeValue MONTH);
+	ELSEIF (pastTimeType = 'YEAR') THEN
+		SET pastDate = DATE_SUB(NOW(), INTERVAL pastTimeValue YEAR);
+	END IF;
+/* view global and resident alert counts for for administrator type users, 
+administrator can view all alerts from any user to other user and alert also,
+there are two tables alert and calculatedalert */		
+	IF userType = 'Administrator' THEN
+/* count for resident past pending alert, query check for limited time and resident <> 100000 and pending alert only */		
+		
+		SELECT (SELECT COUNT(ca.serial) FROM calculatedAlert AS ca WHERE ca.alertDate < NOW()
+		AND ca.alertDate > pastDate AND ca.ownerStatus = 1 AND ca.alertId IN
+		(SELECT a.serial FROM alert AS a WHERE a.residentId <> 100000)) AS rPast,
+		
+/* count for resident future pending alert, query check for limited time and resident <> 100000 and pending alert only */		
+		
+		(SELECT COUNT(ca.serial) FROM calculatedAlert AS ca WHERE ca.alertDate > NOW()
+		AND ca.alertDate < futureDate AND ca.ownerStatus = 1 AND ca.alertId IN
+		(SELECT a.serial FROM alert AS a WHERE a.residentId <> 100000)) AS rFuture,
+		
+/* count for resident completed alert, query check for limited time and resident <> 100000 */		
+		
+		(SELECT COUNT(ca.serial) FROM calculatedAlert AS ca WHERE ca.alertDate < futureDate AND
+		ca.alertDate > pastDate AND ca.ownerStatus = 2 AND ca.alertId IN
+		(SELECT a.serial FROM alert AS a WHERE a.residentId <> 100000)) AS rCompleted,
+		
+/* count for whose owner is logged in user, query check for limited time and resident <> 100000 */		
+		
+		(SELECT COUNT(ca.serial) FROM calculatedAlert AS ca WHERE ca.alertDate < futureDate AND
+		ca.alertDate > pastDate AND ca.alertId IN
+		(SELECT a.serial FROM alert AS a WHERE a.residentId <> 100000)) AS rISendOut,
+		
+/* count for global past pending alert, query check for limited time and resident = 100000 and pending alert only */			
+		
+		(SELECT COUNT(ca.serial) FROM calculatedAlert AS ca WHERE ca.alertDate < NOW() AND ca.alertDate > pastDate
+		AND ca.ownerStatus = 1  AND ca.alertId IN
+		(SELECT a.serial FROM alert AS a WHERE a.residentId = 100000)) AS gPast,
+		
+/* count for global future pending alert, query check for limited time and resident = 100000 and pending alert only */		
+		
+		(SELECT COUNT(ca.serial) FROM calculatedAlert AS ca WHERE ca.alertDate > NOW() AND ca.alertDate < futureDate
+		AND ca.ownerStatus = 1 AND ca.alertId IN
+		(SELECT a.serial FROM alert AS a WHERE a.residentId = 100000)) AS gFuture,
+		
+/* count for global completed alert, query check for limited time and resident = 100000 */			
+		
+		(SELECT COUNT(ca.serial) FROM calculatedAlert AS ca WHERE ca.alertDate < futureDate AND
+		ca.alertDate > pastDate AND ca.ownerStatus = 2 AND ca.alertId IN
+		(SELECT a.serial FROM alert AS a WHERE a.residentId = 100000)) AS gCompleted,
+		
+/* count for global completed alert, query check for limited time and resident = 100000 */			
+		
+		(SELECT COUNT(ca.serial) FROM calculatedAlert AS ca WHERE ca.alertDate < futureDate AND
+		ca.alertDate > pastDate AND ca.alertId IN
+		(SELECT a.serial FROM alert AS a WHERE a.residentId = 100000)) AS gISendOut;
+		
+/* else is used for users who are not administrator, so for they can be owner or reciever, 
+for them you have to use calculatedalert, alert and reciever tables,
+check that user is owner or reciever for limited time. */
+		
+	ELSE
+	
+/* count for resident past pending alert, query check for limited time and resident <> 100000 and pending alert only */	
+	
+		SELECT (SELECT COUNT(ca.serial) FROM calculatedAlert AS ca WHERE ca.alertDate < NOW()
+		AND ca.alertDate > pastDate AND ca.ownerStatus = 1 AND ca.alertId IN
+		(SELECT a.serial FROM alert AS a WHERE a.residentId <> 100000 AND ((a.owner = loggedInKey)
+		OR a.serial IN (SELECT ar.alertId FROM alertreciever AS ar WHERE ar.recieverId = loggedInKey)))) AS rPast,
+		
+/* count for resident future pending alert, query check for limited time and resident <> 100000 and pending alert only */		
+		
+		(SELECT COUNT(ca.serial) FROM calculatedAlert AS ca WHERE ca.alertDate > NOW()
+		AND ca.alertDate < futureDate AND ca.ownerStatus = 1 AND ca.alertId IN
+		(SELECT a.serial FROM alert AS a WHERE a.residentId <> 100000 AND ((a.owner = loggedInKey)
+		OR a.serial IN (SELECT ar.alertId FROM alertreciever AS ar WHERE ar.recieverId = loggedInKey)))) AS rFuture,
+		
+/* count for resident completed alert, query check for limited time and resident <> 100000 */			
+		
+		(SELECT COUNT(ca.serial) FROM calculatedAlert AS ca WHERE ca.alertDate < futureDate AND
+		ca.alertDate > pastDate AND ca.ownerStatus = 2 AND ca.alertId IN
+		(SELECT a.serial FROM alert AS a WHERE a.residentId <> 100000 AND a.owner = loggedInKey)) AS rCompleted,
+		
+/* count for whose owner is logged in user, query check for limited time and resident <> 100000 */		
+		
+		(SELECT COUNT(ca.serial) FROM calculatedAlert AS ca WHERE ca.alertDate < futureDate AND
+		ca.alertDate > pastDate AND ca.alertId IN
+		(SELECT a.serial FROM alert AS a WHERE a.residentId <> 100000 AND (a.owner = loggedInKey))) AS rISendOut,
+		
+/* count for global past pending alert, query check for limited time and resident = 100000 and pending alert only */		
+		
+		(SELECT COUNT(ca.serial) FROM calculatedAlert AS ca WHERE ca.alertDate < NOW() AND ca.alertDate > pastDate
+		AND ca.ownerStatus = 1  AND ca.alertId IN
+		(SELECT a.serial FROM alert AS a WHERE a.residentId = 100000 AND ((a.owner = loggedInKey)
+		OR a.serial IN (SELECT ar.alertId FROM alertreciever AS ar WHERE ar.recieverId = loggedInKey)))) AS gPast,
+		
+/* count for global future pending alert, query check for limited time and resident = 100000 and pending alert only */			
+		
+		(SELECT COUNT(ca.serial) FROM calculatedAlert AS ca WHERE ca.alertDate > NOW() AND ca.alertDate < futureDate
+		AND ca.ownerStatus = 1 AND ca.alertId IN
+		(SELECT a.serial FROM alert AS a WHERE a.residentId = 100000 AND ((a.owner = loggedInKey)
+		OR a.serial IN (SELECT ar.alertId FROM alertreciever AS ar WHERE ar.recieverId = loggedInKey)))) AS gFuture,
+
+/* count for global completed alert, query check for limited time and resident = 100000 */			
+		
+		(SELECT COUNT(ca.serial) FROM calculatedAlert AS ca WHERE ca.alertDate < futureDate AND
+		ca.alertDate > pastDate AND ca.ownerStatus = 2 AND ca.alertId IN
+		(SELECT a.serial FROM alert AS a WHERE a.residentId = 100000 AND a.owner = loggedInKey)) AS gCompleted,
+		
+/* count for global completed alert, query check for limited time and resident = 100000 */		
+		
+		(SELECT COUNT(ca.serial) FROM calculatedAlert AS ca WHERE ca.alertDate < futureDate AND
+		ca.alertDate > pastDate AND ca.alertId IN
+		(SELECT a.serial FROM alert AS a WHERE a.residentId = 100000 AND (a.owner = loggedInKey))) AS gISendOut;
+	END IF;
+    END$$
+
+DELIMITER ;
+-- ------------ CalculateAlertAtTimeProc ---------------------------
+
+DELIMITER $$
+
+USE `ltc`$$
+
+DROP PROCEDURE IF EXISTS `CalculateAlertAtTimeProc`$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CalculateAlertAtTimeProc`()
+BEGIN
+/* this stored proceduere will be called when alert time thread will be executed */
+	DROP TEMPORARY TABLE IF EXISTS alertTemp;
+/*creating temporary table alertTemp that will store maximum value of alertDate 
+that will be used in calculatedAlertTempTableProc*/
+	CREATE TEMPORARY TABLE alertTemp SELECT MAX(ca.alertDate) AS alertDate, ca.alertId AS alertId
+	FROM calculatedAlert AS ca GROUP BY ca.alertId ORDER BY ca.alertId;
+
+-- calling calculatedAlertTempTableProc stored procedure
+	
+	CALL calculatedAlertTempTableProc();
+    END$$
+
+DELIMITER ;
+-- ---------------- calculatedAlertTempTableProc -------------------------
+	
+DELIMITER $$
+
+USE `ltc`$$
+
+DROP PROCEDURE IF EXISTS `calculatedAlertTempTableProc`$$
+/*This procedure is called when thread is activated to generate automatic alerts in night at 12:00 AM,
+this first checks if generation is required or not.*/ 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `calculatedAlertTempTableProc`()
+BEGIN
+/* declare variables and cursors and its handlers */
+    	DECLARE done INT DEFAULT 0;
+    	DECLARE timeDone INT DEFAULT 0;
+    	DECLARE bol BOOLEAN DEFAULT FALSE;
+	DECLARE genTimeType, genTimeValue VARCHAR(255) DEFAULT NULL;
+	DECLARE upcomingTimeType, upcomingTimeValue VARCHAR(255) DEFAULT NULL;
+	DECLARE tempDate DATETIME DEFAULT NULL;
+	DECLARE tempAlertId INT(11) DEFAULT 0;
+	DECLARE futureDate DATETIME DEFAULT NULL;
+	DECLARE nextDays INT(11) DEFAULT 0;
+        DECLARE cursorUpcomingTime CURSOR FOR SELECT ast.timeType, ast.timeValue FROM alertsetting AS ast WHERE ast.serial = 1;
+        DECLARE cursorGenrationTime CURSOR FOR SELECT ast.timeType, ast.timeValue FROM alertsetting AS ast WHERE ast.serial = 2;
+	DECLARE cursorTempTable CURSOR FOR SELECT t.alertDate, t.alertId FROM alertTemp AS t;
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+/* open cursors and fetch values in variables */	
+        OPEN cursorUpcomingTime;
+        OPEN cursorGenrationTime;
+        FETCH cursorUpcomingTime INTO upcomingTimeType, upcomingTimeValue;
+        FETCH cursorGenrationTime INTO genTimeType, genTimeValue;
+-- open a new block for making while loops for all alerts in alert table        
+	BEGIN
+		DECLARE CONTINUE HANDLER FOR NOT FOUND SET timeDone = 1;
+		SET timeDone = 0;
+		OPEN cursorTempTable;
+		cur1_loop : WHILE (timeDone = 0) DO
+			FETCH cursorTempTable INTO tempDate, tempAlertId;
+			IF timeDone = 1 THEN
+				LEAVE  cur1_loop;
+			END IF;
+-- update begin date and start time, delete last entry in calculatedalert then call stored procedure for inserting alert
+-- check upcomingtimetype = minute then insert pending alert			
+		IF (upcomingTimeType = 'MINUTE') THEN
+		-- set future date by adding upcomingtimevalue in current date time
+			SET futureDate = DATE_ADD(NOW(), INTERVAL upcomingTimeValue MINUTE);
+			IF tempDate <= futureDate THEN
+				UPDATE alert AS a
+				SET a.beginDate = tempDate, a.startTime = tempDate WHERE a.serial = tempAlertId;
+				DELETE FROM calculatedAlert WHERE alertId = tempAlertId AND alertDate = tempDate;
+				CALL calculateAlertProc(tempAlertId);
+			END IF;
+		ELSEIF (upcomingTimeType = 'HOUR') THEN
+			SET futureDate = DATE_ADD(NOW(), INTERVAL upcomingTimeValue HOUR);
+			IF tempDate <= futureDate THEN
+				UPDATE alert AS a
+				SET a.beginDate = tempDate, a.startTime = tempDate WHERE a.serial = tempAlertId;
+				DELETE FROM calculatedAlert WHERE alertId = tempAlertId AND alertDate = tempDate;
+				CALL calculateAlertProc(tempAlertId);
+			END IF;
+		ELSEIF (upcomingTimeType = 'DAY') THEN
+			SET futureDate = DATE_ADD(NOW(), INTERVAL upcomingTimeValue DAY);
+			IF tempDate <= futureDate THEN
+				UPDATE alert AS a
+				SET a.beginDate = tempDate WHERE a.serial = tempAlertId;
+				DELETE FROM calculatedAlert WHERE alertId = tempAlertId AND alertDate = tempDate;
+				CALL calculateAlertProc(tempAlertId);
+			END IF;
+		ELSEIF (upcomingTimeType = 'WEEK') THEN
+			SET futureDate = DATE_ADD(NOW(), INTERVAL upcomingTimeValue WEEK);
+			IF tempDate <= futureDate THEN
+				UPDATE alert AS a
+				SET a.beginDate = tempDate WHERE a.serial = tempAlertId;
+				DELETE FROM calculatedAlert WHERE alertId = tempAlertId AND alertDate = tempDate;
+				CALL calculateAlertProc(tempAlertId);
+			END IF;
+		ELSEIF (upcomingTimeType = 'MONTH') THEN
+			SET futureDate = DATE_ADD(NOW(), INTERVAL upcomingTimeValue MONTH);
+			IF tempDate <= futureDate THEN
+				UPDATE alert AS a
+				SET a.beginDate = tempDate WHERE a.serial = tempAlertId;
+				DELETE FROM calculatedAlert WHERE alertId = tempAlertId AND alertDate = tempDate;
+				CALL calculateAlertProc(tempAlertId);
+			END IF;
+		ELSEIF (upcomingTimeType = 'YEAR') THEN
+			SET futureDate = DATE_ADD(NOW(), INTERVAL upcomingTimeValue YEAR);
+			IF tempDate <= futureDate THEN
+				UPDATE alert AS a
+				SET a.beginDate = tempDate WHERE a.serial = tempAlertId;
+				DELETE FROM calculatedAlert WHERE alertId = tempAlertId AND alertDate = tempDate;
+				CALL calculateAlertProc(tempAlertId);
+			END IF;
+		END IF;
+    END WHILE cur1_loop;
+    -- end of while loop and close the cursor.
+    	CLOSE cursorTempTable;
+	SET timeDone = 0;
+	END;
+        CLOSE cursorUpcomingTime;
+        CLOSE cursorGenrationTime;
+	SET done = 0;
+    END$$
+
+DELIMITER ;

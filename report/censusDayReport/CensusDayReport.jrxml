@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["report/censusDayReport/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="admissionDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="dischargeDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="outOnPassDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="hospitalDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="admissionSFDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="dischargeSFDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="outOnPassSFDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="hospitalSFDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="dischargeCount" class="java.lang.String"/>
+	<parameter name="outOnPassCount" class="java.lang.String"/>
+	<parameter name="hospitalCount" class="java.lang.String"/>
+	<parameter name="admissionCountSF" class="java.lang.String"/>
+	<parameter name="dischargeCountSF" class="java.lang.String"/>
+	<parameter name="outOnPassCountSF" class="java.lang.String"/>
+	<parameter name="hospitalCountSF" class="java.lang.String"/>
+	<parameter name="admissionCount" class="java.lang.String"/>
+	<parameter name="date" class="java.lang.String"/>
+	<parameter name="ErDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="erSFDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="erCount" class="java.lang.String"/>
+	<parameter name="erSFCount" class="java.lang.String"/>
+	<parameter name="firstFloorCount" class="java.lang.String"/>
+	<parameter name="secondFloorCount" class="java.lang.String"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="2"/>
+	</title>
+	<pageHeader>
+		<band height="57">
+			<staticText>
+				<reportElement x="176" y="5" width="367" height="28"/>
+				<textElement>
+					<font size="20" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Daily Census Report]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="35" width="36" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="35" y="35" width="262" height="20"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{date}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band/>
+	</columnHeader>
+	<detail>
+		<band height="312">
+			<subreport isUsingCache="true">
+				<reportElement positionType="Float" isPrintRepeatedValues="false" x="66" y="51" width="477" height="23" isRemoveLineWhenBlank="true"/>
+				<subreportParameter name="dischargeCount">
+					<subreportParameterExpression><![CDATA[$P{dischargeCount}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$P{dischargeDataSource}]]></dataSourceExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR}+"CensusDayDischargeReport.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" isPrintRepeatedValues="false" x="66" y="76" width="477" height="23" isRemoveLineWhenBlank="true"/>
+				<subreportParameter name="outOnPassCount">
+					<subreportParameterExpression><![CDATA[$P{outOnPassCount}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$P{outOnPassDataSource}]]></dataSourceExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR}+"CensusDayOutOnPassReport.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" isPrintRepeatedValues="false" x="66" y="102" width="477" height="23" isRemoveLineWhenBlank="true"/>
+				<subreportParameter name="hospitalCount">
+					<subreportParameterExpression><![CDATA[$P{hospitalCount}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$P{hospitalDataSource}]]></dataSourceExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR}+"CensusDayHospitalReport.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" isPrintRepeatedValues="false" x="66" y="26" width="477" height="23" isRemoveLineWhenBlank="true"/>
+				<subreportParameter name="admissionCount">
+					<subreportParameterExpression><![CDATA[$P{admissionCount}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$P{admissionDataSource}]]></dataSourceExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR}+"CensusDayAdmissionReport.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="0" y="3" width="66" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[First Floor ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="154" width="84" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Second Floor]]></text>
+			</staticText>
+			<subreport>
+				<reportElement positionType="Float" isPrintRepeatedValues="false" x="66" y="179" width="477" height="23" isRemoveLineWhenBlank="true"/>
+				<subreportParameter name="admissionCountSF">
+					<subreportParameterExpression><![CDATA[$P{admissionCountSF}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$P{admissionSFDataSource}]]></dataSourceExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR}+"CensusDayAdmissionReport.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport isUsingCache="true">
+				<reportElement positionType="Float" isPrintRepeatedValues="false" x="66" y="204" width="477" height="23" isRemoveLineWhenBlank="true"/>
+				<subreportParameter name="dischargeCountSF">
+					<subreportParameterExpression><![CDATA[$P{dischargeCountSF}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$P{dischargeSFDataSource}]]></dataSourceExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR}+"CensusDayDischargeReport.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" isPrintRepeatedValues="false" x="66" y="230" width="477" height="23" isRemoveLineWhenBlank="true"/>
+				<subreportParameter name="outOnPassCountSF">
+					<subreportParameterExpression><![CDATA[$P{outOnPassCountSF}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$P{outOnPassSFDataSource}]]></dataSourceExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR}+"CensusDayOutOnPassReport.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" isPrintRepeatedValues="false" x="66" y="256" width="477" height="23" isRemoveLineWhenBlank="true"/>
+				<subreportParameter name="hospitalCountSF">
+					<subreportParameterExpression><![CDATA[$P{hospitalCountSF}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$P{hospitalSFDataSource}]]></dataSourceExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR}+"CensusDayHospitalReport.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" isPrintRepeatedValues="false" x="66" y="127" width="477" height="23" isRemoveLineWhenBlank="true"/>
+				<subreportParameter name="erCount">
+					<subreportParameterExpression><![CDATA[$P{erCount}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$P{ErDataSource}]]></dataSourceExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "CensusDayERReport.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" isPrintRepeatedValues="false" x="66" y="282" width="477" height="23" isRemoveLineWhenBlank="true"/>
+				<subreportParameter name="erSFCount">
+					<subreportParameterExpression><![CDATA[$P{erSFCount}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$P{erSFDataSource}]]></dataSourceExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "CensusDayERReport.jasper"]]></subreportExpression>
+			</subreport>
+			<textField isBlankWhenNull="true">
+				<reportElement x="69" y="5" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{firstFloorCount}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="88" y="156" width="116" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{secondFloorCount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band/>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

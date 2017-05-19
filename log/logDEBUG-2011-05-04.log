@@ -1,0 +1,74 @@
+2011-05-04 05:52:24	DEBUG	INFORMATION	USERS	GET	Validating The Current User with UserIdadmin; User Password:admin
+2011-05-04 05:52:25	DEBUG	INFORMATION	USERS	GET	Getting List Of all the Users
+2011-05-04 05:52:25	DEBUG	INFORMATION	CENSUS	GET	Getting List Of Census Admission from Sub Heads According to the given HeadId1
+2011-05-04 05:52:25	DEBUG	INFORMATION	CENSUS	GET	Getting List Of Census Admission from Sub Heads According to the given HeadId2
+2011-05-04 05:52:25	DEBUG	INFORMATION	CENSUS	GET	Getting List Of Census Admission from Sub Heads According to the given HeadId3
+2011-05-04 05:52:25	DEBUG	INFORMATION	CENSUS	GET	Getting List Of Census Admission from Sub Heads According to the given HeadId4
+2011-05-04 05:52:25	DEBUG	INFORMATION	CENSUS	GET	Getting List of Census Admission Transportation
+2011-05-04 05:52:25	DEBUG	INFORMATION	USERS	GET	Getting all the information of Users
+2011-05-04 05:52:25	DEBUG	INFORMATION	USERS_NURSE	GET	Getting The Nurse Record
+2011-05-04 05:52:25	DEBUG	INFORMATION	USERS	GET	Getting all the information of Users
+2011-05-04 05:52:25	DEBUG	INFORMATION	SECURITY	GET	Getting Security Role
+2011-05-04 05:52:25	DEBUG	INFORMATION	SECURITY	GET	Getting Security Role
+2011-05-04 05:52:25	DEBUG	INFORMATION	USER_LOGON	UPDATE	Inserting Or Updating User Logon With UserID:59
+2011-05-04 05:52:28	DEBUG	INFORMATION	ADMIN_SCREENSAVER	GET	Getting Screen Saver Config
+2011-05-04 05:52:35	DEBUG	INFORMATION	GENERAL	GET	Getting Resident Main with status
+2011-05-04 05:52:35	DEBUG	INFORMATION	GENERAL	GET	Getting Resident Main with find fname ss1 and status 
+2011-05-04 05:52:36	DEBUG	INFORMATION	GENERAL	GET	Getting Resident with serial130
+2011-05-04 05:52:36	DEBUG	INFORMATION	GENERAL	GET	getting Resident Payers New Status
+2011-05-04 05:52:36	DEBUG	INFORMATION	GENERAL	GET	Getting Resident with serial130
+2011-05-04 05:52:36	DEBUG	INFORMATION	GENERAL	GET	Getting Resident with serial130
+2011-05-04 05:52:36	DEBUG	INFORMATION	GENERAL	GET	Getting Resident with serial130
+2011-05-04 05:52:36	DEBUG	INFORMATION	GENERAL	GET	Getting Resident with serial130
+2011-05-04 05:52:37	DEBUG	INFORMATION	GENERAL	GET	Getting Resident with serial130
+2011-05-04 05:52:37	DEBUG	INFORMATION	GENERAL	GET	Getting Resident with serial130
+2011-05-04 05:52:37	DEBUG	INFORMATION	GENERAL	GET	Getting Resident with serial130
+2011-05-04 05:52:37	DEBUG	INFORMATION	GENERAL	GET	Getting Resident with serial130
+2011-05-04 05:52:44	DEBUG	INFORMATION	GENERAL	GET	Getting Resident with serial130
+2011-05-04 05:52:44	DEBUG	INFORMATION	GENERAL	UPDATE	Updating Insurance Count
+2011-05-04 05:52:44	DEBUG	INFORMATION	GENERAL	GET	getting Resident Payers New
+2011-05-04 05:52:45	DEBUG	INFORMATION	GENERAL	GET	Getting Resident Contacts info
+2011-05-04 05:52:46	DEBUG	INFORMATION	GENERAL	GET	Getting Resident Contacts info
+2011-05-04 05:52:50	DEBUG	INFORMATION	CENSUS_COUNT	GET	Getting if resident exist inhouse or not
+2011-05-04 05:53:18	DEBUG	INFORMATION	USERS	GET	Getting all the information of Users
+2011-05-04 05:53:18	DEBUG	INFORMATION	GENERAL	GET	Getting Resident with serial130
+2011-05-04 05:53:18	DEBUG	INFORMATION	MESSAGES	UPDATE	Inserting Or Updating message record in Messages Module
+2011-05-04 05:53:18	DEBUG	INFORMATION	MESSAGES	UPDATE	Inserting Or Updating message record in Messages Module
+2011-05-04 05:53:18	DEBUG	INFORMATION	MESSAGES	UPDATE	Inserting Or Updating message record in Messages Module
+2011-05-04 05:53:18	DEBUG	INFORMATION	MESSAGES	UPDATE	Inserting Or Updating message record in Messages Module
+2011-05-04 05:53:18	DEBUG	INFORMATION	MESSAGES	UPDATE	Inserting Or Updating message record in Messages Module
+2011-05-04 05:53:18	DEBUG	INFORMATION	MESSAGES	UPDATE	Inserting Or Updating message record in Messages Module
+2011-05-04 05:53:18	DEBUG	INFORMATION	MESSAGES	UPDATE	Inserting Or Updating message record in Messages Module
+2011-05-04 05:53:18	DEBUG	INFORMATION	MESSAGES	UPDATE	Inserting Or Updating message record in Messages Module
+2011-05-04 05:53:18	DEBUG	INFORMATION	MESSAGES	UPDATE	Inserting Or Updating message record in Messages Module
+2011-05-04 05:53:18	DEBUG	INFORMATION	MESSAGES	UPDATE	Inserting Or Updating message record in Messages Module
+2011-05-04 05:53:18	DEBUG	INFORMATION	MESSAGES	UPDATE	Inserting Or Updating message record in Messages Module
+2011-05-04 05:53:18	DEBUG	INFORMATION	MESSAGES	UPDATE	Inserting Or Updating message record in Messages Module
+2011-05-04 05:53:18	DEBUG	INFORMATION	MESSAGES	UPDATE	Inserting Or Updating message record in Messages Module
+2011-05-04 05:53:18	DEBUG	INFORMATION	MESSAGES	UPDATE	Inserting Or Updating message record in Messages Module
+2011-05-04 05:53:19	DEBUG	INFORMATION	MESSAGES	UPDATE	Inserting Or Updating message record in Messages Module
+2011-05-04 05:53:19	DEBUG	INFORMATION	MESSAGES	UPDATE	Inserting Or Updating message record in Messages Module
+2011-05-04 05:53:34	DEBUG	INFORMATION	GENERAL	GET	Getting Resident with serial130
+2011-05-04 05:53:34	DEBUG	INFORMATION	RESIDENT_ADDMISSION	GET	Getting Admission records on resident serial
+2011-05-04 05:53:37	DEBUG	INFORMATION	RESIDENT_RESIDENTINFO_PHYSICIAN	GET	Getting The List of All physician Forms
+2011-05-04 05:53:37	DEBUG	INFORMATION	USERS_NURSE	GET	Getting a list of all The Nurse Records
+2011-05-04 05:53:37	DEBUG	INFORMATION	GENERAL	GET	Getting Resident with serial130
+2011-05-04 05:53:37	DEBUG	INFORMATION	GENERAL	GET	Getting Resident with serial130
+2011-05-04 05:53:37	DEBUG	INFORMATION	CENSUS	GET	Getting Census Status-getLastAdmission
+2011-05-04 05:53:37	DEBUG	INFORMATION	CENSUS	GET	Getting Census Admission from Sub Heads
+2011-05-04 05:53:37	DEBUG	INFORMATION	CENSUS	GET	Getting Census Admission Transportation
+2011-05-04 05:53:37	DEBUG	INFORMATION	RESIDENT_RESIDENTINFO_DIAGNOSIS	GET	Getting List of Resident Diagnosis Records
+2011-05-04 05:53:38	DEBUG	INFORMATION	GENERAL	GET	Getting Resident with serial130
+2011-05-04 05:53:38	DEBUG	INFORMATION	GENERAL	GET	Getting Resident with serial130
+2011-05-04 05:53:38	DEBUG	INFORMATION	CENSUS	GET	Getting Census Status-getLastAdmission
+2011-05-04 05:53:38	DEBUG	INFORMATION	CENSUS	GET	Getting Census Admission from Sub Heads
+2011-05-04 05:53:38	DEBUG	INFORMATION	CENSUS	GET	Getting Census Admission Transportation
+2011-05-04 05:53:38	DEBUG	INFORMATION	GENERAL	GET	Getting Resident with serial130
+2011-05-04 05:54:00	DEBUG	INFORMATION	USERS_NURSE	GET	Getting a list of all The Nurse Records
+2011-05-04 05:54:00	DEBUG	INFORMATION	GENERAL	GET	Getting Resident with serial130
+2011-05-04 05:54:38	DEBUG	INFORMATION	USERS_NURSE	GET	Getting a list of all The Nurse Records
+2011-05-04 05:54:38	DEBUG	INFORMATION	RESIDENT_RESIDENTINFO_PHYSICIAN	GET	Getting The List of All physician Forms
+2011-05-04 05:54:38	DEBUG	INFORMATION	GENERAL	GET	Getting Resident with serial130
+2011-05-04 05:54:38	DEBUG	INFORMATION	GENERAL	GET	Getting Resident with serial130
+2011-05-04 05:54:44	DEBUG	INFORMATION	RESIDENT_ADDMISSION	GET	Getting Admission records on resident serial
+2011-05-04 05:54:54	DEBUG	INFORMATION	GENERAL	GET	Getting Resident with serial130

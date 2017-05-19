@@ -1,0 +1,162 @@
+
+-- --------------(Stored procedures for medications)---------
+DELIMITER $$
+
+USE `ltc`$$
+
+DROP PROCEDURE IF EXISTS `calculatedMedicationInsertProc`$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `calculatedMedicationInsertProc`(IN medicationId INT(11))
+BEGIN
+-- declaring variables and cursors
+	DECLARE medId, calcstatus, done, timeValue, slotId, frequency, timeDone INT(11) DEFAULT 0;
+	DECLARE calcTime, calctimeRecord, futureDate, startDate, endDate, startDateTime, endDateTime, sdt, edt DATETIME DEFAULT NULL;
+	DECLARE calcNotes VARCHAR(5000) DEFAULT NULL;
+	DECLARE str, timeType, slotStartTime, slotEndTime VARCHAR(255) DEFAULT NULL;
+	DECLARE cursorMedicationValues CURSOR FOR SELECT mv.frequency, mv.orderDate, mv.endDate FROM medications AS mv WHERE mv.serial = medicationId;
+	DECLARE cursorMedSetting CURSOR FOR SELECT asett.timeType, asett.timeValue FROM alertsetting AS asett WHERE asett.serial = 5;
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+-- opening cursors and fetching data into cursors	
+	
+	OPEN cursorMedicationValues;
+	OPEN cursorMedSetting;
+	FETCH cursorMedicationValues INTO frequency, startDate, endDate;
+	FETCH cursorMedSetting INTO timeType, timeValue;
+	
+-- checking timetype and set them in future date	
+	
+	IF (timeType = 'MINUTE') THEN
+		SET futureDate = DATE_ADD(NOW(), INTERVAL timeValue MINUTE);
+	ELSEIF (timeType = 'HOUR') THEN
+		SET futureDate = DATE_ADD(NOW(), INTERVAL timeValue HOUR);
+	ELSEIF (timeType = 'DAY') THEN
+		SET futureDate = DATE_ADD(NOW(), INTERVAL timeValue DAY);
+	ELSEIF (timeType = 'WEEK') THEN
+		SET futureDate = DATE_ADD(NOW(), INTERVAL timeValue WEEK);
+	ELSEIF (timeType = 'MONTH') THEN
+		SET futureDate = DATE_ADD(NOW(), INTERVAL timeValue MONTH);
+	ELSEIF (timeType = 'YEAR') THEN
+		SET futureDate = DATE_ADD(NOW(), INTERVAL timeValue YEAR);
+	END IF;
+	
+-- outer while loop for inserting date for a particular medication 	
+	
+	outer_loop : WHILE (startDate <= endDate) DO
+	IF done = 1 THEN
+		LEAVE outer_loop;
+	END IF;
+	BEGIN
+		DECLARE cursorMedSlot CURSOR FOR SELECT asett.slotStartTime, asett.slotEndTime FROM medicationtimeslot AS asett WHERE asett.slotNum = frequency;
+		DECLARE CONTINUE HANDLER FOR NOT FOUND SET timeDone = 1;
+		SET timeDone = 0;
+		OPEN cursorMedSlot;
+		
+-- inner while loop for inserting date for a particular medication accroding to time slot		
+		
+			inner_loop : WHILE (timeDone = 0) DO
+				FETCH cursorMedSlot INTO slotStartTime, slotEndTime;
+					IF timeDone = 1 THEN
+						LEAVE inner_loop;
+					END IF;
+					SET str = CONCAT(CAST('2000-01-01' AS DATE), ' ', slotStartTime);
+					SET sdt = STR_TO_DATE(str, '%Y-%m-%d %h:%i %p');
+					SET str = CONCAT(CAST('2000-01-01' AS DATE), ' ', slotEndTime);
+					SET edt = STR_TO_DATE(str, '%Y-%m-%d %h:%i %p');
+					
+-- calculating time difference fro starttime to endtime and set difference into end time					
+					
+					SET @difftime = TIMESTAMPDIFF(MINUTE, sdt, edt);
+					IF @difftime < 0 THEN
+						SET str = CONCAT(CAST('2000-01-01' AS DATE), ' ', slotStartTime);
+						SET sdt = STR_TO_DATE(str, '%Y-%m-%d %h:%i %p');
+						SET str = CONCAT(CAST('2000-01-02' AS DATE), ' ', slotEndTime);
+						SET edt = STR_TO_DATE(str, '%Y-%m-%d %h:%i %p');
+						SET @difftime = TIMESTAMPDIFF(MINUTE, sdt, edt);
+					END IF;
+					SET str = CONCAT(CAST(startDate AS DATE), ' ', slotStartTime);
+					SET startDateTime = STR_TO_DATE(str, '%Y-%m-%d %h:%i %p');
+					SET endDateTime = DATE_ADD(startDateTime, INTERVAL @difftime MINUTE);
+					SET calcStatus = 0;
+					INSERT INTO calculatedmedication (`calculatedEndTime`, `calculatedStartTime`, `notes`, `status`, `timeRecord`, `medSerial`, `userId`)
+					VALUES (endDateTime, startDateTime, calcNotes, calcStatus, calcTimeRecord, medicationId,NULL);
+					SET startDate = DATE_ADD(endDateTime, INTERVAL 1 MINUTE);
+			END WHILE inner_loop;
+-- closing inner while loop and cursor 
+			SET timeDone = 0;
+		CLOSE cursorMedSlot;
+	END;
+	END WHILE outer_loop;
+-- closing outer while loop and cursor	
+	CLOSE cursorMedSetting;
+	CLOSE cursorMedicationValues;
+	SET done = 0;
+END$$
+
+DELIMITER ;
+
+-- View Medication stored procedure
+
+DELIMITER $$
+
+USE `ltc`$$
+
+DROP PROCEDURE IF EXISTS `ViewCurrentMedication`$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ViewCurrentMedication`(IN floorType VARCHAR(255))
+BEGIN
+(SELECT com.* FROM
+(SELECT 	
+-- view for resident name, max slot and min slot
+	(SELECT CONCAT(r.userpass ,', ', r.username)
+	FROM residentmain AS r
+	WHERE r.serial = maxData.residentId) AS resident,
+	maxData.calDate AS maxDate, minData.calDate AS minDate,
+	maxData.residentId AS residentId, maxData.cSerial AS maxCSerial, minData.cSerial AS minCSerial,
+	maxData.mSerial AS maxMSerial,minData.mSerial AS minMSerial ,
+	
+	(SELECT tmp.room FROM residentMain AS r JOIN temproomhistory AS tmp
+	ON r.serial = tmp.residentId 
+	WHERE maxData.residentId = tmp.residentId AND tmp.endDate IS NULL) AS room,
+	
+	(SELECT tmp.floor FROM residentMain AS r JOIN temproomhistory AS tmp
+	ON r.serial = tmp.residentId 
+	WHERE maxData.residentId = tmp.residentId AND tmp.endDate IS NULL) AS residentFloor,
+	
+	(SELECT cm.calculatedStartTime FROM calculatedMedication AS cm WHERE cm.serial = minData.cSerial-1) AS prevoiusSlot,
+	
+	(SELECT cm.status FROM calculatedMedication AS cm WHERE cm.serial = minData.cSerial-1) AS prevoiusSlotStatus
+	
+	FROM 
+-- selecting max slot for current date (max data)
+	(SELECT m.residentId, MAX(cst.calculatedStartTime) AS calDate, cst.serial AS cSerial, m.serial AS mSerial
+		FROM calculatedmedication AS cst LEFT JOIN medications AS m ON m.serial = cst.medSerial
+		WHERE DATE(NOW()) = DATE(cst.calculatedStartTime) AND TIME(NOW()) >= TIME(cst.calculatedStartTime)
+		GROUP BY m.residentId) AS maxData 
+		
+	LEFT JOIN
+-- selecting min slot for current date 	(min Data)
+		(SELECT m.residentId, MIN(cst.calculatedEndTime) AS calDate, cst.serial AS cSerial, m.serial AS mSerial
+		FROM calculatedmedication AS cst LEFT JOIN medications AS m ON m.serial = cst.medSerial
+		WHERE DATE(NOW()) = DATE(cst.calculatedEndTime) AND TIME(NOW()) <= TIME(cst.calculatedEndTime)
+		GROUP BY m.residentId) AS minData
+	ON maxData.residentId = minData.residentId) AS com 
+		
+-- left join with calculatedmedication table for particular resident his medications with in range. 	
+LEFT JOIN calculatedmedication AS c
+ON (com.maxMSerial = com.minMSerial) AND (NOW() BETWEEN com.maxDate AND com.minDate)
+	AND (c.serial BETWEEN com.maxCSerial AND com.minCSerial)
+-- checking medication in range and status = 0 for showing them in current list.
+		WHERE EXISTS (SELECT cc.serial FROM calculatedmedication AS cc 
+		LEFT JOIN medications AS m 
+		ON cc.medSerial = m.serial
+		WHERE cc.status = 0 AND m.residentId = com.residentId
+		AND (com.maxDate BETWEEN cc.calculatedStartTime AND cc.calculatedEndTime)
+		AND (com.minDate BETWEEN cc.calculatedStartTime AND cc.calculatedEndTime))
+		AND (com.room IS NOT NULL)
+		AND (com.residentFloor = floorType)
+		
+-- group by resident id		
+GROUP BY com.residentId);
+END$$
+
+DELIMITER ;

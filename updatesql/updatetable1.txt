@@ -1,0 +1,2329 @@
+-- ----------------- Version 0.61 ---------------- 
+
+-- ---------------- vinod kumar (30-04-10) ---------------------- 
+-- Assessment form page 3 -----
+
+ALTER TABLE pressuresoreassessment DROP COLUMN appearance;
+
+ALTER TABLE pressuresoreassessment ADD pink INT(11) DEFAULT '0';
+ALTER TABLE pressuresoreassessment ADD red INT(11) DEFAULT '0';
+ALTER TABLE pressuresoreassessment ADD brown INT(11) DEFAULT '0';
+ALTER TABLE pressuresoreassessment ADD eschar INT(11) DEFAULT '0';
+ALTER TABLE pressuresoreassessment ADD slough INT(11) DEFAULT '0';
+ALTER TABLE pressuresoreassessment ADD location VARCHAR(255) DEFAULT NULL;
+
+ALTER TABLE residentassessmentformpage3 ADD location VARCHAR(255) DEFAULT NULL;
+
+-- Assessment form page 20 -------------------
+
+ALTER TABLE residentassessmentformpage20 ADD na BIT(1) DEFAULT NULL;
+
+ALTER TABLE residentassessmentformpage20 DROP COLUMN initial3;
+ALTER TABLE residentassessmentformpage20 DROP COLUMN initial4;
+ALTER TABLE residentassessmentformpage20 DROP COLUMN initial5;
+ALTER TABLE residentassessmentformpage20 DROP COLUMN initial6;
+ALTER TABLE residentassessmentformpage20 DROP COLUMN initial7;
+ALTER TABLE residentassessmentformpage20 DROP COLUMN initial8;
+ALTER TABLE residentassessmentformpage20 DROP COLUMN signature3;
+ALTER TABLE residentassessmentformpage20 DROP COLUMN signature4;
+ALTER TABLE residentassessmentformpage20 DROP COLUMN signature5;
+ALTER TABLE residentassessmentformpage20 DROP COLUMN signature6;
+ALTER TABLE residentassessmentformpage20 DROP COLUMN signature7;
+ALTER TABLE residentassessmentformpage20 DROP COLUMN signature8;
+
+-- ------------ D S Naruka (2010-05-03) (version 0.61) (Added on behalf of Mayank) ---------------- --
+
+CREATE TABLE `carelogmaster` (
+   `serial` int(11) NOT NULL auto_increment,
+   `dateCreated` datetime default NULL,
+   `residentId` int(11) default NULL,
+   `UserId` int(11) default NULL,
+   PRIMARY KEY  (`serial`)
+ ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `carelognode` (
+   `serial` int(11) NOT NULL auto_increment,
+   `level1Value` int(11) default NULL,
+   `level2Value` int(11) default NULL,
+   `level3Value` int(11) default NULL,
+   `level4Value` int(11) default NULL,
+   `level5Value` int(11) default NULL,
+   `level6Value` int(11) default NULL,
+   `level7Value` int(11) default NULL,
+   `level8Value` int(11) default NULL,
+   `title` varchar(255) default NULL,
+   `careLogMasterSerial` int(11) default NULL,
+   PRIMARY KEY  (`serial`),
+   KEY `FK192E2F534CD4AB0` (`careLogMasterSerial`),
+   CONSTRAINT `FK192E2F534CD4AB0` FOREIGN KEY (`careLogMasterSerial`) REFERENCES `carelogmaster` (`serial`)
+ ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- mayank chandela (2010-05-04) resident assessment form page 1---
+
+ALTER TABLE residentassessmentformpage1 ADD COLUMN isolationType INT(11) DEFAULT NULL;
+
+
+
+-- ------------ Suresh Prasad Rai (2010-05-13) (version 0.61)  ---------------- --
+-- --------------New Form Table Creation  -----------------------------------------
+
+
+
+CREATE TABLE `msjn` (
+   `serial` INT(11) NOT NULL AUTO_INCREMENT,
+   `address` VARCHAR(255) DEFAULT NULL,
+   `date` DATETIME DEFAULT NULL,
+   `medicalFacility` VARCHAR(255) DEFAULT NULL,
+   `noResuscitative` VARCHAR(255) DEFAULT NULL,
+   `phoneCode` VARCHAR(255) DEFAULT NULL,
+   `phoneNo` VARCHAR(255) DEFAULT NULL,
+   `physicianAddress` VARCHAR(255) DEFAULT NULL,
+   `physicianName` VARCHAR(255) DEFAULT NULL,
+   `physicianSignature` VARCHAR(255) DEFAULT NULL,
+   `residentId` INT(11) DEFAULT NULL,
+   `surrogateSignature` VARCHAR(255) DEFAULT NULL,
+   PRIMARY KEY (`serial`)
+ ) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+
+
+CREATE TABLE `assessingresident1` (
+   `serial` INT(11) NOT NULL AUTO_INCREMENT,
+   `ExplainInShort` VARCHAR(255) DEFAULT NULL,
+   `TimeOfAssessing` VARCHAR(255) DEFAULT NULL,
+   `assistanceSmoking` INT(11) DEFAULT NULL,
+   `attendingPhysician` BIT(1) DEFAULT NULL,
+   `birthDate` DATETIME DEFAULT NULL,
+   `dateOfIndependently` DATETIME DEFAULT NULL,
+   `discussion` BIT(1) DEFAULT NULL,
+   `family` BIT(1) DEFAULT NULL,
+   `firstCigarette` VARCHAR(255) DEFAULT NULL,
+   `manyCigarettes` VARCHAR(255) DEFAULT NULL,
+   `nameOfResident` VARCHAR(255) DEFAULT NULL,
+   `notifyNo` BIT(1) DEFAULT NULL,
+   `notifyYes` BIT(1) DEFAULT NULL,
+   `nursing` BIT(1) DEFAULT NULL,
+   `observation` BIT(1) DEFAULT NULL,
+   `residentId` INT(11) DEFAULT NULL,
+   `review` BIT(1) DEFAULT NULL,
+   `room` VARCHAR(255) DEFAULT NULL,
+   `smoke` INT(11) DEFAULT NULL,
+   `sourceOfInformation` VARCHAR(255) DEFAULT NULL,
+   PRIMARY KEY (`serial`)
+ ) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+ALTER TABLE msjn
+DROP COLUMN formId;
+
+ALTER TABLE msjn
+ADD COLUMN `formId` INT(11) DEFAULT 0;
+
+
+ALTER TABLE assessingresident1
+ADD COLUMN `formId` INT(11) DEFAULT 0;
+
+
+CREATE TABLE `assessingresident2` (
+   `serial` INT(11) NOT NULL AUTO_INCREMENT,
+   `assistive` INT(11) DEFAULT NULL,
+   `burn` INT(11) DEFAULT NULL,
+   `consume` INT(11) DEFAULT NULL,
+   `dispose` INT(11) DEFAULT NULL,
+   `explainAboutSmoking` VARCHAR(255) DEFAULT NULL,
+   `formId` INT(11) DEFAULT NULL,
+   `materialUnsafty` INT(11) DEFAULT NULL,
+   `neverCheckBox` BIT(1) DEFAULT NULL,
+   `numberOfTimesCheckBox` BIT(1) DEFAULT NULL,
+   `physicalLimitationSpecify` VARCHAR(255) DEFAULT NULL,
+   `residentId` INT(11) DEFAULT NULL,
+   `risk` INT(11) DEFAULT NULL,
+   `smokingArea` VARCHAR(255) DEFAULT NULL,
+   `tField` VARCHAR(255) DEFAULT NULL,
+   PRIMARY KEY (`serial`)
+ ) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+
+
+CREATE TABLE `assessingresident3` (
+   `serial` INT(11) NOT NULL AUTO_INCREMENT,
+   `access` INT(11) DEFAULT NULL,
+   `apron` INT(11) DEFAULT NULL,
+   `cigarettesLighter` INT(11) DEFAULT NULL,
+   `designated` INT(11) DEFAULT NULL,
+   `dispose` INT(11) DEFAULT NULL,
+   `emergency` INT(11) DEFAULT NULL,
+   `extinguish` INT(11) DEFAULT NULL,
+   `formId` INT(11) DEFAULT NULL,
+   `history` INT(11) DEFAULT NULL,
+   `hold` INT(11) DEFAULT NULL,
+   `light` INT(11) DEFAULT NULL,
+   `lighter` INT(11) DEFAULT NULL,
+   `medicationSpecify` VARCHAR(255) DEFAULT NULL,
+   `residentId` INT(11) DEFAULT NULL,
+   `smokeSafe` INT(11) DEFAULT NULL,
+   `ttonGroup` INT(11) DEFAULT NULL,
+   PRIMARY KEY (`serial`)
+ ) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `physicianprogressnotes` (
+   `serial` INT(11) NOT NULL AUTO_INCREMENT,
+   `additionalOrder` VARCHAR(255) DEFAULT NULL,
+   `advanceDirective` BIT(1) DEFAULT NULL,
+   `chronicDebilitatingDisorder` BIT(1) DEFAULT NULL,
+   `competentResident` BIT(1) DEFAULT NULL,
+   `conditionIrreversible` BIT(1) DEFAULT NULL,
+   `decisionMaker` DATETIME DEFAULT NULL,
+   `discussion` VARCHAR(255) DEFAULT NULL,
+   `emphasis` BIT(1) DEFAULT NULL,
+   `familyResponsibleParty` BIT(1) DEFAULT NULL,
+   `formId` INT(11) DEFAULT NULL,
+   `limitedLife` BIT(1) DEFAULT NULL,
+   `notDisturbedWithTests` BIT(1) DEFAULT NULL,
+   `notHospitalizeCheckBox` BIT(1) DEFAULT NULL,
+   `notResuscitate` BIT(1) DEFAULT NULL,
+   `nursingStaff` BIT(1) DEFAULT NULL,
+   `otherSpecify` VARCHAR(255) DEFAULT NULL,
+   `otherSpecifyDNR` BIT(1) DEFAULT NULL,
+   `otherSpecifyDetail` VARCHAR(255) DEFAULT NULL,
+   `physician` BIT(1) DEFAULT NULL,
+   `physicianSig` DATETIME DEFAULT NULL,
+   `resident` BIT(1) DEFAULT NULL,
+   `residentDiagnosis1` VARCHAR(255) DEFAULT NULL,
+   `residentDiagnosis2` VARCHAR(255) DEFAULT NULL,
+   `residentId` INT(11) DEFAULT NULL,
+   `residentName` VARCHAR(255) DEFAULT NULL,
+   `residentSign` DATETIME DEFAULT NULL,
+   `selectOtherSpecify` BIT(1) DEFAULT NULL,
+   PRIMARY KEY (`serial`)
+ ) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+
+-- --------------Modification of different forms  --------------------
+
+ALTER TABLE residentimmunizationrecord
+ADD COLUMN `formId` INT(11) DEFAULT 0;
+
+ALTER TABLE dietaryresidentdiagnosis ADD problemApproches INT(11) DEFAULT 0;
+
+ALTER TABLE dietaryresidentdiagnosis 
+ADD FOREIGN KEY (problemApproches) REFERENCES notes (SERIAL);
+
+ALTER TABLE dietaryresidentdiagnosis ADD normal INT(11) DEFAULT 0;
+ALTER TABLE dietaryresidentdiagnosis ADD adaptiveEquipment VARCHAR(255) DEFAULT NULL;
+
+
+ALTER TABLE assessingresident1 ADD yesnotifyAttendingPhysician INT(11) DEFAULT 0;
+
+-- ------------------- Vinod kumar (04-05-10) ---------------------------------------------
+ALTER TABLE residentimmunizationrecord ADD consentOnFileHist BIT(1) DEFAULT FALSE;
+ALTER TABLE residentimmunizationrecord ADD ppv INT(11) DEFAULT NULL;
+ALTER TABLE residentimmunizationrecord ADD consentOfFile BIT(1) DEFAULT FALSE;
+ALTER TABLE residentimmunizationrecord ADD influenzaVacine INT(11) DEFAULT NULL;
+
+ALTER TABLE residentimmunizationrecord DROP COLUMN annualPPD2Immunization4;
+ALTER TABLE residentimmunizationrecord DROP COLUMN annualPPD2Immunization5;
+ALTER TABLE residentimmunizationrecord DROP COLUMN annualPPD2Immunization6;
+ALTER TABLE residentimmunizationrecord DROP COLUMN annualPPD2Immunization7;
+ALTER TABLE residentimmunizationrecord DROP COLUMN annualPPD2Immunization8;
+ALTER TABLE residentimmunizationrecord DROP COLUMN annualPPD2Immunization9;
+ALTER TABLE residentimmunizationrecord DROP COLUMN annualPPD2Immunization10;
+
+ALTER TABLE residentimmunizationrecord DROP COLUMN annualPPDSkin1;
+ALTER TABLE residentimmunizationrecord DROP COLUMN annualPPDSkin2;
+ALTER TABLE residentimmunizationrecord DROP COLUMN annualPPDSkin3;
+ALTER TABLE residentimmunizationrecord DROP COLUMN annualPPDSkin4;
+ALTER TABLE residentimmunizationrecord DROP COLUMN annualPPDSkin5;
+
+ALTER TABLE residentimmunizationrecord DROP COLUMN annualPPDSize1;
+ALTER TABLE residentimmunizationrecord DROP COLUMN annualPPDSize2;
+ALTER TABLE residentimmunizationrecord DROP COLUMN annualPPDSize3;
+ALTER TABLE residentimmunizationrecord DROP COLUMN annualPPDSize4;
+ALTER TABLE residentimmunizationrecord DROP COLUMN annualPPDSize5;
+
+-- ----------- Vinod kumar (10-05-10) ----------------------
+
+ALTER TABLE residentassessmentformpage10 ADD notesId INT(11) DEFAULT 0;
+
+ALTER TABLE residentassessmentformpage10 ADD FOREIGN KEY (notesId) REFERENCES notes(SERIAL);
+
+ALTER TABLE residentassessmentformpage1 ADD foleySize INT(11) DEFAULT 0;
+
+ALTER TABLE residentassessmentformpage1 ADD catherType VARCHAR(255) DEFAULT NULL;
+
+-- mayank chandela (2010-05-06) resident assessment form page16 and 19------
+
+ALTER TABLE residentassessmentformpage16 ADD COLUMN fluidRestriction TINYINT (1) DEFAULT NULL;
+DROP TABLE IF EXISTS `residentassessmentformpage19` ;
+CREATE TABLE `residentassessmentformpage19` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `alert` INT(11) NOT NULL,
+  `assessmentDate` DATETIME DEFAULT NULL,
+  `attendingPhysician` VARCHAR(255) DEFAULT NULL,
+  `bloodPressure` VARCHAR(255) DEFAULT NULL,
+  `eyesOpen` INT(11) NOT NULL,
+  `firstName` VARCHAR(255) DEFAULT NULL,
+  `formId` INT(11) DEFAULT NULL,
+  `lPupil` VARCHAR(255) DEFAULT NULL,
+  `lTLowerExtrimity` VARCHAR(255) DEFAULT NULL,
+  `lTUpperExtrimity` VARCHAR(255) DEFAULT NULL,
+  `lastName` VARCHAR(255) DEFAULT NULL,
+  `middleName` VARCHAR(255) DEFAULT NULL,
+  `nAvailable` BIT(1) NOT NULL,
+  `normal` VARCHAR(255) DEFAULT NULL,
+  `pulse` VARCHAR(255) DEFAULT NULL,
+  `rPupil` VARCHAR(255) DEFAULT NULL,
+  `rTLowerExtrimity` VARCHAR(255) DEFAULT NULL,
+  `rTUpperExtrimity` VARCHAR(255) DEFAULT NULL,
+  `recordNo` VARCHAR(255) DEFAULT NULL,
+  `residentId` INT(11) NOT NULL,
+  `residentName` VARCHAR(255) DEFAULT NULL,
+  `respiration` VARCHAR(255) DEFAULT NULL,
+  `roomBed` VARCHAR(255) DEFAULT NULL,
+  `roomNum` VARCHAR(255) DEFAULT NULL,
+  `shallowIrregular` VARCHAR(255) DEFAULT NULL,
+  `speech` INT(11) NOT NULL,
+  `temprature` VARCHAR(255) DEFAULT NULL,
+  `time` VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY  (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+--  resident vital signs ---------------
+
+CREATE TABLE `residentvitalsigns` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `ambulation` INT(11) DEFAULT NULL,
+  `bp` INT(11) DEFAULT NULL,
+  `pulse` INT(11) DEFAULT NULL,
+  `remarks` VARCHAR(255) DEFAULT NULL,
+  `residentId` INT(11) DEFAULT NULL,
+  `temprature` DOUBLE DEFAULT NULL,
+  `dateCreated` DATETIME DEFAULT NULL,
+  `user` INT(11) DEFAULT NULL,
+  PRIMARY KEY  (`serial`),
+  KEY `FKCE9F433AAB5D56E2` (`user`),
+  CONSTRAINT `FKCE9F433AAB5D56E2` FOREIGN KEY (`user`) REFERENCES `users` (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- weight table ---------------------------
+
+CREATE TABLE `residentweight` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `dateOfCreation` DATETIME DEFAULT NULL,
+  `residentId` INT(11) DEFAULT NULL,
+  `weight` DOUBLE DEFAULT NULL,
+  `user` INT(11) DEFAULT NULL,
+  PRIMARY KEY  (`serial`),
+  KEY `FK1A510C08AB5D56E2` (`user`),
+  CONSTRAINT `FK1A510C08AB5D56E2` FOREIGN KEY (`user`) REFERENCES `users` (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- for wound flow form --------------------
+
+ALTER TABLE residentassessmentformpage14
+ADD COLUMN createdBy INT (11) DEFAULT NULL,
+ADD COLUMN formName VARCHAR(255) DEFAULT NULL,
+ADD COLUMN dateOfCreation DATE DEFAULT NULL;
+
+ALTER TABLE residentassessmentformpage14
+ADD FOREIGN KEY(createdBy) REFERENCES users(SERIAL) ON DELETE NO ACTION;
+
+-- wound form table alter queries -----mayank chandela(2010-05-13)
+
+ALTER TABLE residentassessmentformpage14
+DROP COLUMN pressure,DROP COLUMN skinTear, DROP COLUMN sx, DROP COLUMN venous;
+
+ALTER TABLE residentassessmentformpage14
+ADD COLUMN pressure TINYINT(1),ADD COLUMN skinTear TINYINT(1), ADD COLUMN sx TINYINT(1), ADD COLUMN venous TINYINT(1),
+ADD COLUMN diabetic TINYINT(1),ADD COLUMN arterial TINYINT(1) , ADD COLUMN others TINYINT(1);
+
+
+--    -------------------------- Version 0.64 -------------------------------- 
+
+-- ------------------  Vinod kumar (2010-05-14) --------------------
+CREATE TABLE `painAssessment` (
+   `serial` INT(11) NOT NULL AUTO_INCREMENT,
+   `formId` INT(11) DEFAULT NULL,
+   `formNum` INT(11) DEFAULT NULL,
+   `siteNum` VARCHAR(255) DEFAULT NULL,
+   `stage` VARCHAR(255) DEFAULT NULL,
+   `painOnset` VARCHAR(255) DEFAULT NULL,
+   `duration` VARCHAR(255) DEFAULT NULL,
+   `quality` VARCHAR(255) DEFAULT NULL,
+   `exacerbatingFactors` VARCHAR(255) DEFAULT NULL,
+   `painEffects` VARCHAR(255) DEFAULT NULL,
+   `nonPharmacolotical` VARCHAR(255) DEFAULT NULL,
+   `exihibits` VARCHAR(255) DEFAULT NULL,
+   `CoordinateX` INT(11) DEFAULT NULL,
+   `CoordinateY` INT(11) DEFAULT NULL,
+   PRIMARY KEY (`serial`)
+ ) ENGINE=INNODB DEFAULT CHARSET=latin1;
+ 
+ -- mayank chandela (2010-05-19)--- progress notes patient seen or not field added-----
+ 
+ ALTER TABLE progressnotes ADD COLUMN patientSeen INT(11) DEFAULT NULL;
+ ALTER TABLE dietary ADD COLUMN dietaryNotes INT(11) DEFAULT NULL;
+ 
+ ALTER TABLE residentassessmentformpage7 ADD COLUMN flaccValues VARCHAR(255) DEFAULT NULL;
+ ALTER TABLE residentassessmentformpage7 ADD COLUMN presentValue INT (11) DEFAULT NULL;
+ ALTER TABLE residentassessmentformpage7 ADD COLUMN scaleType INT (11) DEFAULT NULL;
+ 
+ -- mayank chandela (2010-05-27) 
+ 
+ -- Resident information  table 
+ 
+ CREATE TABLE `residentinformation` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `abletoMake` INT(11) DEFAULT NULL,
+  `additionalPertinent` VARCHAR(255) DEFAULT NULL,
+  `alert` VARCHAR(255) DEFAULT NULL,
+  `appliance` VARCHAR(255) DEFAULT NULL,
+  `badActivity1` VARCHAR(255) DEFAULT NULL,
+  `badActivity2` VARCHAR(255) DEFAULT NULL,
+  `badActivity3` VARCHAR(255) DEFAULT NULL,
+  `badActivity4` VARCHAR(255) DEFAULT NULL,
+  `badActivity5` VARCHAR(255) DEFAULT NULL,
+  `badActivity6` VARCHAR(255) DEFAULT NULL,
+  `bedLow` VARCHAR(255) DEFAULT NULL,
+  `belligerent` VARCHAR(255) DEFAULT NULL,
+  `bland` VARCHAR(255) DEFAULT NULL,
+  `canHear` INT(11) DEFAULT NULL,
+  `canSpeak` INT(11) DEFAULT NULL,
+  `canWrite` INT(11) DEFAULT NULL,
+  `cane` VARCHAR(255) DEFAULT NULL,
+  `catheter` VARCHAR(255) DEFAULT NULL,
+  `chair` VARCHAR(255) DEFAULT NULL,
+  `colostomy` VARCHAR(255) DEFAULT NULL,
+  `combative` VARCHAR(255) DEFAULT NULL,
+  `confused` VARCHAR(255) DEFAULT NULL,
+  `cooperative` VARCHAR(255) DEFAULT NULL,
+  `crutches` VARCHAR(255) DEFAULT NULL,
+  `denturesUpper` VARCHAR(255) DEFAULT NULL,
+  `diabetic` VARCHAR(255) DEFAULT NULL,
+  `dietAll` VARCHAR(255) DEFAULT NULL,
+  `disruptive` VARCHAR(255) DEFAULT NULL,
+  `dressing1` VARCHAR(255) DEFAULT NULL,
+  `dressing10` VARCHAR(255) DEFAULT NULL,
+  `dressing11` VARCHAR(255) DEFAULT NULL,
+  `dressing12` VARCHAR(255) DEFAULT NULL,
+  `dressing2` VARCHAR(255) DEFAULT NULL,
+  `dressing3` VARCHAR(255) DEFAULT NULL,
+  `dressing4` VARCHAR(255) DEFAULT NULL,
+  `dressing5` VARCHAR(255) DEFAULT NULL,
+  `dressing6` VARCHAR(255) DEFAULT NULL,
+  `dressing7` VARCHAR(255) DEFAULT NULL,
+  `dressing8` VARCHAR(255) DEFAULT NULL,
+  `dressing9` VARCHAR(255) DEFAULT NULL,
+  `feedSelf` VARCHAR(255) DEFAULT NULL,
+  `feeding1` VARCHAR(255) DEFAULT NULL,
+  `feeding2` VARCHAR(255) DEFAULT NULL,
+  `feeding3` VARCHAR(255) DEFAULT NULL,
+  `forgetful` VARCHAR(255) DEFAULT NULL,
+  `formId` INT(11) DEFAULT NULL,
+  `gestures` INT(11) DEFAULT NULL,
+  `glassess` VARCHAR(255) DEFAULT NULL,
+  `hearingL` VARCHAR(255) DEFAULT NULL,
+  `hearingR` VARCHAR(255) DEFAULT NULL,
+  `ifYesLanguage` VARCHAR(255) DEFAULT NULL,
+  `locomotion1` VARCHAR(255) DEFAULT NULL,
+  `locomotion2` VARCHAR(255) DEFAULT NULL,
+  `locomotion3` VARCHAR(255) DEFAULT NULL,
+  `locomotion4` VARCHAR(255) DEFAULT NULL,
+  `locomotion5` VARCHAR(255) DEFAULT NULL,
+  `locomotion6` VARCHAR(255) DEFAULT NULL,
+  `locomotion7` VARCHAR(255) DEFAULT NULL,
+  `locomotion8` VARCHAR(255) DEFAULT NULL,
+  `locomotion9` VARCHAR(255) DEFAULT NULL,
+  `lowResidue` VARCHAR(255) DEFAULT NULL,
+  `lowSalt` VARCHAR(255) DEFAULT NULL,
+  `lower` VARCHAR(255) DEFAULT NULL,
+  `mattressFirm` VARCHAR(255) DEFAULT NULL,
+  `needsHelp` VARCHAR(255) DEFAULT NULL,
+  `orientedX` VARCHAR(255) DEFAULT NULL,
+  `otherDiet` VARCHAR(255) DEFAULT NULL,
+  `otherReg` VARCHAR(255) DEFAULT NULL,
+  `part` VARCHAR(255) DEFAULT NULL,
+  `personalHygiene1` VARCHAR(255) DEFAULT NULL,
+  `personalHygiene10` VARCHAR(255) DEFAULT NULL,
+  `personalHygiene11` VARCHAR(255) DEFAULT NULL,
+  `personalHygiene12` VARCHAR(255) DEFAULT NULL,
+  `personalHygiene13` VARCHAR(255) DEFAULT NULL,
+  `personalHygiene14` VARCHAR(255) DEFAULT NULL,
+  `personalHygiene15` VARCHAR(255) DEFAULT NULL,
+  `personalHygiene2` VARCHAR(255) DEFAULT NULL,
+  `personalHygiene3` VARCHAR(255) DEFAULT NULL,
+  `personalHygiene4` VARCHAR(255) DEFAULT NULL,
+  `personalHygiene5` VARCHAR(255) DEFAULT NULL,
+  `personalHygiene6` VARCHAR(255) DEFAULT NULL,
+  `personalHygiene7` VARCHAR(255) DEFAULT NULL,
+  `personalHygiene8` VARCHAR(255) DEFAULT NULL,
+  `personalHygiene9` VARCHAR(255) DEFAULT NULL,
+  `prosthesis` VARCHAR(255) DEFAULT NULL,
+  `reg` VARCHAR(255) DEFAULT NULL,
+  `regular` VARCHAR(255) DEFAULT NULL,
+  `residentId` INT(11) DEFAULT NULL,
+  `senile` VARCHAR(255) DEFAULT NULL,
+  `sideRails` INT(11) DEFAULT NULL,
+  `socialInformation` VARCHAR(255) DEFAULT NULL,
+  `suspicious` VARCHAR(255) DEFAULT NULL,
+  `tranfer1` VARCHAR(255) DEFAULT NULL,
+  `tranfer10` VARCHAR(255) DEFAULT NULL,
+  `tranfer11` VARCHAR(255) DEFAULT NULL,
+  `tranfer12` VARCHAR(255) DEFAULT NULL,
+  `tranfer2` VARCHAR(255) DEFAULT NULL,
+  `tranfer3` VARCHAR(255) DEFAULT NULL,
+  `tranfer4` VARCHAR(255) DEFAULT NULL,
+  `tranfer5` VARCHAR(255) DEFAULT NULL,
+  `tranfer6` VARCHAR(255) DEFAULT NULL,
+  `tranfer7` VARCHAR(255) DEFAULT NULL,
+  `tranfer8` VARCHAR(255) DEFAULT NULL,
+  `tranfer9` VARCHAR(255) DEFAULT NULL,
+  `understandEnglish` INT(11) DEFAULT NULL,
+  `understandSpeaking` INT(11) DEFAULT NULL,
+  `understandWriting` INT(11) DEFAULT NULL,
+  `walker` VARCHAR(255) DEFAULT NULL,
+  `wanders` VARCHAR(255) DEFAULT NULL,
+  `withdrawn` VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (`serial`)
+) ENGINE=INNODB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+-- inventory control  
+
+
+CREATE TABLE `inventorypersonaleffect` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `admissionTitleDate` DATETIME DEFAULT NULL,
+  `articleOther1` VARCHAR(255) DEFAULT NULL,
+  `articleOther2` VARCHAR(255) DEFAULT NULL,
+  `articleOther3` VARCHAR(255) DEFAULT NULL,
+  `articleOther4` VARCHAR(255) DEFAULT NULL,
+  `articleOther5` VARCHAR(255) DEFAULT NULL,
+  `articleOther6` VARCHAR(255) DEFAULT NULL,
+  `articleOther7` VARCHAR(255) DEFAULT NULL,
+  `articleOther8` VARCHAR(255) DEFAULT NULL,
+  `articleOther9` VARCHAR(255) DEFAULT NULL,
+  `dateOfInventory` DATETIME DEFAULT NULL,
+  `descriptionBeltSuspenders` VARCHAR(255) DEFAULT NULL,
+  `descriptionBlouses` VARCHAR(255) DEFAULT NULL,
+  `descriptionCoats` VARCHAR(255) DEFAULT NULL,
+  `descriptionDentures` VARCHAR(255) DEFAULT NULL,
+  `descriptionDresses` VARCHAR(255) DEFAULT NULL,
+  `descriptionFirs` VARCHAR(255) DEFAULT NULL,
+  `descriptionGlasses` VARCHAR(255) DEFAULT NULL,
+  `descriptionGloves` VARCHAR(255) DEFAULT NULL,
+  `descriptionHearingAid` VARCHAR(255) DEFAULT NULL,
+  `descriptionHose` VARCHAR(255) DEFAULT NULL,
+  `descriptionLadiesHandkerChiefs` VARCHAR(255) DEFAULT NULL,
+  `descriptionLadiesHats` VARCHAR(255) DEFAULT NULL,
+  `descriptionLadiesShoes` VARCHAR(255) DEFAULT NULL,
+  `descriptionLadiesSuit` VARCHAR(255) DEFAULT NULL,
+  `descriptionLadiesSweaters` VARCHAR(255) DEFAULT NULL,
+  `descriptionMensHandkerChiefs` VARCHAR(255) DEFAULT NULL,
+  `descriptionOthers` VARCHAR(255) DEFAULT NULL,
+  `descriptionPajamas` VARCHAR(255) DEFAULT NULL,
+  `descriptionRobes` VARCHAR(255) DEFAULT NULL,
+  `descriptionShavingKit` VARCHAR(255) DEFAULT NULL,
+  `descriptionShorts` VARCHAR(255) DEFAULT NULL,
+  `descriptionSlippers` VARCHAR(255) DEFAULT NULL,
+  `descriptionTies` VARCHAR(255) DEFAULT NULL,
+  `descriptionTravellingBags` VARCHAR(255) DEFAULT NULL,
+  `dischargeResponsiblePartyDate` DATETIME DEFAULT NULL,
+  `formId` INT(11) DEFAULT NULL,
+  `howRecieved1` VARCHAR(255) DEFAULT NULL,
+  `howRecieved10` VARCHAR(255) DEFAULT NULL,
+  `howRecieved11` VARCHAR(255) DEFAULT NULL,
+  `howRecieved12` VARCHAR(255) DEFAULT NULL,
+  `howRecieved13` VARCHAR(255) DEFAULT NULL,
+  `howRecieved14` VARCHAR(255) DEFAULT NULL,
+  `howRecieved2` VARCHAR(255) DEFAULT NULL,
+  `howRecieved3` VARCHAR(255) DEFAULT NULL,
+  `howRecieved4` VARCHAR(255) DEFAULT NULL,
+  `howRecieved5` VARCHAR(255) DEFAULT NULL,
+  `howRecieved6` VARCHAR(255) DEFAULT NULL,
+  `howRecieved7` VARCHAR(255) DEFAULT NULL,
+  `howRecieved8` VARCHAR(255) DEFAULT NULL,
+  `howRecieved9` VARCHAR(255) DEFAULT NULL,
+  `orginalItem1` VARCHAR(255) DEFAULT NULL,
+  `orginalItem10` VARCHAR(255) DEFAULT NULL,
+  `orginalItem11` VARCHAR(255) DEFAULT NULL,
+  `orginalItem12` VARCHAR(255) DEFAULT NULL,
+  `orginalItem13` VARCHAR(255) DEFAULT NULL,
+  `orginalItem14` VARCHAR(255) DEFAULT NULL,
+  `orginalItem2` VARCHAR(255) DEFAULT NULL,
+  `orginalItem3` VARCHAR(255) DEFAULT NULL,
+  `orginalItem4` VARCHAR(255) DEFAULT NULL,
+  `orginalItem5` VARCHAR(255) DEFAULT NULL,
+  `orginalItem6` VARCHAR(255) DEFAULT NULL,
+  `orginalItem7` VARCHAR(255) DEFAULT NULL,
+  `orginalItem8` VARCHAR(255) DEFAULT NULL,
+  `orginalItem9` VARCHAR(255) DEFAULT NULL,
+  `originalDate1` DATETIME DEFAULT NULL,
+  `originalDate10` DATETIME DEFAULT NULL,
+  `originalDate11` DATETIME DEFAULT NULL,
+  `originalDate12` DATETIME DEFAULT NULL,
+  `originalDate13` DATETIME DEFAULT NULL,
+  `originalDate14` DATETIME DEFAULT NULL,
+  `originalDate2` DATETIME DEFAULT NULL,
+  `originalDate3` DATETIME DEFAULT NULL,
+  `originalDate4` DATETIME DEFAULT NULL,
+  `originalDate5` DATETIME DEFAULT NULL,
+  `originalDate6` DATETIME DEFAULT NULL,
+  `originalDate7` DATETIME DEFAULT NULL,
+  `originalDate8` DATETIME DEFAULT NULL,
+  `originalDate9` DATETIME DEFAULT NULL,
+  `patientName` VARCHAR(255) DEFAULT NULL,
+  `quantityBeltsSuspenders` VARCHAR(255) DEFAULT NULL,
+  `quantityBlouses` VARCHAR(255) DEFAULT NULL,
+  `quantityBrasiers` VARCHAR(255) DEFAULT NULL,
+  `quantityCoats` VARCHAR(255) DEFAULT NULL,
+  `quantityDentures` VARCHAR(255) DEFAULT NULL,
+  `quantityDresses` VARCHAR(255) DEFAULT NULL,
+  `quantityFIR` VARCHAR(255) DEFAULT NULL,
+  `quantityFoundationGarments` VARCHAR(255) DEFAULT NULL,
+  `quantityGlasses` VARCHAR(255) DEFAULT NULL,
+  `quantityGloves` VARCHAR(255) DEFAULT NULL,
+  `quantityHearingAid` VARCHAR(255) DEFAULT NULL,
+  `quantityHose` VARCHAR(255) DEFAULT NULL,
+  `quantityHouseCoats` VARCHAR(255) DEFAULT NULL,
+  `quantityHouseSlippers` VARCHAR(255) DEFAULT NULL,
+  `quantityLadiesHandkerChiefs` VARCHAR(255) DEFAULT NULL,
+  `quantityLadiesHats` VARCHAR(255) DEFAULT NULL,
+  `quantityLadiesShoes` VARCHAR(255) DEFAULT NULL,
+  `quantityLadiesSuit` VARCHAR(255) DEFAULT NULL,
+  `quantityLadiesSweaters` VARCHAR(255) DEFAULT NULL,
+  `quantityMensGloves` VARCHAR(255) DEFAULT NULL,
+  `quantityMensHandkerChiefs` VARCHAR(255) DEFAULT NULL,
+  `quantityMensHats` VARCHAR(255) DEFAULT NULL,
+  `quantityMensShoes` VARCHAR(255) DEFAULT NULL,
+  `quantityMensSuit` VARCHAR(255) DEFAULT NULL,
+  `quantityNightGowns` VARCHAR(255) DEFAULT NULL,
+  `quantityOther1` VARCHAR(255) DEFAULT NULL,
+  `quantityOther2` VARCHAR(255) DEFAULT NULL,
+  `quantityOther3` VARCHAR(255) DEFAULT NULL,
+  `quantityOther4` VARCHAR(255) DEFAULT NULL,
+  `quantityOther5` VARCHAR(255) DEFAULT NULL,
+  `quantityOther6` VARCHAR(255) DEFAULT NULL,
+  `quantityOther7` VARCHAR(255) DEFAULT NULL,
+  `quantityOther8` VARCHAR(255) DEFAULT NULL,
+  `quantityOther9` VARCHAR(255) DEFAULT NULL,
+  `quantityOthers` VARCHAR(255) DEFAULT NULL,
+  `quantityOvernightCase` VARCHAR(255) DEFAULT NULL,
+  `quantityPajamas` VARCHAR(255) DEFAULT NULL,
+  `quantityPocketBooks` VARCHAR(255) DEFAULT NULL,
+  `quantityRobes` VARCHAR(255) DEFAULT NULL,
+  `quantityShavingKit` VARCHAR(255) DEFAULT NULL,
+  `quantityShort` VARCHAR(255) DEFAULT NULL,
+  `quantitySlacks` VARCHAR(255) DEFAULT NULL,
+  `quantitySlippers` VARCHAR(255) DEFAULT NULL,
+  `quantitySlips` VARCHAR(255) DEFAULT NULL,
+  `quantitySocks` VARCHAR(255) DEFAULT NULL,
+  `quantitySportJackets` VARCHAR(255) DEFAULT NULL,
+  `quantityTies` VARCHAR(255) DEFAULT NULL,
+  `quantityTopCoats` VARCHAR(255) DEFAULT NULL,
+  `quantityTravellingBags` VARCHAR(255) DEFAULT NULL,
+  `quantityUnderShirts` VARCHAR(255) DEFAULT NULL,
+  `remarks` VARCHAR(255) DEFAULT NULL,
+  `residentId` INT(11) DEFAULT NULL,
+  `roomNumber` VARCHAR(255) DEFAULT NULL,
+  `signResponsiblePartyOnAddmission` VARCHAR(255) DEFAULT NULL,
+  `signResponsiblePartyOnDischarge` VARCHAR(255) DEFAULT NULL,
+  `valueCoats` VARCHAR(255) DEFAULT NULL,
+  `valueDresses` VARCHAR(255) DEFAULT NULL,
+  `valueFirs` VARCHAR(255) DEFAULT NULL,
+  `valueLadiesHats` VARCHAR(255) DEFAULT NULL,
+  `valueLadiesShoes` VARCHAR(255) DEFAULT NULL,
+  `valueLadiesSuit` VARCHAR(255) DEFAULT NULL,
+  `valuesBeltSuspenders` VARCHAR(255) DEFAULT NULL,
+  `valuesBlouses` VARCHAR(255) DEFAULT NULL,
+  `valuesBrassiers` VARCHAR(255) DEFAULT NULL,
+  `valuesDentures` VARCHAR(255) DEFAULT NULL,
+  `valuesFoundationGarments` VARCHAR(255) DEFAULT NULL,
+  `valuesGlasses` VARCHAR(255) DEFAULT NULL,
+  `valuesGloves` VARCHAR(255) DEFAULT NULL,
+  `valuesHearingAid` VARCHAR(255) DEFAULT NULL,
+  `valuesHose` VARCHAR(255) DEFAULT NULL,
+  `valuesHouseCoats` VARCHAR(255) DEFAULT NULL,
+  `valuesHouseSlippers` VARCHAR(255) DEFAULT NULL,
+  `valuesLadiesHandkerChiefs` VARCHAR(255) DEFAULT NULL,
+  `valuesLadiesSweaters` VARCHAR(255) DEFAULT NULL,
+  `valuesMensGloves` VARCHAR(255) DEFAULT NULL,
+  `valuesMensHandkerChie` VARCHAR(255) DEFAULT NULL,
+  `valuesMensHats` VARCHAR(255) DEFAULT NULL,
+  `valuesMensShoes` VARCHAR(255) DEFAULT NULL,
+  `valuesMensSuit` VARCHAR(255) DEFAULT NULL,
+  `valuesNightGowns` VARCHAR(255) DEFAULT NULL,
+  `valuesOthers` VARCHAR(255) DEFAULT NULL,
+  `valuesOverNightCase` VARCHAR(255) DEFAULT NULL,
+  `valuesPajamas` VARCHAR(255) DEFAULT NULL,
+  `valuesPocketBooks` VARCHAR(255) DEFAULT NULL,
+  `valuesRobes` VARCHAR(255) DEFAULT NULL,
+  `valuesShavingKit` VARCHAR(255) DEFAULT NULL,
+  `valuesShorts` VARCHAR(255) DEFAULT NULL,
+  `valuesSlacks` VARCHAR(255) DEFAULT NULL,
+  `valuesSlippers` VARCHAR(255) DEFAULT NULL,
+  `valuesSlips` VARCHAR(255) DEFAULT NULL,
+  `valuesSocks` VARCHAR(255) DEFAULT NULL,
+  `valuesSportJackets` VARCHAR(255) DEFAULT NULL,
+  `valuesTies` VARCHAR(255) DEFAULT NULL,
+  `valuesTopCoats` VARCHAR(255) DEFAULT NULL,
+  `valuesTravellingBags` VARCHAR(255) DEFAULT NULL,
+  `valuesUnderShirts` VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY  (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- transfer form
+
+CREATE TABLE `residenttransferform` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `advancedDirective` INT(11) DEFAULT NULL,
+  `amputation` BIT(1) DEFAULT NULL,
+  `avoidingPosition` VARCHAR(255) DEFAULT NULL,
+  `bladder` BIT(1) DEFAULT NULL,
+  `blueCross` BIT(1) DEFAULT NULL,
+  `bowel` BIT(1) DEFAULT NULL,
+  `byResident` VARCHAR(255) DEFAULT NULL,
+  `cBCDate` DATETIME DEFAULT NULL,
+  `cBCResult` VARCHAR(255) DEFAULT NULL,
+  `chestXRay` DATETIME DEFAULT NULL,
+  `chestXrayResult` VARCHAR(255) DEFAULT NULL,
+  `clinicAppointment` VARCHAR(255) DEFAULT NULL,
+  `contracture` BIT(1) DEFAULT NULL,
+  `copyAttached` BIT(1) DEFAULT NULL,
+  `dateOfAdmission` DATETIME DEFAULT NULL,
+  `dateOfBirth` DATETIME DEFAULT NULL,
+  `dateOfClinicAppointment` DATETIME DEFAULT NULL,
+  `dateOfDischarge` DATETIME DEFAULT NULL,
+  `dateOfLastPhysicalExam` DATETIME DEFAULT NULL,
+  `dateOfTransfer` DATETIME DEFAULT NULL,
+  `dateTransfer` DATETIME DEFAULT NULL,
+  `decubUlcer` BIT(1) DEFAULT NULL,
+  `diagnosesTimeOfTransferPrimary` VARCHAR(255) DEFAULT NULL,
+  `diagnosesTimeOfTransferSecondary` VARCHAR(255) DEFAULT NULL,
+  `dietOrder` VARCHAR(255) DEFAULT NULL,
+  `employer` BIT(1) DEFAULT NULL,
+  `employmentRelated` INT(11) DEFAULT NULL,
+  `encourageGroup` VARCHAR(255) DEFAULT NULL,
+  `facilityName` VARCHAR(255) DEFAULT NULL,
+  `fair` BIT(1) DEFAULT NULL,
+  `familyAware` INT(11) DEFAULT NULL,
+  `formId` INT(11) DEFAULT NULL,
+  `genericCheckBox` BIT(1) DEFAULT NULL,
+  `good` BIT(1) DEFAULT NULL,
+  `guardianAddress` VARCHAR(255) DEFAULT NULL,
+  `guardianPhoneNo` VARCHAR(255) DEFAULT NULL,
+  `healthInsuranceClaimNumber` VARCHAR(255) DEFAULT NULL,
+  `hearing` BIT(1) DEFAULT NULL,
+  `hours` VARCHAR(255) DEFAULT NULL,
+  `individual` VARCHAR(255) DEFAULT NULL,
+  `mI` VARCHAR(255) DEFAULT NULL,
+  `mental` BIT(1) DEFAULT NULL,
+  `minTimesDay` VARCHAR(255) DEFAULT NULL,
+  `moderate` BIT(1) DEFAULT NULL,
+  `nameAndAddress` VARCHAR(255) DEFAULT NULL,
+  `nameAndAddressHospital` VARCHAR(255) DEFAULT NULL,
+  `none` BIT(1) DEFAULT NULL,
+  `nurseSignature` VARCHAR(255) DEFAULT NULL,
+  `onLeg` VARCHAR(255) DEFAULT NULL,
+  `otherExplain` BIT(1) DEFAULT NULL,
+  `otherOutLined` VARCHAR(255) DEFAULT NULL,
+  `outside` VARCHAR(255) DEFAULT NULL,
+  `paralysis` BIT(1) DEFAULT NULL,
+  `physicianCare` INT(11) DEFAULT NULL,
+  `placeOfExercise` VARCHAR(255) DEFAULT NULL,
+  `poor` BIT(1) DEFAULT NULL,
+  `privateInsurance` BIT(1) DEFAULT NULL,
+  `pronePosition` VARCHAR(255) DEFAULT NULL,
+  `publicAgency` BIT(1) DEFAULT NULL,
+  `rangeOfMotion` VARCHAR(255) DEFAULT NULL,
+  `relativeGuardianName` VARCHAR(255) DEFAULT NULL,
+  `religion` VARCHAR(255) DEFAULT NULL,
+  `residentAddress` VARCHAR(255) DEFAULT NULL,
+  `residentFirstName` VARCHAR(255) DEFAULT NULL,
+  `residentId` INT(11) DEFAULT NULL,
+  `residentKnew` INT(11) DEFAULT NULL,
+  `residentLastName` VARCHAR(255) DEFAULT NULL,
+  `residentSex` INT(11) DEFAULT NULL,
+  `saliva` BIT(1) DEFAULT NULL,
+  `selfOrFamily` BIT(1) DEFAULT NULL,
+  `sensation` BIT(1) DEFAULT NULL,
+  `serologyDate` DATETIME DEFAULT NULL,
+  `serologyResult` VARCHAR(255) DEFAULT NULL,
+  `severe` BIT(1) DEFAULT NULL,
+  `sittingHours` VARCHAR(255) DEFAULT NULL,
+  `sittingTimesAday` VARCHAR(255) DEFAULT NULL,
+  `speech` BIT(1) DEFAULT NULL,
+  `stand` VARCHAR(255) DEFAULT NULL,
+  `tBTest` DATETIME DEFAULT NULL,
+  `timeOfTransfer` VARCHAR(255) DEFAULT NULL,
+  `transport` INT(11) DEFAULT NULL,
+  `urinalysis` DATETIME DEFAULT NULL,
+  `urinalysisResult` VARCHAR(255) DEFAULT NULL,
+  `vision` BIT(1) DEFAULT NULL,
+  `vitalBP` VARCHAR(255) DEFAULT NULL,
+  `vitalPulse` VARCHAR(255) DEFAULT NULL,
+  `vitalR` VARCHAR(255) DEFAULT NULL,
+  `vitalTemp` VARCHAR(255) DEFAULT NULL,
+  `walkingTimesAday` VARCHAR(255) DEFAULT NULL,
+  `weightBearingFull` VARCHAR(255) DEFAULT NULL,
+  `weightBearingPartial` VARCHAR(255) DEFAULT NULL,
+  `within` VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY  (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- resident status sheet
+
+
+CREATE TABLE `residentstatussheet` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `adultBriefs` BIT(1) DEFAULT NULL,
+  `age` VARCHAR(255) DEFAULT NULL,
+  `aphasic` BIT(1) DEFAULT NULL,
+  `assist` BIT(1) DEFAULT NULL,
+  `bathAssist` BIT(1) DEFAULT NULL,
+  `bathBed` BIT(1) DEFAULT NULL,
+  `bathHairCare` BIT(1) DEFAULT NULL,
+  `bathSelfCare` BIT(1) DEFAULT NULL,
+  `bathShower` BIT(1) DEFAULT NULL,
+  `bathTotalCare` BIT(1) DEFAULT NULL,
+  `bathTub` BIT(1) DEFAULT NULL,
+  `bedPan` BIT(1) DEFAULT NULL,
+  `bedtoChair` BIT(1) DEFAULT NULL,
+  `birthDate` DATETIME DEFAULT NULL,
+  `bladderRetraining` BIT(1) DEFAULT NULL,
+  `blind` BIT(1) DEFAULT NULL,
+  `blindBoth` BIT(1) DEFAULT NULL,
+  `blindLeft` BIT(1) DEFAULT NULL,
+  `blindLegally` BIT(1) DEFAULT NULL,
+  `blindRight` BIT(1) DEFAULT NULL,
+  `bothEye` BIT(1) DEFAULT NULL,
+  `bowelAssist` BIT(1) DEFAULT NULL,
+  `bowelBR` BIT(1) DEFAULT NULL,
+  `bowelBedPan` BIT(1) DEFAULT NULL,
+  `bowelCommode` BIT(1) DEFAULT NULL,
+  `bowelIncontinent` BIT(1) DEFAULT NULL,
+  `bowelSelfControl` BIT(1) DEFAULT NULL,
+  `bowelTotalCare` BIT(1) DEFAULT NULL,
+  `bowelTraining` BIT(1) DEFAULT NULL,
+  `br` BIT(1) DEFAULT NULL,
+  `bracesAssist` BIT(1) DEFAULT NULL,
+  `bracesSelf` BIT(1) DEFAULT NULL,
+  `bracesTotalCare` BIT(1) DEFAULT NULL,
+  `bracesType` VARCHAR(255) DEFAULT NULL,
+  `cane` BIT(1) DEFAULT NULL,
+  `cataracts` BIT(1) DEFAULT NULL,
+  `catheter` BIT(1) DEFAULT NULL,
+  `catheterDateChange` DATETIME DEFAULT NULL,
+  `catheterSize` VARCHAR(255) DEFAULT NULL,
+  `chartNumber` VARCHAR(255) DEFAULT NULL,
+  `commode` BIT(1) DEFAULT NULL,
+  `crutches` BIT(1) DEFAULT NULL,
+  `dR` BIT(1) DEFAULT NULL,
+  `dRb` VARCHAR(255) DEFAULT NULL,
+  `dRd` VARCHAR(255) DEFAULT NULL,
+  `dRs` VARCHAR(255) DEFAULT NULL,
+  `dateChange` DATETIME DEFAULT NULL,
+  `deficit` BIT(1) DEFAULT NULL,
+  `dexterityLeftHand` BIT(1) DEFAULT NULL,
+  `dexterityRightHand` BIT(1) DEFAULT NULL,
+  `diet` VARCHAR(255) DEFAULT NULL,
+  `dressAssist` BIT(1) DEFAULT NULL,
+  `dressClothes` BIT(1) DEFAULT NULL,
+  `dressSelfCare` BIT(1) DEFAULT NULL,
+  `dressShocking` BIT(1) DEFAULT NULL,
+  `dressShoes` BIT(1) DEFAULT NULL,
+  `dressSupervise` BIT(1) DEFAULT NULL,
+  `dressTotalCare` BIT(1) DEFAULT NULL,
+  `eatingAssist` BIT(1) DEFAULT NULL,
+  `feeder` BIT(1) DEFAULT NULL,
+  `feedsSelf` BIT(1) DEFAULT NULL,
+  `formId` INT(11) DEFAULT NULL,
+  `fullAmbulatory` BIT(1) DEFAULT NULL,
+  `groomingAssist` BIT(1) DEFAULT NULL,
+  `groomingComb` BIT(1) DEFAULT NULL,
+  `groomingFeet` BIT(1) DEFAULT NULL,
+  `groomingHairDresser` BIT(1) DEFAULT NULL,
+  `groomingNails` BIT(1) DEFAULT NULL,
+  `groomingPodatrist` BIT(1) DEFAULT NULL,
+  `groomingSelfCare` BIT(1) DEFAULT NULL,
+  `groomingShave` BIT(1) DEFAULT NULL,
+  `groomingSupervise` BIT(1) DEFAULT NULL,
+  `groomingTotalCare` BIT(1) DEFAULT NULL,
+  `hearingLeft` BIT(1) DEFAULT NULL,
+  `hearingRight` BIT(1) DEFAULT NULL,
+  `incontinent` BIT(1) DEFAULT NULL,
+  `intake` BIT(1) DEFAULT NULL,
+  `irrigation` BIT(1) DEFAULT NULL,
+  `irrigationA` VARCHAR(255) DEFAULT NULL,
+  `irrigationC` VARCHAR(255) DEFAULT NULL,
+  `languageSpoken` BIT(1) DEFAULT NULL,
+  `leftEye` BIT(1) DEFAULT NULL,
+  `levelCare` VARCHAR(255) DEFAULT NULL,
+  `lifttoChair` BIT(1) DEFAULT NULL,
+  `maritalStatus` INT(11) DEFAULT NULL,
+  `mentalAttitudeAgitated` BIT(1) DEFAULT NULL,
+  `mentalAttitudeAlert` BIT(1) DEFAULT NULL,
+  `mentalAttitudeCheerful` BIT(1) DEFAULT NULL,
+  `mentalAttitudeConfused` BIT(1) DEFAULT NULL,
+  `mentalAttitudeDepressed` BIT(1) DEFAULT NULL,
+  `mentalAttitudeForgetFul` BIT(1) DEFAULT NULL,
+  `mentalAttitudeMoody` BIT(1) DEFAULT NULL,
+  `mentalAttitudeOriented` BIT(1) DEFAULT NULL,
+  `mentalAttitudeWellAdjusted` BIT(1) DEFAULT NULL,
+  `mouthCareAssist` BIT(1) DEFAULT NULL,
+  `mouthCareAtBedSise` BIT(1) DEFAULT NULL,
+  `mouthCareDentures` BIT(1) DEFAULT NULL,
+  `mouthCareLower` BIT(1) DEFAULT NULL,
+  `mouthCareNoDentures` BIT(1) DEFAULT NULL,
+  `mouthCareNoTeeth` BIT(1) DEFAULT NULL,
+  `mouthCareSelfCare` BIT(1) DEFAULT NULL,
+  `mouthCareSupervise` BIT(1) DEFAULT NULL,
+  `mouthCareTotalCare` BIT(1) DEFAULT NULL,
+  `mouthCareUpper` BIT(1) DEFAULT NULL,
+  `needBib` BIT(1) DEFAULT NULL,
+  `oOBinChair` BIT(1) DEFAULT NULL,
+  `offer` BIT(1) DEFAULT NULL,
+  `offerQuantity` VARCHAR(255) DEFAULT NULL,
+  `outPut` BIT(1) DEFAULT NULL,
+  `paralysisLeftArm` BIT(1) DEFAULT NULL,
+  `paralysisLeftLeg` BIT(1) DEFAULT NULL,
+  `paralysisLtSideOfFace` BIT(1) DEFAULT NULL,
+  `paralysisParaplegla` BIT(1) DEFAULT NULL,
+  `paralysisQuadriplegia` BIT(1) DEFAULT NULL,
+  `paralysisRtArm` BIT(1) DEFAULT NULL,
+  `paralysisRtLeg` BIT(1) DEFAULT NULL,
+  `paralysisRtsideOfFace` BIT(1) DEFAULT NULL,
+  `partiallyDeaf` BIT(1) DEFAULT NULL,
+  `phoneNumber` VARCHAR(255) DEFAULT NULL,
+  `physician` VARCHAR(255) DEFAULT NULL,
+  `positionChangeAfterHalfHour` BIT(1) DEFAULT NULL,
+  `positionChangeAfterOneHour` BIT(1) DEFAULT NULL,
+  `positionChangeAfterTwoHour` BIT(1) DEFAULT NULL,
+  `positionChangeBySelf` BIT(1) DEFAULT NULL,
+  `positionWith1Assist` BIT(1) DEFAULT NULL,
+  `positionWith2Assist` BIT(1) DEFAULT NULL,
+  `prefferedName` VARCHAR(255) DEFAULT NULL,
+  `prepareFood` BIT(1) DEFAULT NULL,
+  `residentId` INT(11) DEFAULT NULL,
+  `residentName` VARCHAR(255) DEFAULT NULL,
+  `residentStrengths` VARCHAR(255) DEFAULT NULL,
+  `restorativeAarom` BIT(1) DEFAULT NULL,
+  `restorativeAmputation` BIT(1) DEFAULT NULL,
+  `restorativeBedMobility` BIT(1) DEFAULT NULL,
+  `restorativeCommunication` BIT(1) DEFAULT NULL,
+  `restorativeDressingGrooming` BIT(1) DEFAULT NULL,
+  `restorativeEatingSwallowing` BIT(1) DEFAULT NULL,
+  `restorativeOthers` BIT(1) DEFAULT NULL,
+  `restorativeOthersValue` VARCHAR(255) DEFAULT NULL,
+  `restorativeProm` BIT(1) DEFAULT NULL,
+  `restorativeRoom` BIT(1) DEFAULT NULL,
+  `restorativeSplintBraceAssist` BIT(1) DEFAULT NULL,
+  `restorativeTransfer` BIT(1) DEFAULT NULL,
+  `restorativeWalking` BIT(1) DEFAULT NULL,
+  `restraintBed` BIT(1) DEFAULT NULL,
+  `restraintChair` BIT(1) DEFAULT NULL,
+  `restraintJacket` BIT(1) DEFAULT NULL,
+  `restraintWaist` BIT(1) DEFAULT NULL,
+  `restrictOp` BIT(1) DEFAULT NULL,
+  `restrictQuantity` VARCHAR(255) DEFAULT NULL,
+  `rightEye` BIT(1) DEFAULT NULL,
+  `riskFactors` VARCHAR(255) DEFAULT NULL,
+  `room` VARCHAR(255) DEFAULT NULL,
+  `schedule` VARCHAR(255) DEFAULT NULL,
+  `selfControl` BIT(1) DEFAULT NULL,
+  `sideRailsAtNight` BIT(1) DEFAULT NULL,
+  `sideRailsConstantly` BIT(1) DEFAULT NULL,
+  `sideRailsOmit` BIT(1) DEFAULT NULL,
+  `skinContractures` BIT(1) DEFAULT NULL,
+  `skinContracturesSite` VARCHAR(255) DEFAULT NULL,
+  `skinDecubitus` BIT(1) DEFAULT NULL,
+  `skinDecubitusSite` VARCHAR(255) DEFAULT NULL,
+  `skinRoutine` BIT(1) DEFAULT NULL,
+  `skinSpecial` BIT(1) DEFAULT NULL,
+  `speaksWell` BIT(1) DEFAULT NULL,
+  `specialEquipmentAssist` BIT(1) DEFAULT NULL,
+  `specialEquipmentProsthesis` BIT(1) DEFAULT NULL,
+  `specialEquipmentSelf` BIT(1) DEFAULT NULL,
+  `specialEquipmentTotalCare` BIT(1) DEFAULT NULL,
+  `specialEquipmentTotalCareType` VARCHAR(255) DEFAULT NULL,
+  `specificTask` VARCHAR(255) DEFAULT NULL,
+  `strecher` BIT(1) DEFAULT NULL,
+  `sugarSubstitute` BIT(1) DEFAULT NULL,
+  `supplementFeeding` BIT(1) DEFAULT NULL,
+  `supportiveAfterPressurePad` BIT(1) DEFAULT NULL,
+  `supportiveBedBoard` BIT(1) DEFAULT NULL,
+  `supportiveBedCradle` BIT(1) DEFAULT NULL,
+  `supportiveBrace` BIT(1) DEFAULT NULL,
+  `supportiveFoamRubber` BIT(1) DEFAULT NULL,
+  `supportiveFootBoard` BIT(1) DEFAULT NULL,
+  `supportivePillows` BIT(1) DEFAULT NULL,
+  `supportiveSpecialMattress` BIT(1) DEFAULT NULL,
+  `supportiveTrapeze` BIT(1) DEFAULT NULL,
+  `supportiveWaterBed` BIT(1) DEFAULT NULL,
+  `supportiveWaterMattress` BIT(1) DEFAULT NULL,
+  `toiletProgram` BIT(1) DEFAULT NULL,
+  `totalCare` BIT(1) DEFAULT NULL,
+  `totallyDeaf` BIT(1) DEFAULT NULL,
+  `tubeFeeding` BIT(1) DEFAULT NULL,
+  `tubeFeedingSize` VARCHAR(255) DEFAULT NULL,
+  `urinal` BIT(1) DEFAULT NULL,
+  `usesHearingAid` BIT(1) DEFAULT NULL,
+  `walker` BIT(1) DEFAULT NULL,
+  `walks` BIT(1) DEFAULT NULL,
+  `wearsGlasses` BIT(1) DEFAULT NULL,
+  `wheelChair` BIT(1) DEFAULT NULL,
+  `with2Assist` BIT(1) DEFAULT NULL,
+  `withOneAssist` BIT(1) DEFAULT NULL,
+  PRIMARY KEY  (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- resident care plan
+
+
+CREATE TABLE `residentcareplan` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `activityInterest` VARCHAR(255) DEFAULT NULL,
+  `allergies` VARCHAR(255) DEFAULT NULL,
+  `bathing` VARCHAR(255) DEFAULT NULL,
+  `carePlanPreparedBy` VARCHAR(255) DEFAULT NULL,
+  `catheterSize` VARCHAR(255) DEFAULT NULL,
+  `chestXray` BIT(1) DEFAULT NULL,
+  `dateChanged` DATETIME DEFAULT NULL,
+  `dentures` BIT(1) DEFAULT NULL,
+  `diagnosis` VARCHAR(255) DEFAULT NULL,
+  `diet` VARCHAR(255) DEFAULT NULL,
+  `dischargePlan` VARCHAR(255) DEFAULT NULL,
+  `dressing` VARCHAR(255) DEFAULT NULL,
+  `eatingHabits` VARCHAR(255) DEFAULT NULL,
+  `elimination` VARCHAR(255) DEFAULT NULL,
+  `fairPotential` BIT(1) DEFAULT NULL,
+  `formId` INT(11) DEFAULT NULL,
+  `glasses` BIT(1) DEFAULT NULL,
+  `goodPtential` BIT(1) DEFAULT NULL,
+  `grooming` VARCHAR(255) DEFAULT NULL,
+  `hearingAid` BIT(1) DEFAULT NULL,
+  `immunizationType1` VARCHAR(255) DEFAULT NULL,
+  `immunizationType1Date` DATETIME DEFAULT NULL,
+  `immunizationType2` VARCHAR(255) DEFAULT NULL,
+  `immunizationType2Date` DATETIME DEFAULT NULL,
+  `immunizationType3` VARCHAR(255) DEFAULT NULL,
+  `immunizationType3Date` DATETIME DEFAULT NULL,
+  `immunizationType4` VARCHAR(255) DEFAULT NULL,
+  `immunizationType4Date` DATETIME DEFAULT NULL,
+  `mantoux` BIT(1) DEFAULT NULL,
+  `mentalStatus` VARCHAR(255) DEFAULT NULL,
+  `mobility` VARCHAR(255) DEFAULT NULL,
+  `nextAppointment` DATETIME DEFAULT NULL,
+  `oralCare` VARCHAR(255) DEFAULT NULL,
+  `others` BIT(1) DEFAULT NULL,
+  `othersValue` VARCHAR(255) DEFAULT NULL,
+  `overAllGoal` VARCHAR(255) DEFAULT NULL,
+  `poorPotential` BIT(1) DEFAULT NULL,
+  `privileges` VARCHAR(255) DEFAULT NULL,
+  `prostheresis` BIT(1) DEFAULT NULL,
+  `residentId` INT(11) DEFAULT NULL,
+  `restraints` VARCHAR(255) DEFAULT NULL,
+  `routineLabWork` VARCHAR(255) DEFAULT NULL,
+  `skinCondition` VARCHAR(255) DEFAULT NULL,
+  `speechHearing` VARCHAR(255) DEFAULT NULL,
+  `strengths` VARCHAR(255) DEFAULT NULL,
+  `tbScreeningDate` DATETIME DEFAULT NULL,
+  `tbScreeningResult` VARCHAR(255) DEFAULT NULL,
+  `theraples` VARCHAR(255) DEFAULT NULL,
+  `updatedDate` DATETIME DEFAULT NULL,
+  PRIMARY KEY  (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- interdisciplinary care plan
+
+
+CREATE TABLE `interdisciplinarycareplan` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `formId` INT(11) DEFAULT NULL,
+  `residentId` INT(11) DEFAULT NULL,
+  PRIMARY KEY  (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- interdisciplinary care plan row
+
+
+CREATE TABLE `interdisciplinarycareplanrow` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `approaches` VARCHAR(255) DEFAULT NULL,
+  `dateAdded` DATETIME DEFAULT NULL,
+  `dateOfCarePlan` DATETIME DEFAULT NULL,
+  `department` VARCHAR(255) DEFAULT NULL,
+  `formId` INT(11) NOT NULL,
+  `goals` VARCHAR(255) DEFAULT NULL,
+  `outcomes` VARCHAR(255) DEFAULT NULL,
+  `problem` VARCHAR(255) DEFAULT NULL,
+  `residentId` INT(11) NOT NULL,
+  `targetDate` DATETIME DEFAULT NULL,
+  `interDisciplinaryCarePlan` INT(11) DEFAULT NULL,
+  PRIMARY KEY  (`serial`),
+  KEY `FKA8CA34B1EC165E77` (`interDisciplinaryCarePlan`),
+  CONSTRAINT `FKA8CA34B1EC165E77` FOREIGN KEY (`interDisciplinaryCarePlan`) REFERENCES `interdisciplinarycareplan` (`serial`) ON DELETE CASCADE
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- ---------------------------------version 0.67---------------------------------------------------------------------------
+------------- ptotstSpeechDailyRecord(mayank chandela (2010-06-01))
+
+ALTER TABLE ptotstspeechdailyrecord ADD COLUMN frequency VARCHAR(255) DEFAULT NULL;
+
+-- ---------------- vinod kumar (2010-06-01) -------------
+
+ALTER TABLE residentimmunizationrecord MODIFY tetanus1 DATE;
+ALTER TABLE residentimmunizationrecord MODIFY tetanus2 DATE;
+ALTER TABLE residentimmunizationrecord MODIFY tetanus3 DATE;
+ALTER TABLE residentimmunizationrecord MODIFY tetanus4 DATE;
+ALTER TABLE residentimmunizationrecord MODIFY tetanus5 DATE;
+
+-- ---------------- vinod kumar (2010-06-02) -------------
+ALTER TABLE residentassessmentformpage13 ADD COLUMN residentId INT;
+
+-- mayank chandela (2010-06-02)
+
+ALTER TABLE residentWeight ADD COLUMN ambulationType INT(11) DEFAULT 0;
+
+-- mayank chandela (2010-06-02)(table for dietary alert sheet)
+
+
+-- ------------------------- Version 0.68 ----------------
+
+
+CREATE TABLE `dietaryalertsheet` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `abnormalLabValues` BIT(1) DEFAULT NULL,
+  `formId` INT(11) DEFAULT NULL,
+  `actionToBeTaken` VARCHAR(255) DEFAULT NULL,
+  `attendPhysician` BIT(1) DEFAULT NULL,
+  `attendingPhysician` BIT(1) DEFAULT NULL,
+  `attendingPhysicianDate` DATETIME DEFAULT NULL,
+  `catheter` BIT(1) DEFAULT NULL,
+  `chewingDifficulties` BIT(1) DEFAULT NULL,
+  `constipation` BIT(1) DEFAULT NULL,
+  `descriptionOfProblem` VARCHAR(255) DEFAULT NULL,
+  `diarrhea` BIT(1) DEFAULT NULL,
+  `diet` BIT(1) DEFAULT NULL,
+  `dietitian` BIT(1) DEFAULT NULL,
+  `dietitianDate` DATETIME DEFAULT NULL,
+  `diets` VARCHAR(255) DEFAULT NULL,
+  `edema` BIT(1) DEFAULT NULL,
+  `fluctuatingWeight` BIT(1) DEFAULT NULL,
+  `form` VARCHAR(255) DEFAULT NULL,
+  `formDate` DATETIME DEFAULT NULL,
+  `gained5lbs` BIT(1) DEFAULT NULL,
+  `ibwRange` VARCHAR(255) DEFAULT NULL,
+  `lossOf5lbs` BIT(1) DEFAULT NULL,
+  `medication` BIT(1) DEFAULT NULL,
+  `needsAdaptiveDevice` BIT(1) DEFAULT NULL,
+  `needsAssistanceWithMeals` BIT(1) DEFAULT NULL,
+  `nursingDupervisor` BIT(1) DEFAULT NULL,
+  `nursingDupervisorDate` DATETIME DEFAULT NULL,
+  `nursingSupervisor` BIT(1) DEFAULT NULL,
+  `other` BIT(1) DEFAULT NULL,
+  `poorAppetite` BIT(1) DEFAULT NULL,
+  `residentId` INT(11) DEFAULT NULL,
+  `residentName` VARCHAR(255) DEFAULT NULL,
+  `room` VARCHAR(255) DEFAULT NULL,
+  `signature` VARCHAR(255) DEFAULT NULL,
+  `skinBreakdown` BIT(1) DEFAULT NULL,
+  `skinFragibility` BIT(1) DEFAULT NULL,
+  `supplementalFeedings` BIT(1) DEFAULT NULL,
+  `tubeFeedings` BIT(1) DEFAULT NULL,
+  `vomiting` BIT(1) DEFAULT NULL,
+  `weight` VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY  (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- ---table for consent form
+
+
+CREATE TABLE `influenzaconsentform` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `calledBy` VARCHAR(255) DEFAULT NULL,
+  `dateCalled` DATETIME DEFAULT NULL,
+  `formId` INT(11) DEFAULT NULL,
+  `dateTimeGiven` DATETIME DEFAULT NULL,
+  `expiryDate` DATETIME DEFAULT NULL,
+  `lotNo` VARCHAR(255) DEFAULT NULL,
+  `nameParty` VARCHAR(255) DEFAULT NULL,
+  `relationship` VARCHAR(255) DEFAULT NULL,
+  `residentId` INT(11) DEFAULT NULL,
+  `residentName` VARCHAR(255) DEFAULT NULL,
+  `residentSignatureDate` DATETIME DEFAULT NULL,
+  `responseConsent` BIT(1) DEFAULT NULL,
+  `responseRefused` BIT(1) DEFAULT NULL,
+  `responsiblePartyDate` DATETIME DEFAULT NULL,
+  `shiftDate1` DATETIME DEFAULT NULL,
+  `shiftDate2` DATETIME DEFAULT NULL,
+  `shiftDate3` DATETIME DEFAULT NULL,
+  `shiftNurseSignature1` VARCHAR(255) DEFAULT NULL,
+  `shiftNurseSignature2` VARCHAR(255) DEFAULT NULL,
+  `shiftNurseSignature3` VARCHAR(255) DEFAULT NULL,
+  `shiftShift1` VARCHAR(255) DEFAULT NULL,
+  `shiftShift2` VARCHAR(255) DEFAULT NULL,
+  `shiftShift3` VARCHAR(255) DEFAULT NULL,
+  `shiftTemprature1` VARCHAR(255) DEFAULT NULL,
+  `shiftTemprature2` VARCHAR(255) DEFAULT NULL,
+  `shiftTemprature3` VARCHAR(255) DEFAULT NULL,
+  `signatureParty` VARCHAR(255) DEFAULT NULL,
+  `signatureResident` VARCHAR(255) DEFAULT NULL,
+  `signatureWitnessParty` VARCHAR(255) DEFAULT NULL,
+  `signatureWitnessResident` VARCHAR(255) DEFAULT NULL,
+  `site` VARCHAR(255) DEFAULT NULL,
+  `temprature` VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY  (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- ----table skilled flow sheet
+
+
+CREATE TABLE `skilledflowsheet` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `angina11To7` VARCHAR(255) DEFAULT NULL,
+  `angina3To11` VARCHAR(255) DEFAULT NULL,
+  `angina7To3` VARCHAR(255) DEFAULT NULL,
+  `badMobility1Extensive11To7` BIT(1) DEFAULT NULL,
+  `badMobility1Extensive3To11` BIT(1) DEFAULT NULL,
+  `badMobility1Extensive7To3` BIT(1) DEFAULT NULL,
+  `badMobility2Extensive11To7` BIT(1) DEFAULT NULL,
+  `badMobility2Extensive3To11` BIT(1) DEFAULT NULL,
+  `badMobility2Extensive7To3` BIT(1) DEFAULT NULL,
+  `badMobilityIndepemdent11To7` BIT(1) DEFAULT NULL,
+  `badMobilityIndepemdent3To11` BIT(1) DEFAULT NULL,
+  `badMobilityIndepemdent7To3` BIT(1) DEFAULT NULL,
+  `badMobilityLimited11To7` BIT(1) DEFAULT NULL,
+  `badMobilityLimited3To11` BIT(1) DEFAULT NULL,
+  `badMobilityTotalIndependence11To7` BIT(1) DEFAULT NULL,
+  `badMobilityTotalIndependence3To11` BIT(1) DEFAULT NULL,
+  `bedMobilityLimited7To3` BIT(1) DEFAULT NULL,
+  `bp11To7` VARCHAR(255) DEFAULT NULL,
+  `bp3To11` VARCHAR(255) DEFAULT NULL,
+  `bp7To3` VARCHAR(255) DEFAULT NULL,
+  `breathSoundsClear11To7` VARCHAR(255) DEFAULT NULL,
+  `breathSoundsClear3To11` VARCHAR(255) DEFAULT NULL,
+  `breathSoundsClear7To3` VARCHAR(255) DEFAULT NULL,
+  `comments` VARCHAR(255) DEFAULT NULL,
+  `cracklesRalesRhonchi11To7` VARCHAR(255) DEFAULT NULL,
+  `cracklesRalesRhonchi3To11` VARCHAR(255) DEFAULT NULL,
+  `cracklesRalesRhonchi7To3` VARCHAR(255) DEFAULT NULL,
+  `dateOfAssessment` DATETIME DEFAULT NULL,
+  `formId` INT(11) DEFAULT NULL,
+  `gtFeeding11To7` VARCHAR(255) DEFAULT NULL,
+  `gtFeeding3To11` VARCHAR(255) DEFAULT NULL,
+  `gtFeeding7To3` VARCHAR(255) DEFAULT NULL,
+  `heartRate11To7` VARCHAR(255) DEFAULT NULL,
+  `heartRate3To11` VARCHAR(255) DEFAULT NULL,
+  `heartRate7To3` VARCHAR(255) DEFAULT NULL,
+  `independent11To7` VARCHAR(255) DEFAULT NULL,
+  `independent3To11` VARCHAR(255) DEFAULT NULL,
+  `independent7To3` VARCHAR(255) DEFAULT NULL,
+  `interventions1` VARCHAR(255) DEFAULT NULL,
+  `interventions2` VARCHAR(255) DEFAULT NULL,
+  `interventions3` VARCHAR(255) DEFAULT NULL,
+  `limitedAssist11To7` VARCHAR(255) DEFAULT NULL,
+  `limitedAssist3To11` VARCHAR(255) DEFAULT NULL,
+  `limitedAssist7To3` VARCHAR(255) DEFAULT NULL,
+  `lungsSoundsDiminished11To7` VARCHAR(255) DEFAULT NULL,
+  `lungsSoundsDiminished3To11` VARCHAR(255) DEFAULT NULL,
+  `lungsSoundsDiminished7To3` VARCHAR(255) DEFAULT NULL,
+  `o2Saturation11To7` VARCHAR(255) DEFAULT NULL,
+  `o2Saturation3To11` VARCHAR(255) DEFAULT NULL,
+  `o2Saturation7To3` VARCHAR(255) DEFAULT NULL,
+  `pleasureFoods11To7` VARCHAR(255) DEFAULT NULL,
+  `pleasureFoods3To11` VARCHAR(255) DEFAULT NULL,
+  `pleasureFoods7To3` VARCHAR(255) DEFAULT NULL,
+  `pulse11To7` VARCHAR(255) DEFAULT NULL,
+  `pulse3To11` VARCHAR(255) DEFAULT NULL,
+  `pulse7To3` VARCHAR(255) DEFAULT NULL,
+  `residentId` INT(11) DEFAULT NULL,
+  `residentName` VARCHAR(255) DEFAULT NULL,
+  `respiration11To7` VARCHAR(255) DEFAULT NULL,
+  `respiration3To11` VARCHAR(255) DEFAULT NULL,
+  `respiration7To3` VARCHAR(255) DEFAULT NULL,
+  `roomNo` VARCHAR(255) DEFAULT NULL,
+  `skinConcern3To11` VARCHAR(255) DEFAULT NULL,
+  `skinConcern7To3` VARCHAR(255) DEFAULT NULL,
+  `skinIntact3To11` VARCHAR(255) DEFAULT NULL,
+  `skinIntact7To3` VARCHAR(255) DEFAULT NULL,
+  `suctioned11To7` VARCHAR(255) DEFAULT NULL,
+  `suctioned3To11` VARCHAR(255) DEFAULT NULL,
+  `suctioned7To3` VARCHAR(255) DEFAULT NULL,
+  `suturesStaplesStrips3To11` VARCHAR(255) DEFAULT NULL,
+  `suturesStaplesStrips7To3` VARCHAR(255) DEFAULT NULL,
+  `temp11To7` VARCHAR(255) DEFAULT NULL,
+  `temp3To11` VARCHAR(255) DEFAULT NULL,
+  `temp7To3` VARCHAR(255) DEFAULT NULL,
+  `toileting1Extensive11To7` BIT(1) DEFAULT NULL,
+  `toileting1Extensive3To11` BIT(1) DEFAULT NULL,
+  `toileting1Extensive7To3` BIT(1) DEFAULT NULL,
+  `toileting2Extensive11To7` BIT(1) DEFAULT NULL,
+  `toileting2Extensive3To11` BIT(1) DEFAULT NULL,
+  `toileting2Extensive7To3` BIT(1) DEFAULT NULL,
+  `toiletingIndependent11To7` BIT(1) DEFAULT NULL,
+  `toiletingIndependent3To11` BIT(1) DEFAULT NULL,
+  `toiletingIndependent7To3` BIT(1) DEFAULT NULL,
+  `toiletingLimited11To7` BIT(1) DEFAULT NULL,
+  `toiletingLimited3To11` BIT(1) DEFAULT NULL,
+  `toiletingLimited7To3` BIT(1) DEFAULT NULL,
+  `toiletingTotalDependence11To7` BIT(1) DEFAULT NULL,
+  `toiletingTotalDependence3To11` BIT(1) DEFAULT NULL,
+  `toiletingTotalDependence7To3` BIT(1) DEFAULT NULL,
+  `totalDependence11To7` VARCHAR(255) DEFAULT NULL,
+  `totalDependence3To11` VARCHAR(255) DEFAULT NULL,
+  `totalDependence7To3` VARCHAR(255) DEFAULT NULL,
+  `trachCare11To7` VARCHAR(255) DEFAULT NULL,
+  `trachCare3To11` VARCHAR(255) DEFAULT NULL,
+  `trachCare7To3` VARCHAR(255) DEFAULT NULL,
+  `transfer1Extensive11To7` BIT(1) DEFAULT NULL,
+  `transfer1Extensive3To11` BIT(1) DEFAULT NULL,
+  `transfer1Extensive7To3` BIT(1) DEFAULT NULL,
+  `transfer2Extensive11To7` BIT(1) DEFAULT NULL,
+  `transfer2Extensive3To11` BIT(1) DEFAULT NULL,
+  `transfer2Extensive7To3` BIT(1) DEFAULT NULL,
+  `transferIndepemdent11To7` BIT(1) DEFAULT NULL,
+  `transferIndepemdent3To11` BIT(1) DEFAULT NULL,
+  `transferIndepemdent7To3` BIT(1) DEFAULT NULL,
+  `transferLimited11To7` BIT(1) DEFAULT NULL,
+  `transferLimited3To11` BIT(1) DEFAULT NULL,
+  `transferLimited7To3` BIT(1) DEFAULT NULL,
+  `transferTotalIndependence11To7` BIT(1) DEFAULT NULL,
+  `transferTotalIndependence3To11` BIT(1) DEFAULT NULL,
+  `transferTotalIndependence7To3` BIT(1) DEFAULT NULL,
+  `wound3To11` VARCHAR(255) DEFAULT NULL,
+  `wound7To3` VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY  (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+
+
+ -- ----------------------  Version 0.69 -------------------------------
+
+-- -----------mayank chandela(2010-06-04)------------------------
+
+ALTER TABLE residentassessmentformpage4 ADD COLUMN peripheralType VARCHAR(255);
+ALTER TABLE residentassessmentformpage4 ADD COLUMN peripheralLocation VARCHAR(255);
+ALTER TABLE residentassessmentformpage4 ADD COLUMN peripheralDate DATETIME;
+ALTER TABLE residentassessmentformpage4 ADD COLUMN peripheralNA TINYINT(1);
+ALTER TABLE residentassessmentformpage4 ADD COLUMN centralLineType VARCHAR(255);
+ALTER TABLE residentassessmentformpage4 ADD COLUMN centralLineLocation VARCHAR(255);
+ALTER TABLE residentassessmentformpage4 ADD COLUMN centralLineDate DATETIME;
+ALTER TABLE residentassessmentformpage4 ADD COLUMN centralLineNA TINYINT(1);
+ALTER TABLE residentassessmentformpage4 ADD COLUMN shuntType VARCHAR(255);
+ALTER TABLE residentassessmentformpage4 ADD COLUMN shuntLocation VARCHAR(255);
+ALTER TABLE residentassessmentformpage4 ADD COLUMN shuntBruit VARCHAR(255);
+ALTER TABLE residentassessmentformpage4 ADD COLUMN shuntThrill VARCHAR(255);
+ALTER TABLE residentassessmentformpage4 ADD COLUMN dizzinessOn VARCHAR(255);
+ALTER TABLE residentassessmentformpage4 ADD COLUMN jVd TINYINT(1);
+ALTER TABLE residentassessmentformpage4 ADD COLUMN chestPain TINYINT(1);
+ALTER TABLE residentassessmentformpage4 ADD COLUMN shortnessOfBreath INT(11);
+ALTER TABLE residentassessmentformpage4 ADD COLUMN pittingValue VARCHAR(255);
+ALTER TABLE residentassessmentformpage4 ADD COLUMN soundLocation VARCHAR(255);
+ALTER TABLE residentassessmentformpage4 ADD COLUMN wheezeLocation VARCHAR(255);
+ALTER TABLE residentassessmentformpage4 ADD COLUMN ralesLocation VARCHAR(255);
+ALTER TABLE residentassessmentformpage4 ADD COLUMN coughType INT(11);
+ALTER TABLE residentassessmentformpage4 ADD COLUMN dryness TINYINT(1); 
+ 
+ -- Vinod Kumar (2010-06-04)
+ 
+ ALTER TABLE residentdiagnosis ADD dateConfirmed DATE ;
+ 
+ -- Version 0.70 ------------------
+ 
+ -- ---------- Vinod kumar (2010-06-07) -----------
+ 
+ALTER TABLE dietarycommunicationform ADD COLUMN formId INT;
+ALTER TABLE enteralfeeding ADD COLUMN formId INT;
+ALTER TABLE dietaryplazahealth ADD COLUMN formId INT;
+ 
+-- ----------------- version 0.71 --------------------
+
+-- -------------------  Vinod kumar (2010-06-08) ----------------------
+
+CREATE TABLE `AmbulationWeight` (
+   `serial` INT(11) NOT NULL AUTO_INCREMENT,
+   `ambulationType` VARCHAR(255) DEFAULT NULL,
+   `weight` DOUBLE DEFAULT NULL,
+   PRIMARY KEY (`serial`)
+ ) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- -------------------  Vinod kumar (2010-06-09) for learning text field ---------------------------------- 
+ALTER TABLE ptotstspeechlanguage MODIFY speechEvalOtherField INT(11) DEFAULT 0;
+ALTER TABLE ptotstspeechlanguage ADD FOREIGN KEY (speechEvalOtherField) REFERENCES richtextfield(rtfId);
+
+ALTER TABLE ptotstspeechlanguage MODIFY treatmentDiagnosis INT(11) DEFAULT 0;
+ALTER TABLE ptotstspeechlanguage ADD FOREIGN KEY (treatmentDiagnosis) REFERENCES richtextfield(rtfId);
+
+ALTER TABLE ptotstspeechlanguage MODIFY initialAssessmentRefBy INT(11) DEFAULT 0;
+ALTER TABLE ptotstspeechlanguage ADD FOREIGN KEY (initialAssessmentRefBy) REFERENCES richtextfield(rtfId);
+
+ALTER TABLE ptotstspeechlanguage MODIFY initialAssessmentPmh INT(11) DEFAULT 0;
+ALTER TABLE ptotstspeechlanguage ADD FOREIGN KEY (initialAssessmentPmh) REFERENCES richtextfield(rtfId);
+
+ALTER TABLE ptotstspeechlanguage MODIFY initialAssessmentPrecautions INT(11) DEFAULT 0;
+ALTER TABLE ptotstspeechlanguage ADD FOREIGN KEY (initialAssessmentPrecautions) REFERENCES richtextfield(rtfId);
+
+ALTER TABLE ptotstspeechlanguage MODIFY initialAssessmentRecentTherapyNaField INT(11) DEFAULT 0;
+ALTER TABLE ptotstspeechlanguage ADD FOREIGN KEY (initialAssessmentRecentTherapyNaField) REFERENCES richtextfield(rtfId);
+
+ALTER TABLE ptotstspeechlanguage MODIFY evalOtherField INT(11) DEFAULT 0;
+ALTER TABLE ptotstspeechlanguage ADD FOREIGN KEY (evalOtherField) REFERENCES richtextfield(rtfId);
+
+ALTER TABLE ptotstspeechlanguage MODIFY hearingAidedWfl INT(11) DEFAULT 0;
+ALTER TABLE ptotstspeechlanguage ADD FOREIGN KEY (hearingAidedWfl) REFERENCES richtextfield(rtfId);
+
+ALTER TABLE ptotstspeechlanguage MODIFY comprehensionWfl INT(11) DEFAULT 0;
+ALTER TABLE ptotstspeechlanguage ADD FOREIGN KEY (comprehensionWfl) REFERENCES richtextfield(rtfId);
+
+ALTER TABLE ptotstspeechlanguage MODIFY speechWfl INT(11) DEFAULT 0;
+ALTER TABLE ptotstspeechlanguage ADD FOREIGN KEY (speechWfl) REFERENCES richtextfield(rtfId);
+
+ALTER TABLE ptotstspeechlanguage MODIFY oralMotorWfl INT(11) DEFAULT 0;
+ALTER TABLE ptotstspeechlanguage ADD FOREIGN KEY (oralMotorWfl) REFERENCES richtextfield(rtfId);
+
+ALTER TABLE ptotstspeechlanguage MODIFY voiceWfl INT(11) DEFAULT 0;
+ALTER TABLE ptotstspeechlanguage ADD FOREIGN KEY (voiceWfl) REFERENCES richtextfield(rtfId);
+
+ALTER TABLE ptotstspeechlanguage MODIFY evalOtherWfl INT(11) DEFAULT 0;
+ALTER TABLE ptotstspeechlanguage ADD FOREIGN KEY (evalOtherWfl) REFERENCES richtextfield(rtfId);
+
+ALTER TABLE ptotstspeechlanguage MODIFY cognitionImpaired INT(11) DEFAULT 0;
+ALTER TABLE ptotstspeechlanguage ADD FOREIGN KEY (cognitionImpaired) REFERENCES richtextfield(rtfId);
+
+ALTER TABLE ptotstspeechlanguage MODIFY hearingAidedImpaired INT(11) DEFAULT 0;
+ALTER TABLE ptotstspeechlanguage ADD FOREIGN KEY (hearingAidedImpaired) REFERENCES richtextfield(rtfId);
+
+ALTER TABLE ptotstspeechlanguage MODIFY comprehensionImpaired INT(11) DEFAULT 0;
+ALTER TABLE ptotstspeechlanguage ADD FOREIGN KEY (comprehensionImpaired) REFERENCES richtextfield(rtfId);
+
+ALTER TABLE ptotstspeechlanguage MODIFY speechImpaired INT(11) DEFAULT 0;
+ALTER TABLE ptotstspeechlanguage ADD FOREIGN KEY (speechImpaired) REFERENCES richtextfield(rtfId);
+
+ALTER TABLE ptotstspeechlanguage MODIFY oralMotorImpaired INT(11) DEFAULT 0;
+ALTER TABLE ptotstspeechlanguage ADD FOREIGN KEY (oralMotorImpaired) REFERENCES richtextfield(rtfId);
+
+ALTER TABLE ptotstspeechlanguage MODIFY voiceImpaired INT(11) DEFAULT 0;
+ALTER TABLE ptotstspeechlanguage ADD FOREIGN KEY (voiceImpaired) REFERENCES richtextfield(rtfId);
+
+ALTER TABLE ptotstspeechlanguage MODIFY evalOtherImpaired INT(11) DEFAULT 0;
+ALTER TABLE ptotstspeechlanguage ADD FOREIGN KEY (evalOtherImpaired) REFERENCES richtextfield(rtfId);
+
+-- ------------- Vinod kumar (2010-06-10) ------------------------
+
+ALTER TABLE ptotstspeechlanguage MODIFY evalOtherComments INT(11) DEFAULT 0;
+ALTER TABLE ptotstspeechlanguage ADD FOREIGN KEY (evalOtherComments) REFERENCES notes(SERIAL);
+
+ALTER TABLE ptotstspeechlanguage MODIFY voiceComments INT(11) DEFAULT 0;
+ALTER TABLE ptotstspeechlanguage ADD FOREIGN KEY (voiceComments) REFERENCES notes(SERIAL);
+
+ALTER TABLE ptotstspeechlanguage MODIFY oralMotorComments INT(11) DEFAULT 0;
+ALTER TABLE ptotstspeechlanguage ADD FOREIGN KEY (oralMotorComments) REFERENCES notes(SERIAL);
+
+ALTER TABLE ptotstspeechlanguage MODIFY speechComments INT(11) DEFAULT 0;
+ALTER TABLE ptotstspeechlanguage ADD FOREIGN KEY (speechComments) REFERENCES notes(SERIAL);
+
+ALTER TABLE ptotstspeechlanguage MODIFY comprehensionComments INT(11) DEFAULT 0;
+ALTER TABLE ptotstspeechlanguage ADD FOREIGN KEY (comprehensionComments) REFERENCES notes(SERIAL);
+
+
+ALTER TABLE ptotstspeechlanguage MODIFY hearingAidedComments INT(11) DEFAULT 0;
+ALTER TABLE ptotstspeechlanguage ADD FOREIGN KEY (hearingAidedComments) REFERENCES notes(SERIAL);
+
+ALTER TABLE ptotstspeechlanguage MODIFY cognitionComments INT(11) DEFAULT 0;
+ALTER TABLE ptotstspeechlanguage ADD FOREIGN KEY (cognitionComments) REFERENCES notes(SERIAL);
+
+ALTER TABLE ptotstspeechlanguage MODIFY initialAssessmentPlof INT(11) DEFAULT 0;
+ALTER TABLE ptotstspeechlanguage ADD FOREIGN KEY (initialAssessmentPlof) REFERENCES notes(SERIAL);
+
+-- ---------------------  Vinod Kumar (2010-06-10) Diagnosis -------------------------
+
+ALTER TABLE residentdiagnosis ADD COLUMN addedBy INT(11) DEFAULT NULL;
+
+ALTER TABLE residentdiagnosis ADD FOREIGN KEY(addedBy) REFERENCES users(SERIAL);
+
+ALTER TABLE residentdiagnosis ADD COLUMN discontinueBy INT(11) DEFAULT NULL;
+
+ALTER TABLE residentdiagnosis ADD FOREIGN KEY(discontinueBy) REFERENCES users(SERIAL);
+
+ALTER TABLE residentdiagnosis ADD COLUMN confirmedBy INT(11) DEFAULT NULL;
+
+ALTER TABLE residentdiagnosis ADD FOREIGN KEY(confirmedBy) REFERENCES users(SERIAL);
+ 
+-- ------------------mayank chandela(2010-06-10)---------------------------------------------------
+
+ALTER TABLE ptotstspeechlanguage MODIFY planOfTreatmentLongTerm INT(11) DEFAULT 0;
+ALTER TABLE ptotstspeechlanguage ADD FOREIGN KEY (planOfTreatmentLongTerm) REFERENCES notes(SERIAL);
+
+ALTER TABLE ptotstspeechlanguage MODIFY planOfTreatmentShortTerm INT(11) DEFAULT 0;
+ALTER TABLE ptotstspeechlanguage ADD FOREIGN KEY (planOfTreatmentShortTerm) REFERENCES notes(SERIAL);
+
+ALTER TABLE ptotstspeechlanguage MODIFY reasonForReferral INT(11) DEFAULT 0;
+ALTER TABLE ptotstspeechlanguage ADD FOREIGN KEY (reasonForReferral) REFERENCES notes(SERIAL);
+
+ -- ----------------  Vinod kumar (2010-06-14) ------------------------------------
+ 
+ALTER TABLE dietaryalertsheet MODIFY descriptionOfProblem INT(11);
+ALTER TABLE dietaryalertsheet ADD FOREIGN KEY(descriptionOfProblem) REFERENCES notes(SERIAL);
+
+ALTER TABLE dietaryalertsheet MODIFY actionToBeTaken INT(11);
+ALTER TABLE dietaryalertsheet ADD FOREIGN KEY(actionToBeTaken) REFERENCES notes(SERIAL);=======
+-- -------------------mayank chandela(2010-06-14)-----------------------------------------------------
+
+ALTER TABLE dietaryresidentdiagnosis ADD COLUMN appetite INT(11) DEFAULT 0; 
+ALTER TABLE dietaryresidentdiagnosis MODIFY diet INT(11) DEFAULT 0;
+ALTER TABLE dietaryresidentdiagnosis ADD FOREIGN KEY (diet) REFERENCES richtextfield(rtfId);
+
+ALTER TABLE dietaryresidentdiagnosis MODIFY foodAllergy INT(11) DEFAULT 0;
+ALTER TABLE dietaryresidentdiagnosis ADD FOREIGN KEY (foodAllergy) REFERENCES richtextfield(rtfId);
+
+ALTER TABLE dietaryresidentdiagnosis MODIFY mentalStatus INT(11) DEFAULT 0;
+ALTER TABLE dietaryresidentdiagnosis ADD FOREIGN KEY (mentalStatus) REFERENCES richtextfield(rtfId);
+
+ALTER TABLE dietaryresidentdiagnosis MODIFY physicalDis INT(11) DEFAULT 0;
+ALTER TABLE dietaryresidentdiagnosis ADD FOREIGN KEY (physicalDis) REFERENCES richtextfield(rtfId);
+
+ALTER TABLE dietaryresidentdiagnosis MODIFY cultural INT(11) DEFAULT 0;
+ALTER TABLE dietaryresidentdiagnosis ADD FOREIGN KEY (cultural) REFERENCES richtextfield(rtfId);
+
+
+-- -----------------------version 0.74 -----------------------------------------------------
+-- -------------------mayank chandela (2010-06-18)------------------------------------------
+-- -------------------physician Order diets-------------------------------------------------
+
+CREATE TABLE `physicianorderdiets` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `asSnack` VARCHAR(255) DEFAULT NULL,
+  `calorieCount` INT(11) DEFAULT NULL,
+  `dietConsistency` VARCHAR(255) DEFAULT NULL,
+  `dietType` VARCHAR(255) DEFAULT NULL,
+  `dietary` VARCHAR(255) DEFAULT NULL,
+  `fluidConsistency` VARCHAR(255) DEFAULT NULL,
+  `fluidRestriction` VARCHAR(255) DEFAULT NULL,
+  `milileters` VARCHAR(255) DEFAULT NULL,
+  `mlDay` VARCHAR(255) DEFAULT NULL,
+  `number` VARCHAR(255) DEFAULT NULL,
+  `nursing` VARCHAR(255) DEFAULT NULL,
+  `residentId` INT(11) DEFAULT NULL,
+  `supplements` VARCHAR(255) DEFAULT NULL,
+  `weights` VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY  (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `physicianOrderRecord` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `dateCreated` DATETIME DEFAULT NULL,
+  `formId` INT(11) DEFAULT NULL,
+  `formType` VARCHAR(255) DEFAULT NULL,
+  `lastModified` DATETIME DEFAULT NULL,
+  `residentId` INT(11) DEFAULT NULL,
+  `status` VARCHAR(255) DEFAULT NULL,
+  `user` VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY  (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+
+
+-- -------------gaurav(2010-06-23)--------------------
+
+CREATE TABLE `physicianorderconsultations` (
+  `Serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `Others` VARCHAR(225) DEFAULT NULL,
+  `Reason` VARCHAR(225) DEFAULT NULL,
+  `Other` INT(1) DEFAULT NULL,
+  `OralSurgery` INT(1) DEFAULT NULL,
+  `Ld` INT(1) DEFAULT NULL,
+  `Ortho` INT(1) DEFAULT NULL,
+  `WoundCare` INT(1) DEFAULT NULL,
+  `Physicolgy` INT(1) DEFAULT NULL,
+  `Psychiatry` INT(1) DEFAULT NULL,
+  `Ent` INT(1) DEFAULT NULL,
+  `GeneralSurgery` INT(1) DEFAULT NULL,
+  `Vascular` INT(1) DEFAULT NULL,
+  `Gynecology` INT(1) DEFAULT NULL,
+  `HemeOnc` INT(1) DEFAULT NULL,
+  `Pulmonology` INT(1) DEFAULT NULL,
+  `Gu` INT(1) DEFAULT NULL,
+  `Endocrinology` INT(1) DEFAULT NULL,
+  `Renal` INT(1) DEFAULT NULL,
+  `Opdanology` INT(1) DEFAULT NULL,
+  `Dental` INT(1) DEFAULT NULL,
+  `Optometry` INT(1) DEFAULT NULL,
+  `padiatry` INT(1) DEFAULT NULL,
+  `cardiology` INT(1) DEFAULT NULL,
+  `Gi` INT(1) DEFAULT NULL,
+  `residentId` INT(11) DEFAULT NULL,
+  PRIMARY KEY (`Serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+
+-- --------------gaurav(2010-06-23)--------------------------
+
+CREATE TABLE `physicianorderdiagnostictests` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `CarotidUs` INT(1) DEFAULT NULL,
+  `Mbs` INT(1) DEFAULT NULL,
+  `Pft` INT(1) DEFAULT NULL,
+  `Eeg` INT(1) DEFAULT NULL,
+  `Emg` INT(1) DEFAULT NULL,
+  `Tee` INT(1) DEFAULT NULL,
+  `Echo` INT(1) DEFAULT NULL,
+  `Colonoscope` INT(1) DEFAULT NULL,
+  `Mammogram` INT(1) DEFAULT NULL,
+  `Mra` INT(1) DEFAULT NULL,
+  `Egd` INT(1) DEFAULT NULL,
+  `Mri` INT(1) DEFAULT NULL,
+  `PetScan` INT(1) DEFAULT NULL,
+  `CTScan` INT(1) DEFAULT NULL,
+  `Venois` INT(1) DEFAULT NULL,
+  `Aterial` INT(1) DEFAULT NULL,
+  `SymptomatologyClinical` VARCHAR(225) DEFAULT NULL,
+  `ScheduleFor` VARCHAR(225) DEFAULT NULL,
+  `ScheduleAt` VARCHAR(225) DEFAULT NULL,
+  `Symptomatology` VARCHAR(225) DEFAULT NULL,
+  `ScheduleForDc` DATE DEFAULT NULL,
+  `US` VARCHAR(225) DEFAULT NULL,
+  `Xray` VARCHAR(225) DEFAULT NULL,
+  `Doppler` VARCHAR(225) DEFAULT NULL,
+  `residentId` INT(11) DEFAULT NULL,
+  PRIMARY KEY (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- ------------------ kriti (21-06-2010) -------------------------------
+
+
+CREATE TABLE `physicianorderrespiratorytherapy` (
+  `Serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `oxygen` INT(11) DEFAULT NULL,
+  `oxygenPercentage` INT(11) DEFAULT NULL,
+  `continuous` INT(1) DEFAULT NULL,
+  `PRN` INT(1) DEFAULT NULL,
+  `prnFor` INT(11) DEFAULT NULL,
+  `via` VARCHAR(225) DEFAULT NULL,
+  `pulseOximetryNumber` VARCHAR(225) DEFAULT NULL,
+  `pulseOximetryFrequency` VARCHAR(225) DEFAULT NULL,
+  `pulseOximetry` INT(11) DEFAULT NULL,
+  `trachCareNumber` VARCHAR(225) DEFAULT NULL,
+  `trachCareFrequency` VARCHAR(225) DEFAULT NULL,
+  `trachCare` INT(11) DEFAULT NULL,
+  `innerCannulaNumber` VARCHAR(225) DEFAULT NULL,
+  `innerCannulaFrequency` VARCHAR(225) DEFAULT NULL,
+  `trachSiteNumber` VARCHAR(225) DEFAULT NULL,
+  `trachSiteFrequency` VARCHAR(225) DEFAULT NULL,
+  `trachCausrNumber` VARCHAR(225) DEFAULT NULL,
+  `trachCausrFrequency` VARCHAR(225) DEFAULT NULL,
+  `chestPhysiotherapyNumber` VARCHAR(225) DEFAULT NULL,
+  `chestPhysiotherapyFrequency` VARCHAR(225) DEFAULT NULL,
+  `residentID` INT(11) DEFAULT NULL,
+  `PO` INT(11) DEFAULT NULL,
+  PRIMARY KEY (`Serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+ALTER TABLE physicianorderrecord ADD COLUMN  title VARCHAR(225) DEFAULT NULL;
+
+
+CREATE TABLE `physicianorderadvancedirectives` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `residentId` INT(11) DEFAULT NULL,
+  `onFile` INT(1) DEFAULT NULL,
+  `willPronde` INT(1) DEFAULT NULL,
+  `wishesToDiscuss` INT(1) DEFAULT NULL,
+  `notInterested` INT(1) DEFAULT NULL,
+  `advanceDirectivesReviewed` INT(1) DEFAULT NULL,
+  `DNR` VARCHAR(225) DEFAULT NULL,
+  `DNH` VARCHAR(225) DEFAULT NULL,
+  `advancedDirective` VARCHAR(225) DEFAULT NULL,
+  PRIMARY KEY (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+
+-- ------------------------------------ AARTI AHUJA (23-06-2010) ---------------------------------------------------
+
+CREATE TABLE `physicianordertreatment` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `skinInfection` INT(11) DEFAULT NULL,
+  `nutritional` TINYINT(1) DEFAULT NULL,
+  `weeklySkinAssessment` TINYINT(1) DEFAULT NULL,
+  `specialityMattress` TINYINT(1) DEFAULT NULL,
+  `woundPhysician` TINYINT(1) DEFAULT NULL,
+  `weeklyWoundEval` TINYINT(1) DEFAULT NULL,
+  `tp` TINYINT(1) DEFAULT NULL,
+  `chairCushion` TINYINT(1) DEFAULT NULL,
+  `residentId` INT(11) DEFAULT NULL,
+  `location` VARCHAR(255) DEFAULT NULL,
+  `applyProtective` TINYINT(1) DEFAULT NULL,
+  `skinSealants` TINYINT(1) DEFAULT NULL,
+  `other` TINYINT(1) DEFAULT NULL,
+  `hydrocolloid` TINYINT(1) DEFAULT NULL,
+  `days` TINYINT(1) DEFAULT NULL,
+  `foamDressing` TINYINT(1) DEFAULT NULL,
+  `protectiveBarrier` TINYINT(1) DEFAULT NULL,
+  PRIMARY KEY (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+
+
+-- --------------------- Suresh Rai (24-06-10)---------------------------
+
+CREATE TABLE `physicianordermedication` (
+   `serial` INT(11) NOT NULL AUTO_INCREMENT,
+   `daily` INT(11) DEFAULT NULL,
+   `dose` VARCHAR(255) DEFAULT NULL,
+   `duration1` VARCHAR(255) DEFAULT NULL,
+   `durationFrom` DATETIME DEFAULT NULL,
+   `durationTo` DATETIME DEFAULT NULL,
+   `formId` INT(11) DEFAULT NULL,
+   `frequency1` VARCHAR(255) DEFAULT NULL,
+   `frequency2` VARCHAR(255) DEFAULT NULL,
+   `instruction` VARCHAR(255) DEFAULT NULL,
+   `instructions` VARCHAR(255) DEFAULT NULL,
+   `medication` VARCHAR(255) DEFAULT NULL,
+   `prnIndication` VARCHAR(255) DEFAULT NULL,
+   `residentId` INT(11) DEFAULT NULL,
+   `route` VARCHAR(255) DEFAULT NULL,
+   PRIMARY KEY (`serial`)
+ ) ENGINE=INNODB DEFAULT CHARSET=latin1;
+ 
+-- ------------------------version 0.76---------------------------------------------------------------------------- 
+-- --------------------- Suresh Rai (25-06-10)---------------------------------------------------------------------
+
+CREATE TABLE `rehabilitationrestrorative` (
+   `serial` INT(11) NOT NULL AUTO_INCREMENT,
+   `apply` VARCHAR(255) DEFAULT NULL,
+   `applyFrequencyHip` VARCHAR(255) DEFAULT NULL,
+   `bendm` BIT(1) DEFAULT NULL,
+   `crossLege` BIT(1) DEFAULT NULL,
+   `days` VARCHAR(255) DEFAULT NULL,
+   `defaultShift` VARCHAR(255) DEFAULT NULL,
+   `discipline` VARCHAR(255) DEFAULT NULL,
+   `duration` VARCHAR(255) DEFAULT NULL,
+   `frequencyRehab` VARCHAR(255) DEFAULT NULL,
+   `frequencySplints` VARCHAR(255) DEFAULT NULL,
+   `oteval` BIT(1) DEFAULT NULL,
+   `pteval` BIT(1) DEFAULT NULL,
+   `remove` BIT(1) DEFAULT NULL,
+   `residentId` INT(11) DEFAULT NULL,
+   `restrotiveFrequency` VARCHAR(255) DEFAULT NULL,
+   `session` VARCHAR(255) DEFAULT NULL,
+   `steval` BIT(1) DEFAULT NULL,
+   `treatment` VARCHAR(255) DEFAULT NULL,
+   `type` VARCHAR(255) DEFAULT NULL,
+   PRIMARY KEY (`serial`)
+ ) ENGINE=INNODB DEFAULT CHARSET=latin1;
+ 
+--  -------------------------gaurav (2010-06-28)(Physician order miscellaneous)------------------------------
+CREATE TABLE `physicianordermiscellaneous` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `AmbulatiryStatus` VARCHAR(255) DEFAULT NULL,
+  `CallMd` VARCHAR(255) DEFAULT NULL,
+  `Device` VARCHAR(255) DEFAULT NULL,
+  `Dialysis` TINYBLOB,
+  `DischargeOrder` VARCHAR(255) DEFAULT NULL,
+  `Frequency` VARCHAR(255) DEFAULT NULL,
+  `IsolationPrecautions` VARCHAR(255) DEFAULT NULL,
+  `LocationAmbulatoryStatus` VARCHAR(255) DEFAULT NULL,
+  `LocationDialysis` VARCHAR(255) DEFAULT NULL,
+  `Measure` VARCHAR(255) DEFAULT NULL,
+  `Organism` VARCHAR(255) DEFAULT NULL,
+  `ShowerDays` TINYBLOB,
+  `SpecifyLocation` VARCHAR(255) DEFAULT NULL,
+  `SpecifyReasonForTransfer` VARCHAR(255) DEFAULT NULL,
+  `WeightBearingStatus` VARCHAR(255) DEFAULT NULL,
+  `residentId` INT(11) DEFAULT NULL,
+  PRIMARY KEY (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+
+-- --------------------------------version 0.77---------------------------------------------------------------
+-- ---------------------------mayank chandela(2010-29-06)(treatment stages columns added)-----------------------------------------------------
+
+ALTER TABLE physicianordertreatment ADD COLUMN applyNoSting INT(1) DEFAULT 0;
+ALTER TABLE physicianordertreatment ADD COLUMN cleanseArea INT(1) DEFAULT 0;
+ALTER TABLE physicianordertreatment ADD COLUMN daysAndPrn INT(1) DEFAULT 0;
+ALTER TABLE physicianordertreatment ADD COLUMN hydrogel INT(1) DEFAULT 0;
+ALTER TABLE physicianordertreatment ADD COLUMN granulatingTissue INT(11) DEFAULT 0;
+
+--  -------------------------Suresh (2010-07-01)(Physician order Enteralprotocol and parentalnutritionalorderform)------------------------------
+
+ALTER TABLE physicianorderdiets
+ADD(formId INT);
+
+CREATE TABLE `physicianorderenteralprotocol` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `admission` VARCHAR(255) DEFAULT NULL,
+  `allergyHistory1` VARCHAR(255) DEFAULT NULL,
+  `allergyHistory2` VARCHAR(255) DEFAULT NULL,
+  `allergyHistory3` VARCHAR(255) DEFAULT NULL,
+  `bolus` BIT(1) DEFAULT NULL,
+  `bolusViaPumpML` VARCHAR(255) DEFAULT NULL,
+  `bolusViaPumpRatePerHour` VARCHAR(255) DEFAULT NULL,
+  `changeEquipment` VARCHAR(255) DEFAULT NULL,
+  `changeFeeding` VARCHAR(255) DEFAULT NULL,
+  `checkForResidual` VARCHAR(255) DEFAULT NULL,
+  `cleanseSite` VARCHAR(255) DEFAULT NULL,
+  `cleanseSiteWith` VARCHAR(255) DEFAULT NULL,
+  `dOB` DATETIME DEFAULT NULL,
+  `diagnosis1` VARCHAR(255) DEFAULT NULL,
+  `diagnosis2` VARCHAR(255) DEFAULT NULL,
+  `diagnosis3` VARCHAR(255) DEFAULT NULL,
+  `facilityName` VARCHAR(255) DEFAULT NULL,
+  `feeding` VARCHAR(255) DEFAULT NULL,
+  `feedingFor` VARCHAR(255) DEFAULT NULL,
+  `feedingFrequencyHoursPerDay` VARCHAR(255) DEFAULT NULL,
+  `feedingFrequencyMLPerHour` VARCHAR(255) DEFAULT NULL,
+  `feedingFrequencyTimesPerDay` VARCHAR(255) DEFAULT NULL,
+  `firstName` VARCHAR(255) DEFAULT NULL,
+  `flushBetweenMedication` VARCHAR(255) DEFAULT NULL,
+  `flushHours` VARCHAR(255) DEFAULT NULL,
+  `flushML` VARCHAR(255) DEFAULT NULL,
+  `gravity` BIT(1) DEFAULT NULL,
+  `height` VARCHAR(255) DEFAULT NULL,
+  `hysician` VARCHAR(255) DEFAULT NULL,
+  `lastName` VARCHAR(255) DEFAULT NULL,
+  `notedBy` DATETIME DEFAULT NULL,
+  `notedByDetails` VARCHAR(255) DEFAULT NULL,
+  `notedByTime` VARCHAR(255) DEFAULT NULL,
+  `nurse` DATETIME DEFAULT NULL,
+  `nurseSign` VARCHAR(255) DEFAULT NULL,
+  `nurseTime` VARCHAR(255) DEFAULT NULL,
+  `oB` VARCHAR(255) DEFAULT NULL,
+  `otedBy` VARCHAR(255) DEFAULT NULL,
+  `peg` BIT(1) DEFAULT NULL,
+  `physician` DATETIME DEFAULT NULL,
+  `physicianFirstName` VARCHAR(255) DEFAULT NULL,
+  `physicianLastName` VARCHAR(255) DEFAULT NULL,
+  `physicianSign` VARCHAR(255) DEFAULT NULL,
+  `physicianTime` VARCHAR(255) DEFAULT NULL,
+  `placement` VARCHAR(255) DEFAULT NULL,
+  `pump` BIT(1) DEFAULT NULL,
+  `residentId` INT(11) DEFAULT NULL,
+  `residualML` VARCHAR(255) DEFAULT NULL,
+  `residualMLNotifyMD` VARCHAR(255) DEFAULT NULL,
+  `tArea` VARCHAR(255) DEFAULT NULL,
+  `timeDown` VARCHAR(255) DEFAULT NULL,
+  `timeUp` VARCHAR(255) DEFAULT NULL,
+  `totalCalories` VARCHAR(255) DEFAULT NULL,
+  `totalNutrient` VARCHAR(255) DEFAULT NULL,
+  `tubeFeeding` VARCHAR(255) DEFAULT NULL,
+  `tubeSize` VARCHAR(255) DEFAULT NULL,
+  `urse` VARCHAR(255) DEFAULT NULL,
+  `weight` VARCHAR(255) DEFAULT NULL,
+  `yCheckBox` BIT(1) DEFAULT NULL,
+  `yNotReplaceCheckBox` BIT(1) DEFAULT NULL,
+  PRIMARY KEY (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `parentalnutritionalorderform` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `aminoAcids` VARCHAR(255) DEFAULT NULL,
+  `baseSolution` VARCHAR(255) DEFAULT NULL,
+  `calciumGluconate` VARCHAR(255) DEFAULT NULL,
+  `date` VARCHAR(255) DEFAULT NULL,
+  `dateOrdered` VARCHAR(255) DEFAULT NULL,
+  `dextrose` VARCHAR(255) DEFAULT NULL,
+  `faculty` VARCHAR(255) DEFAULT NULL,
+  `fatEmulsion` VARCHAR(255) DEFAULT NULL,
+  `labCbfComment` VARCHAR(255) DEFAULT NULL,
+  `magnesiumSulphate` VARCHAR(255) DEFAULT NULL,
+  `mdName` VARCHAR(255) DEFAULT NULL,
+  `mdSignature` VARCHAR(255) DEFAULT NULL,
+  `multiraceCone` VARCHAR(255) DEFAULT NULL,
+  `mviAdult` VARCHAR(255) DEFAULT NULL,
+  `oneHrRamp` VARCHAR(255) DEFAULT NULL,
+  `oneHrTaper` VARCHAR(255) DEFAULT NULL,
+  `orderedValid` VARCHAR(255) DEFAULT NULL,
+  `otherAdditive` VARCHAR(255) DEFAULT NULL,
+  `over` VARCHAR(255) DEFAULT NULL,
+  `patientName` VARCHAR(255) DEFAULT NULL,
+  `porassiumPhosphate` VARCHAR(255) DEFAULT NULL,
+  `potassiumAcetate` VARCHAR(255) DEFAULT NULL,
+  `potassiumChloride` VARCHAR(255) DEFAULT NULL,
+  `ptWgt` VARCHAR(255) DEFAULT NULL,
+  `regularHumenInsulin` VARCHAR(255) DEFAULT NULL,
+  `residentId` INT(11) DEFAULT NULL,
+  `rm` VARCHAR(255) DEFAULT NULL,
+  `rnName` VARCHAR(255) DEFAULT NULL,
+  `rnSignature` VARCHAR(255) DEFAULT NULL,
+  `sodiumAcetate` VARCHAR(255) DEFAULT NULL,
+  `sodiumChloride` VARCHAR(255) DEFAULT NULL,
+  `sodiumPhosphate` VARCHAR(255) DEFAULT NULL,
+  `totalVolume` VARCHAR(255) DEFAULT NULL,
+  `unit` VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+
+-- ------------------------ Kriti(2010-06-29)(Physician Order Safety Precautions)------------------------------------
+
+CREATE TABLE `physicianordersafetyprecautions` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `residentId` INT(11) DEFAULT NULL,
+  `fallRisk` VARCHAR(225) DEFAULT NULL,
+  `bedAlarm` INT(1) DEFAULT NULL,
+  `wcAlarm` INT(1) DEFAULT NULL,
+  `sensorAlarm` INT(1) DEFAULT NULL,
+  `wedgeCushion` INT(1) DEFAULT NULL,
+  `dicem` INT(1) DEFAULT NULL,
+  `seatBelt` INT(1) DEFAULT NULL,
+  `selfRelease` INT(1) DEFAULT NULL,
+  `floorMats` INT(1) DEFAULT NULL,
+  `selfR` VARCHAR(225) DEFAULT NULL,
+  `sideRails` VARCHAR(225) DEFAULT NULL,
+  `reason` VARCHAR(225) DEFAULT NULL,
+  `wandorGuard` VARCHAR(225) DEFAULT NULL,
+  `expirationDate` DATE DEFAULT NULL,
+  `outOnPass` VARCHAR(225) DEFAULT NULL,
+  `specialInstruction` VARCHAR(225) DEFAULT NULL,
+  `alcoholicBeverages` VARCHAR(225) DEFAULT NULL,
+  `limit1` VARCHAR(225) DEFAULT NULL,
+  PRIMARY KEY (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- ----------------------------- AARTI AHUJA (2010-30-06)-------------------------------------------------
+
+ALTER TABLE physicianordertreatment ADD COLUMN stage INT(11) DEFAULT 0;
+
+-- ----------------------------- AARTI AHUJA (2010-01-07)-------------------------------------------------
+
+ALTER TABLE physicianordertreatment ADD COLUMN santyl TINYINT(1)  DEFAULT NULL;
+ALTER TABLE physicianordertreatment ADD COLUMN covrsite TINYINT(1)  DEFAULT NULL;
+ALTER TABLE physicianordertreatment ADD COLUMN cddDaily TINYINT(1)  DEFAULT NULL;
+ALTER TABLE physicianordertreatment ADD COLUMN other3or4 TINYINT(1)  DEFAULT NULL;
+ALTER TABLE physicianordertreatment ADD COLUMN otherTxt VARCHAR(255)  DEFAULT NULL;
+ALTER TABLE physicianordertreatment ADD COLUMN changeTxt VARCHAR(255)  DEFAULT NULL;
+ALTER TABLE physicianordertreatment ADD COLUMN hydrogelWith TINYINT(1)  DEFAULT NULL;
+ALTER TABLE physicianordertreatment ADD COLUMN cdd TINYINT(1)  DEFAULT NULL;
+ALTER TABLE physicianordertreatment ADD COLUMN q VARCHAR(255)  DEFAULT NULL;
+ALTER TABLE physicianordertreatment ADD COLUMN allevyn TINYINT(1)  DEFAULT NULL;
+ALTER TABLE physicianordertreatment ADD COLUMN covrsiteWound TINYINT(1)  DEFAULT NULL;
+ALTER TABLE physicianordertreatment ADD COLUMN woundOther TINYINT(1)  DEFAULT NULL;
+ALTER TABLE physicianordertreatment ADD COLUMN woundOtherTxt VARCHAR(255)  DEFAULT NULL;
+ALTER TABLE physicianordertreatment ADD COLUMN silver TINYINT(1)  DEFAULT NULL;
+
+ALTER TABLE physicianordertreatment ADD COLUMN cleanse TINYINT(1)  DEFAULT NULL;
+ALTER TABLE physicianordertreatment ADD COLUMN antiFungal VARCHAR(255)  DEFAULT NULL;
+
+
+-- ----------------------------- AARTI AHUJA (2010-02-07)-------------------------------------------------
+
+ALTER TABLE physicianordertreatment ADD COLUMN heelLift TINYINT(1)  DEFAULT NULL;
+ALTER TABLE physicianordertreatment ADD COLUMN offLoad TINYINT(1)  DEFAULT NULL;
+ALTER TABLE physicianordertreatment ADD COLUMN barrierFilm TINYINT(1)  DEFAULT NULL;
+
+ALTER TABLE physicianordertreatment ADD COLUMN ota TINYINT(1)  DEFAULT NULL;
+ALTER TABLE physicianordertreatment ADD COLUMN shift TINYINT(1)  DEFAULT NULL;
+ALTER TABLE physicianordertreatment ADD COLUMN cleanseNs TINYINT(1)  DEFAULT NULL;
+ALTER TABLE physicianordertreatment ADD COLUMN removeStaples TINYINT(1)  DEFAULT NULL;
+ALTER TABLE physicianordertreatment ADD COLUMN locationWound VARCHAR(255)  DEFAULT NULL;
+ALTER TABLE physicianordertreatment ADD COLUMN dailyBid VARCHAR(255)  DEFAULT NULL;
+ALTER TABLE physicianordertreatment ADD COLUMN dateOn DATE  DEFAULT NULL;
+
+
+ALTER TABLE physicianordertreatment ADD COLUMN miscellaneous TINYINT(1)  DEFAULT NULL;
+ALTER TABLE physicianordertreatment ADD COLUMN capillaryRefill TINYINT(1)  DEFAULT NULL;
+ALTER TABLE physicianordertreatment ADD COLUMN pedalPulse TINYINT(1)  DEFAULT NULL;
+ALTER TABLE physicianordertreatment ADD COLUMN locationSkinTears VARCHAR(255)  DEFAULT NULL;
+ALTER TABLE physicianordertreatment ADD COLUMN frequencyRefill VARCHAR(255)  DEFAULT NULL;
+ALTER TABLE physicianordertreatment ADD COLUMN locationPedalPulse VARCHAR(255)  DEFAULT NULL;
+ALTER TABLE physicianordertreatment ADD COLUMN frequencyPedalPulse VARCHAR(255)  DEFAULT NULL;
+
+-- mayank chandela(2010-07-21) form manager tables---------------------------------------------------------------------------
+-- Tab table ------------------------------
+
+CREATE TABLE `tab` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `tabName` VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY  (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- form table ----------------
+
+CREATE TABLE `form` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `formName` VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY  (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- form page table -----------
+
+CREATE TABLE `formpage` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `className` VARCHAR(255) DEFAULT NULL,
+  `pageNo` INT(11) DEFAULT NULL,
+  PRIMARY KEY  (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- tab_form table ----------------------
+
+CREATE TABLE `tab_form` (
+  `tab_serial` INT(11) NOT NULL,
+  `form_serial` INT(11) NOT NULL,
+  KEY `FKC9EA7B2EB9CB9674` (`tab_serial`),
+  KEY `FKC9EA7B2E9EEF19B2` (`form_serial`),
+  CONSTRAINT `FKC9EA7B2E9EEF19B2` FOREIGN KEY (`form_serial`) REFERENCES `form` (`serial`),
+  CONSTRAINT `FKC9EA7B2EB9CB9674` FOREIGN KEY (`tab_serial`) REFERENCES `tab` (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- form_formPage table -----------------
+
+CREATE TABLE `form_formpage` (
+  `form_serial` INT(11) NOT NULL,
+  `formPage_serial` INT(11) NOT NULL,
+  KEY `FKD0F7228E9F57F772` (`formPage_serial`),
+  KEY `FKD0F7228E9EEF19B2` (`form_serial`),
+  CONSTRAINT `FKD0F7228E9EEF19B2` FOREIGN KEY (`form_serial`) REFERENCES `form` (`serial`),
+  CONSTRAINT `FKD0F7228E9F57F772` FOREIGN KEY (`formPage_serial`) REFERENCES `formpage` (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- -------------------------------------------------Version (0.79)-------------------------------------------
+-- ------------------------Suresh P Rai (2010-07-30)(physician Order medication table changes)---------------
+
+ALTER TABLE physicianordermedication CHANGE  duration1 duration1 INT(11);
+ALTER TABLE physicianordermedication CHANGE  frequency1 frequency1 INT(11);
+ALTER TABLE physicianordermedication CHANGE  prnIndication prnIndication INT(11);
+
+
+-- ------------------------Suresh P Rai (2010-08-02)(medication table changes)---------------
+drop table if exists medication;
+CREATE TABLE `medication` (
+   `ndc` BIGINT(11) NOT NULL,
+   `code` VARCHAR(255) DEFAULT NULL,
+   `coustionary` VARCHAR(255) DEFAULT NULL,
+   `description` VARCHAR(255) DEFAULT NULL,
+   `name` VARCHAR(255) DEFAULT NULL,
+   `routeName` VARCHAR(255) DEFAULT NULL,
+   PRIMARY KEY (`ndc`)
+ ) ENGINE=INNODB DEFAULT CHARSET=latin1;
+ 
+ 
+-- ------------------------Suresh P Rai (2010-08-03)(residentassessmentformpage16 table changes)---------------
+ 
+ ALTER TABLE residentassessmentformpage16 
+add `residentId` INT(11) DEFAULT NULL;
+
+-- -----------------------Mayank chandela(2010-08-09)(medications table)---------------------------------------
+
+ALTER TABLE medications ADD COLUMN isPRN TINYINT(1)DEFAULT 0;
+ALTER TABLE medications ADD COLUMN reasonforPRN VARCHAR(255) DEFAULT NULL;
+
+insert  into `medicationtimeslot`(`slotNum`,`slotStartTime`,`slotEndTime`) values (1,'01:30 PM','11:59 PM'),(2,'08:00 AM','03:59 PM'),(2,'04:00 PM','11:59 PM'),(3,'08:00 AM','12:59 PM'),(3,'01:00 PM','06:29 PM'),(3,'06:30 PM','11:59 PM'),(4,'08:00 AM','11:59 AM'),(4,'12:00 PM','03:59 PM'),(4,'04:00 PM','07:59 PM'),(4,'08:00 PM','11:59 PM'),(5,'08:00 AM','10:59 AM'),(5,'11:00 AM','01:59 PM'),(5,'02:00 PM','04:29 PM'),(5,'05:00 PM','07:59 PM'),(5,'08:00 PM','11:59 PM'),(6,'06:00 AM','08:59 AM'),(6,'09:00 AM','11:59 AM'),(6,'12:00 PM','02:59 PM'),(6,'03:00 PM','05:59 PM'),(6,'06:00 PM','08:59 PM'),(6,'09:00 PM','11:59 PM'),(7,'06:00 AM','08:29 AM'),(7,'08:30 AM','10:59 AM'),(7,'11:00 AM','01:29 PM'),(7,'01:30 PM','03:59 PM'),(7,'04:00 PM','06:29 PM'),(7,'06:30 PM','08:59 PM'),(7,'09:00 PM','11:59 PM');
+
+-- --------------------------version(0.80)------------------------------------------------------
+-- ------------------------Suresh P Rai (2010-08-10)(dietaryresidentdiagnosis table changes)---------------
+
+ALTER TABLE dietaryresidentdiagnosis
+CHANGE diagnosis diagnosis VARCHAR(1024) DEFAULT NULL;
+-- --------------------------version(0.81)-----------------------------------------------
+-- --------------------------mayank chandela(2010-08-11)---------------------------------
+
+ALTER TABLE calculatedmedication ADD COLUMN userId INT(11) DEFAULT NULL;
+
+CREATE TABLE `prnmedication` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `dosage` VARCHAR(255) DEFAULT NULL,
+  `frequency` INT(11) DEFAULT NULL,
+  `medSerial` INT(11) DEFAULT NULL,
+  `medicationName` VARCHAR(255) DEFAULT NULL,
+  `residentId` INT(11) DEFAULT NULL,
+  `resonForPrn` VARCHAR(255) DEFAULT NULL,
+  `route` VARCHAR(255) DEFAULT NULL,
+  `timeStamp` DATETIME DEFAULT NULL,
+  `userId` INT(11) DEFAULT NULL,
+  PRIMARY KEY  (`serial`),
+  KEY `FKD4AD425B79519D3D` (`userId`),
+  CONSTRAINT `FKD4AD425B79519D3D` FOREIGN KEY (`userId`) REFERENCES `users` (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- -------------------------------version(0.82)------------------------------------------
+-- -------------------------------mayank chandela(2010-08-12)----------------------------
+
+ALTER TABLE physicianordermedication ADD COLUMN medicationId BIGINT(11) DEFAULT 0;
+ALTER TABLE medications ADD COLUMN medicationId BIGINT(11) DEFAULT 0;
+ALTER TABLE medications DROP COLUMN reasonforprn;
+
+-- -------------------------------version(0.83)------------------------------------------
+-- ------------------------------mayank chandela(2010-08-13)-----------------------------
+
+ALTER TABLE medicationTimeSlot ADD COLUMN frequencyType VARCHAR(255) DEFAULT NULL;
+TRUNCATE TABLE medicationtimeslot;
+INSERT  INTO `medicationtimeslot`(`slotNum`,`slotStartTime`,`slotEndTime`,`frequencyType`) VALUES (1,'09:00 AM','11:59 PM','DAILY'),(2,'09:00 AM','04:59 PM','2 x DAILY(BID)'),(2,'05:00 PM','11:59 PM','2 x DAILY(BID)'),(3,'09:00 AM','12:59 PM','3 x DAILY(TID)'),(3,'01:00 PM','04:59 PM','3 x DAILY(TID)'),(3,'05:00 PM','11:59 PM','3 x DAILY(TID)'),(4,'09:00 AM','12:59 PM','4 x DAILY(QID)'),(4,'01:00 PM','04:59 PM','4 x DAILY(QID)'),(4,'05:00 PM','08:59 PM','4 x DAILY(QID)'),(4,'09:00 PM','11:59 PM','4 x DAILY(QID)'),(5,'07:00 AM','10:59 AM','BEFORE MEALS(AC)'),(5,'11:00 AM','03:59 PM','BEFORE MEALS(AC)'),(5,'04:00 PM','11:59 PM','BEFORE MEALS(AC)'),(6,'08:30 AM','12:29 PM','AFTER MEALS(PC)'),(6,'12:30 PM','06:29 PM','AFTER MEALS(PC)'),(6,'06:30 PM','11:59 PM','AFTER MEALS(PC)'),(7,'08:00 AM','11:59 AM','WITH MEALS(WM)'),(7,'12:00 PM','04:59 PM','WITH MEALS(WM)'),(7,'05:00 PM','11:59 PM','WITH MEALS(WM)'),(8,'06:00 AM','01:59 PM','Q8 HOURS'),(8,'02:00 PM','09:59 PM','Q8 HOURS'),(8,'10:00 PM','11:59 PM','Q8 HOURS'),(9,'12:00 AM','05:59 AM','Q6 HOURS'),(9,'06:00 AM','11:59 AM','Q6 HOURS'),(9,'12:00 PM','05:59 PM','Q6 HOURS'),(9,'06:00 PM','11:59 PM','Q6 HOURS'),(10,'02:00 AM','05:59 AM','Q4 HOURS'),(10,'06:00 AM','11:59 AM','Q4 HOURS'),(10,'12:00 PM','01:59 PM','Q4 HOURS'),(10,'02:00 PM','05:59 PM','Q4 HOURS'),(10,'06:00 PM','09:59 PM','Q4 HOURS'),(10,'10:00 PM','11:59 PM','Q4 HOURS'),(11,'09:00 PM','11:59 PM','BEDTIME(HS)'),(12,'06:00 PM','11:59 PM','COUMADIN'),(13,'07:30 AM','04:29 PM','INSULIN'),(13,'04:30 PM','11:59 PM','INSULIN');
+
+ALTER TABLE physicianordermedication CHANGE daily doseAmount INT(11);
+ALTER TABLE physicianordermedication CHANGE instruction prnInstructionComments VARCHAR(255);
+ALTER TABLE physicianordermedication CHANGE frequency2 prnIndicationComments VARCHAR(255);
+
+CREATE TABLE `dialysisRecord` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `dateCreated` DATETIME DEFAULT NULL,
+  `formId` INT(11) DEFAULT NULL,
+  `formType` VARCHAR(255) DEFAULT NULL,
+  `lastModified` DATETIME DEFAULT NULL,
+  `notes` VARCHAR(255) DEFAULT NULL,
+  `residentId` INT(11) DEFAULT NULL,
+  `status` VARCHAR(255) DEFAULT NULL,
+  `user` VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY  (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- ---------------suresh p Rai(2010-08-30)--------------------------------------------
+
+CREATE TABLE `nursesnotesrecord` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `dateCreated` DATETIME DEFAULT NULL,
+  `formId` INT(11) DEFAULT NULL,
+  `formType` VARCHAR(255) DEFAULT NULL,
+  `lastModified` DATETIME DEFAULT NULL,
+  `notes` VARCHAR(255) DEFAULT NULL,
+  `residentId` INT(11) DEFAULT NULL,
+  `status` VARCHAR(255) DEFAULT NULL,
+  `user` VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- -------------- mayank chandela(2010-09-02)-----------------------------------------
+-- --------------residentAssessmentformPage1 changes----------------------------------
+
+
+ALTER TABLE residentassessmentformpage1 ADD COLUMN dnrOrder INT(11) DEFAULT 0;
+ALTER TABLE residentassessmentformpage1 ADD COLUMN livingWill INT(11) DEFAULT 0;
+ALTER TABLE residentassessmentformpage1 ADD COLUMN healthCareProxy INT(11) DEFAULT 0;
+
+
+-- ---------------suresh p Rai(2010-09-03)--------------------------------------------
+
+ALTER TABLE residentassessmentformpage4 ADD  `MidlineDate` DATETIME DEFAULT NULL;
+ALTER TABLE residentassessmentformpage4 ADD  `MidlineLocation` VARCHAR(255) DEFAULT NULL;
+ALTER TABLE residentassessmentformpage4 ADD  `MidlineNA` BIT(1) DEFAULT NULL;
+ALTER TABLE residentassessmentformpage4 ADD  `MidlineType` VARCHAR(255) DEFAULT NULL;
+ALTER TABLE residentassessmentformpage4 ADD  `PortDate` DATETIME DEFAULT NULL;
+ALTER TABLE residentassessmentformpage4 ADD  `PortLocation` VARCHAR(255) DEFAULT NULL;
+ALTER TABLE residentassessmentformpage4 ADD  `PortNA` BIT(1) DEFAULT NULL;
+ALTER TABLE residentassessmentformpage4 ADD  `PortType` VARCHAR(255) DEFAULT NULL;
+
+ALTER TABLE residentassessmentformpage4 ADD `TrachSize` VARCHAR(255) DEFAULT NULL;
+ALTER TABLE residentassessmentformpage4 ADD  `TrachType` VARCHAR(255) DEFAULT NULL;
+ALTER TABLE residentassessmentformpage4 ADD `OxyenVia` VARCHAR(255) DEFAULT NULL;
+ALTER TABLE residentassessmentformpage4 ADD `cpapSetting` VARCHAR(255) DEFAULT NULL;
+
+
+
+ALTER TABLE residentassessmentformpage3 ADD `abnormality` VARCHAR(255) DEFAULT NULL;
+
+-- ---------------suresh p Rai(2010-09-04)--------------------------------------------
+
+CREATE TABLE `treatmentadmin` (
+  `ndc` BIGINT(20) NOT NULL,
+  `code` VARCHAR(255) DEFAULT NULL,
+  `coustionary` VARCHAR(255) DEFAULT NULL,
+  `description` VARCHAR(255) DEFAULT NULL,
+  `name` VARCHAR(255) DEFAULT NULL,
+  `routeName` VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (`ndc`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- ----------------mayank chandela(2010-09-11)----------------------------------------
+ALTER TABLE physicianordersafetyprecautions ADD COLUMN sideRails2 VARCHAR(255) DEFAULT NULL;
+-- --------------Pawan Rajput(2010-09-11)-----------------------------------------
+ALTER TABLE physicianorderrespiratorytherapy ADD COLUMN pulseOximetryOthers VARCHAR(255) DEFAULT NULL;
+
+-- ---------------suresh p Rai(2010-09-06)--------------------------------------------
+
+CREATE TABLE `physicianordertreatmenttemp` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `dose` VARCHAR(255) DEFAULT NULL,
+  `doseAmount` INT(11) DEFAULT NULL,
+  `duration1` INT(11) DEFAULT NULL,
+  `durationFrom` DATETIME DEFAULT NULL,
+  `durationTo` DATETIME DEFAULT NULL,
+  `formId` INT(11) DEFAULT NULL,
+  `frequency1` INT(11) DEFAULT NULL,
+  `instructions` VARCHAR(255) DEFAULT NULL,
+  `medication` VARCHAR(255) DEFAULT NULL,
+  `medicationId` BIGINT(20) DEFAULT NULL,
+  `prnIndication` INT(11) DEFAULT NULL,
+  `prnIndicationComments` VARCHAR(255) DEFAULT NULL,
+  `prnInstructionComments` VARCHAR(255) DEFAULT NULL,
+  `residentId` INT(11) DEFAULT NULL,
+  `route` VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+
+-- ---------------suresh p Rai(2010-09-07)--------------------------------------------
+
+CREATE TABLE `treatments` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `dosage` INT(11) DEFAULT NULL,
+  `endDate` DATETIME DEFAULT NULL,
+  `formId` INT(11) DEFAULT NULL,
+  `frequency` INT(11) DEFAULT NULL,
+  `medicationName` VARCHAR(255) DEFAULT NULL,
+  `orderDate` DATETIME DEFAULT NULL,
+  `prnIndicator` INT(11) DEFAULT NULL,
+  `residentId` INT(11) DEFAULT NULL,
+  `route` VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+
+
+CREATE TABLE `calculatedtreatment` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `calculatedEndTime` DATETIME DEFAULT NULL,
+  `calculatedStartTime` DATETIME DEFAULT NULL,
+  `notes` VARCHAR(255) DEFAULT NULL,
+  `status` INT(11) DEFAULT NULL,
+  `timeRecord` DATETIME DEFAULT NULL,
+  `userId` INT(11) DEFAULT NULL,
+  `medSerial` INT(11) DEFAULT NULL,
+  PRIMARY KEY (`serial`),
+  KEY `FK67840C3AD300AA4B` (`medSerial`),
+  KEY `FK67840C3A79519D3D` (`userId`),
+  CONSTRAINT `FK67840C3A79519D3D` FOREIGN KEY (`userId`) REFERENCES `users` (`serial`),
+  CONSTRAINT `FK67840C3AD300AA4B` FOREIGN KEY (`medSerial`) REFERENCES `treatments` (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `prntreatment` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `dosage` VARCHAR(255) DEFAULT NULL,
+  `frequency` INT(11) DEFAULT NULL,
+  `medSerial` BIGINT(20) DEFAULT NULL,
+  `medicationName` VARCHAR(255) DEFAULT NULL,
+  `residentId` INT(11) DEFAULT NULL,
+  `resonForPrn` VARCHAR(255) DEFAULT NULL,
+  `route` VARCHAR(255) DEFAULT NULL,
+  `timeStamp` DATETIME DEFAULT NULL,
+  `userId` INT(11) DEFAULT NULL,
+  PRIMARY KEY (`serial`),
+  KEY `FK835EDF6C79519D3D` (`userId`),
+  CONSTRAINT `FK835EDF6C79519D3D` FOREIGN KEY (`userId`) REFERENCES `users` (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+
+
+
+CREATE TABLE IF NOT EXISTS `treatmenttimeslot` (
+  `slotNum` INT(11) DEFAULT '0',
+  `slotStartTime` VARCHAR(255) DEFAULT NULL,
+  `slotEndTime` VARCHAR(255) DEFAULT NULL,
+  `frequencyType` VARCHAR(255) DEFAULT NULL
+) ENGINE=INNODB DEFAULT CHARSET=latin1 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
+
+--
+-- Dumping data for table `medicationtimeslot`
+--
+
+INSERT INTO `treatmenttimeslot` (`slotNum`, `slotStartTime`, `slotEndTime`, `frequencyType`) VALUES
+(1, '09:00 AM', '11:59 PM', 'DAILY'),
+(2, '09:00 AM', '04:59 PM', '2 x DAILY(BID)'),
+(2, '05:00 PM', '11:59 PM', '2 x DAILY(BID)'),
+(3, '09:00 AM', '12:59 PM', '3 x DAILY(TID)'),
+(3, '01:00 PM', '04:59 PM', '3 x DAILY(TID)'),
+(3, '05:00 PM', '11:59 PM', '3 x DAILY(TID)'),
+(4, '09:00 AM', '12:59 PM', '4 x DAILY(QID)'),
+(4, '01:00 PM', '04:59 PM', '4 x DAILY(QID)'),
+(4, '05:00 PM', '08:59 PM', '4 x DAILY(QID)'),
+(4, '09:00 PM', '11:59 PM', '4 x DAILY(QID)'),
+(5, '07:00 AM', '10:59 AM', 'BEFORE MEALS(AC)'),
+(5, '11:00 AM', '03:59 PM', 'BEFORE MEALS(AC)'),
+(5, '04:00 PM', '11:59 PM', 'BEFORE MEALS(AC)'),
+(6, '08:30 AM', '12:29 PM', 'AFTER MEALS(PC)'),
+(6, '12:30 PM', '06:29 PM', 'AFTER MEALS(PC)'),
+(6, '06:30 PM', '11:59 PM', 'AFTER MEALS(PC)'),
+(7, '08:00 AM', '11:59 AM', 'WITH MEALS(WM)'),
+(7, '12:00 PM', '04:59 PM', 'WITH MEALS(WM)'),
+(7, '05:00 PM', '11:59 PM', 'WITH MEALS(WM)'),
+(8, '06:00 AM', '01:59 PM', 'Q8 HOURS'),
+(8, '02:00 PM', '09:59 PM', 'Q8 HOURS'),
+(8, '10:00 PM', '11:59 PM', 'Q8 HOURS'),
+(9, '12:00 AM', '05:59 AM', 'Q6 HOURS'),
+(9, '06:00 AM', '11:59 AM', 'Q6 HOURS'),
+(9, '12:00 PM', '05:59 PM', 'Q6 HOURS'),
+(9, '06:00 PM', '11:59 PM', 'Q6 HOURS'),
+(10, '02:00 AM', '05:59 AM', 'Q4 HOURS'),
+(10, '06:00 AM', '11:59 AM', 'Q4 HOURS'),
+(10, '12:00 PM', '01:59 PM', 'Q4 HOURS'),
+(10, '02:00 PM', '05:59 PM', 'Q4 HOURS'),
+(10, '06:00 PM', '09:59 PM', 'Q4 HOURS'),
+(10, '10:00 PM', '11:59 PM', 'Q4 HOURS'),
+(11, '09:00 PM', '11:59 PM', 'BEDTIME(HS)'),
+(12, '06:00 PM', '11:59 PM', 'COUMADIN'),
+(13, '07:30 AM', '04:29 PM', 'INSULIN'),
+(13, '04:30 PM', '11:59 PM', 'INSULIN');
+
+
+-- ---------------suresh p Rai(2010-09-09)--------------------------------------------
+
+ALTER TABLE residentassessmentformpage1 ADD  `understand` INT(11) DEFAULT NULL;
+ALTER TABLE residentassessmentformpage1 ADD `nameBracelet` VARCHAR(255) DEFAULT NULL;
+ALTER TABLE residentassessmentformpage1 ADD  `namePlaceOnDoor` VARCHAR(255) DEFAULT NULL;
+ALTER TABLE residentassessmentformpage1 ADD  `doesUnderstandEnglish` BIT(1) DEFAULT NULL;
+
+-- ---------------suresh p Rai(2010-09-11)--------------------------------------------
+
+ALTER TABLE physicianorderrespiratorytherapy ADD  `sizeOfCannula` VARCHAR(255) DEFAULT NULL;
+ALTER TABLE physicianorderrespiratorytherapy ADD  `sizeOfCollar` VARCHAR(255) DEFAULT NULL;
+ALTER TABLE physicianorderrespiratorytherapy ADD  `sizeOfTrach` VARCHAR(255) DEFAULT NULL;
+ALTER TABLE physicianorderrespiratorytherapy ADD ` typeOfCannula` VARCHAR(255) DEFAULT NULL;
+ALTER TABLE physicianorderrespiratorytherapy ADD  `typeOfCollar` VARCHAR(255) DEFAULT NULL;
+ALTER TABLE physicianorderrespiratorytherapy ADD  `typeOfTrach` VARCHAR(255) DEFAULT NULL;
+ALTER TABLE physicianorderrespiratorytherapy ADD  `minutes` VARCHAR(255) DEFAULT NULL;
+
+ALTER TABLE physicianorderrespiratorytherapy ADD `cpap` BIT(1) DEFAULT NULL;
+ALTER TABLE physicianorderrespiratorytherapy ADD `bipap` BIT(1) DEFAULT NULL;
+ALTER TABLE physicianorderrespiratorytherapy ADD `durationFrom` DATETIME DEFAULT NULL;
+ALTER TABLE physicianorderrespiratorytherapy ADD `durationTo` DATETIME DEFAULT NULL;
+
+ALTER TABLE physicianorderrespiratorytherapy ADD `frequency` VARCHAR(255) DEFAULT NULL;
+ALTER TABLE physicianorderrespiratorytherapy ADD `duration` VARCHAR(255) DEFAULT NULL;
+
+----------------------Pavan Kumar(2010-09-13)-----------------------------------------
+
+ALTER TABLE physicianorderrespiratorytherapy ADD COLUMN pulseOximetryOthers VARCHAR(255) DEFAULT NULL;
+
+
+-- ---------------suresh p Rai(2010-09-20)--------------------------------------------
+
+CREATE TABLE `mds3sectiona` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  `cMSA0100` BIGINT(20) NOT NULL,
+  `cmbTypeOfProviderA0200` VARCHAR(255) DEFAULT NULL,
+  `nPIA0100` BIGINT(20) NOT NULL,
+  `sPNA0100` BIGINT(20) NOT NULL,
+  PRIMARY KEY  (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `mds3sectionb` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY  (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `mds3sectionc` (
+  `serial` INT(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY  (`serial`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-----------------Pavan Kumar (2010-09-20)---------------------------
+CREATE TABLE `mds3` (
+  `serial` int(11) NOT NULL auto_increment,
+  `dateCreated` datetime default NULL,
+  `formType` varchar(255) default NULL,
+  `identifierName` varchar(255) default NULL,
+  `lastModified` datetime default NULL,
+  `mdsDate` datetime default NULL,
+  `notes` varchar(255) default NULL,
+  `residentId` int(11) default NULL,
+  `residentName` varchar(255) default NULL,
+  `status` varchar(255) default NULL,
+  `user` int(11) default NULL,
+  `mdsSectionA` int(11) default NULL,
+  `mdsSectionB` int(11) default NULL,
+  `mdsSectionC` int(11) default NULL,
+  PRIMARY KEY  (`serial`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+
+

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["report/changeRoom/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ffChangeRoomDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="sfChangeRoomDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="date" class="java.lang.String"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="79">
+			<staticText>
+				<reportElement x="101" y="2" width="352" height="23"/>
+				<textElement>
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Plaza Health Care & Rehabiliation Center]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="30" width="134" height="20"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[456 Rahway Avenue]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="146" y="50" width="262" height="26"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Elizabeth. New Jersey 07202]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="81">
+			<staticText>
+				<reportElement x="13" y="5" width="530" height="35"/>
+				<textElement textAlignment="Center">
+					<font size="24" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Room Changes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="50" width="244" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="267" y="50" width="276" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{date}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="5"/>
+	</columnHeader>
+	<detail>
+		<band height="107">
+			<staticText>
+				<reportElement x="13" y="4" width="100" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[First Floor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="13" y="55" width="100" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Second Floor]]></text>
+			</staticText>
+			<subreport>
+				<reportElement positionType="Float" isPrintRepeatedValues="false" x="31" y="27" width="512" height="24" isRemoveLineWhenBlank="true"/>
+				<dataSourceExpression><![CDATA[$P{ffChangeRoomDataSource}]]></dataSourceExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "ChangeRoomFF.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" isPrintRepeatedValues="false" x="31" y="78" width="512" height="24" isRemoveLineWhenBlank="true"/>
+				<dataSourceExpression><![CDATA[$P{sfChangeRoomDataSource}]]></dataSourceExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "ChangeRoomFF.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54"/>
+	</pageFooter>
+	<summary>
+		<band height="42"/>
+	</summary>
+</jasperReport>
