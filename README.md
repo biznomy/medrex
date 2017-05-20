@@ -1,6 +1,6 @@
 # [Medrex - EMR System](http://www.technolabs.in/showcase/medrex)
 
-![Medrex System](/docs/screenshots/0001.png "Medrex Dashboard")
+![Medrex System](/docs/screenshots/0001.jpg "Medrex Dashboard")
 
 Medrex, aka Medical Records, is an EMR (Electronic Medical Records) solution for the hospital. Medrex system provides facility to maintain complete information about residents of the hospital, availability of doctors, availability of rooms, prescribed medication & nursing routines with integrated medication and nursing carts. 
 
@@ -28,15 +28,15 @@ Medrex system is built completely over Java & J2EE stack. Initially started with
 
 ![Medrex Architecture](/docs/diagrams/architecture.png "Medrex Architecture")
 
-![Medrex Layered Technologies](/docs/diagrams/hld.png "Medrex Layered Technologies")
+![Medrex Layered Technologies](/docs/diagrams/layeredtech.png "Medrex Layered Technologies")
 
 ## Screenshots
 
-![Medrex Screenshot](/docs/screenshots/0001.png "Medrex Screenshot")
+![Medrex Screenshot](/docs/screenshots/0001.jpg "Medrex Screenshot")
 
-![Medrex Screenshot](/docs/screenshots/0002.png "Medrex Screenshot")
+![Medrex Screenshot](/docs/screenshots/0002.jpg "Medrex Screenshot")
 
-![Medrex Screenshot](/docs/screenshots/0003.png "Medrex Screenshot")
+![Medrex Screenshot](/docs/screenshots/0003.jpg "Medrex Screenshot")
 
-![Medrex Screenshot](/docs/screenshots/0004.png "Medrex Screenshot")
+![Medrex Screenshot](/docs/screenshots/0004.jpg "Medrex Screenshot")
 
