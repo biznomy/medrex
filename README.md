@@ -7,6 +7,8 @@ Medrex, aka Medical Records, is an EMR (Electronic Medical Records) solution for
 ## Disclaimer
 Please note that shared code is for portfolio demonstration and learning purposes only. By no means, its final working version of system. We have shared Alpha version(code) of system after approval from our client.
 
+More details at http://www.technolabs.in/showcase/medrex
+
 ## Features
 + Integrated solution for desktop, web and mobile platforms
 + Over 200 paper forms automated
